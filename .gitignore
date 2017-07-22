@@ -9,3 +9,13 @@
 
 # Undo-tree save-files
 *.~undo-tree
+
+# Temp Files
+\#*\#
+/**/temp
+.\#*
+
+# Automatically populated dirs
+/frameworks
+/auto-save-list/**
+/elpa/**
