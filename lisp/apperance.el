@@ -45,6 +45,16 @@
 (defun my-linum ()
   "Turns on and colors line numbers"
   (linum-mode)
-  (setq linum-format "%d ")
+  (custom-set-variables '(linum-format 'dynamic))
+  ;; Blatantly stolen from stackoverflow: https://stackoverflow.com/questions/3626632/right-align-line-numbers-with-linum-mode
+  (defadvice linum-update-window (around linum-dynamic activate)
+    (let* ((w (length (number-to-string
+		       (count-lines (point-min) (point-max)))))
+	   (linum-format (concat "%" (number-to-string w) "d ")))
+      ad-do-it)) 
   (set-face-background 'linum "black"))
 (add-hook 'prog-mode-hook #'my-linum)
+
+(use-package diff-hl
+  :ensure t
+  :config (add-hook 'prog-mode-hook 'diff-hl-flydiff-mode))

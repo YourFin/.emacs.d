@@ -34,21 +34,21 @@
 (evil-space-bind "bx" 'kill-buffer)
 
 ;; Windows
-(defun hsplit-buffer ()
+(defun hsplit-recents ()
   "splits the current window horizontally
 and opens up helm switch buffer"
   (interactive)
   (evil-window-split)
   (evil-window-next 1)
-  (helm-buffers-list))
+  (helm-mini))
 
-(defun vsplit-buffer ()
+(defun vsplit-recents ()
   "splits the current window horizontally
 and opens up helm switch buffer"
   (interactive)
   (evil-window-vsplit)
   (evil-window-next 1)
-  (helm-buffers-list))
+  (helm-mini))
 
 (defun hsplit-files ()
   "splits the current window horizontally
@@ -56,7 +56,7 @@ and opens up helm switch buffer"
   (interactive)
   (evil-window-split)
   (evil-window-next 1)
-  (helm-find-files (file-name-directory buffer-file-name)))
+  (helm-find-files t))
 
 (defun vsplit-files ()
   "splits the current window horizontally
@@ -64,7 +64,7 @@ and opens up helm switch buffer"
   (interactive)
   (evil-window-vsplit)
   (evil-window-next 1)
-  (helm-find-files (file-name-directory buffer-file-name)))
+  (helm-find-files t))
 
 (evil-space-bind "ww" 'evil-window-next)
 (evil-space-bind "wW" 'evil-window-prev)
@@ -74,8 +74,8 @@ and opens up helm switch buffer"
 (evil-space-bind "wh" 'evil-window-left)
 (evil-space-bind "wx" 'evil-window-delete)
 (evil-space-bind "wo" 'delete-other-windows)
-(evil-space-bind "ws" 'hsplit-buffer)
-(evil-space-bind "wv" 'vsplit-buffer)
+(evil-space-bind "ws" 'hsplit-recents)
+(evil-space-bind "wv" 'vsplit-recents)
 (evil-space-bind "wS" 'hsplit-files)
 (evil-space-bind "wV" 'vsplit-files)
 
@@ -120,4 +120,7 @@ and opens up helm switch buffer"
   (lambda () "Moves the cursor down and adds a cursor" (interactive)
     (evil-previous-line)
     (evil-mc-make-cursor-here)))
- 
+
+;;; Helm rebinds
+; make tab completion work normally in helm find files
+(define-key helm-find-files-map "\t" 'helm-execute-persistent-action)
