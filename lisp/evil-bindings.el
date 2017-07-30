@@ -10,8 +10,6 @@
   :config (evil-terminal-cursor-changer-activate))
 (use-package evil-indent-textobject :ensure t)
 
-(define-key evil-motion-state-map "K" 'ace-jump-mode)
-
 ;;;; Space bindings
 ;; unmap normal space
 (define-key evil-motion-state-map " " nil)
@@ -90,10 +88,14 @@ and opens up helm switch buffer"
 			(magit-commit)
 			(magit-push-current)))
 
-;; Sane defaults
+;;; misc bindings
 (define-key evil-motion-state-map "j" 'evil-next-visual-line)
 (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
-
+(define-key evil-normal-state-map (kbd "J") nil)
+;; a holdover from my vim days
+(define-key evil-normal-state-map (kbd "-j") 'evil-join)
+(define-key evil-motion-state-map (kbd "J") 'evil-avy-goto-word-or-subword-1)
+(define-key evil-motion-state-map (kbd "K") 'evil-avy-goto-char-timer) 
 ;;(define-key evil-normal-state-map "c" (evil-change 
 
 ;;; Multiple cursors
@@ -114,7 +116,7 @@ and opens up helm switch buffer"
 (define-key evil-normal-state-map (kbd "C-J")
   (lambda () "Moves the cursor up and adds a cursor" (interactive)
     (evil-next-line)
-    (evil-mc-make-cursor-here)))
+     (evil-mc-make-cursor-here)))
 
 (define-key evil-normal-state-map (kbd "C-K")
   (lambda () "Moves the cursor down and adds a cursor" (interactive)
