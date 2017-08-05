@@ -10,6 +10,9 @@
   :config (evil-terminal-cursor-changer-activate))
 (use-package evil-indent-textobject :ensure t)
 
+;;; sanity check
+(setq evil-want-Y-yank-to-eol t)
+
 ;;;; Space bindings
 ;; unmap normal space
 (define-key evil-motion-state-map " " nil)
@@ -28,7 +31,7 @@
 ;; Buffers
 (evil-space-bind "bb" 'save-buffer)
 (evil-space-bind "bs" 'helm-buffers-list)
-(evil-space-bind "bw" 'save-buffer)
+(evil-space-bind "bo" 'helm-find-files)
 (evil-space-bind "bx" 'kill-buffer)
 
 ;; Windows
@@ -88,6 +91,12 @@ and opens up helm switch buffer"
 			(magit-commit)
 			(magit-push-current)))
 
+;; Random utilities
+(evil-space-bind "uc" 'helm-calcul-expression)
+
+;; helm kill ring
+(evil-space-bind "k" 'helm-show-kill-ring)
+
 ;;; misc bindings
 (define-key evil-motion-state-map "j" 'evil-next-visual-line)
 (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
@@ -96,6 +105,7 @@ and opens up helm switch buffer"
 (define-key evil-normal-state-map (kbd "-j") 'evil-join)
 (define-key evil-motion-state-map (kbd "J") 'evil-avy-goto-word-or-subword-1)
 (define-key evil-motion-state-map (kbd "K") 'evil-avy-goto-char-timer) 
+(define-key evil-normal-state-map (kbd "Y") 'e
 ;;(define-key evil-normal-state-map "c" (evil-change 
 
 ;;; Multiple cursors
