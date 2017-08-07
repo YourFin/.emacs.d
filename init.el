@@ -6,6 +6,7 @@
 ; (package-initialize)
 
 (require 'package-setup)
+(setq use-package-always-ensure t)
 
 (defun try-require (name) 
   "Attepts to require a file, but doesn't break
@@ -31,17 +32,19 @@
 
 ;;; Packages
 
-(use-package markdown-mode :ensure t)
+(use-package markdown-mode)
 (use-package evil
-  :ensure t
+ 
   :config (require 'evil-bindings))
-(use-package helm :ensure t
+(use-package helm
   :bind ("M-x" . helm-M-x))
-(use-package term :ensure t)
-(use-package avy :ensure t)
-(use-package projectile :ensure t)
-(use-package helm-projectile :ensure t)
-(use-package magit :ensure t)
+(use-package term)
+(use-package avy)
+(use-package projectile)
+(use-package helm-projectile)
+(use-package magit)
+(use-package python)
+(use-package python-django)
 
 ; ace-flyspell
 ; flyspell
@@ -69,7 +72,7 @@
  '(linum-format (quote dynamic))
  '(package-selected-packages
    (quote
-    (avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode))))
+    (company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

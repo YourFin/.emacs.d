@@ -1,4 +1,24 @@
-# Compiled
+ Compiled
+*.elc
+
+# Packaging
+.cask
+
+# Backup files
+*~
+
+# Undo-tree save-files
+*.~undo-tree
+
+# Temp Files
+\#*\#
+/**/temp
+.\#*
+
+# Automatically populated dirs
+/frameworks
+/auto-save-list/**
+/elpa/** Compiled
 *.elc
 
 # Packaging

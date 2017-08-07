@@ -9,11 +9,11 @@
 (scroll-bar-mode -1)
 
 ;;; Apperance packages:
-(use-package tangotango-theme :ensure t)
+(use-package tangotango-theme)
 (load-theme 'tangotango t)
 
 
-(use-package rainbow-delimiters :ensure t
+(use-package rainbow-delimiters
   :config
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
   (setq rainbow-delimiters-max-face-count 8)
@@ -33,7 +33,7 @@
 
 
 
-(use-package highlight-indent-guides :ensure t)
+(use-package highlight-indent-guides)
 (require 'highlight-indent-guides)
 (setq highlight-indent-guides-method 'column)
 (setq highlight-indent-guides-auto-odd-face-perc 23)
@@ -56,5 +56,5 @@
 (add-hook 'prog-mode-hook #'my-linum)
 
 (use-package diff-hl
-  :ensure t
+ 
   :config (add-hook 'prog-mode-hook 'diff-hl-flydiff-mode))

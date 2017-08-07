@@ -2,13 +2,13 @@
 
 (evil-mode 1)
 
-(use-package evil-anzu :ensure t)
-(use-package evil-ediff :ensure t)
+(use-package evil-anzu)
+(use-package evil-ediff)
 (use-package evil-terminal-cursor-changer
-  :ensure t
+ 
   :if (not 'display-graphic-p)
   :config (evil-terminal-cursor-changer-activate))
-(use-package evil-indent-textobject :ensure t)
+(use-package evil-indent-textobject)
 
 ;;; sanity check
 (setq evil-want-Y-yank-to-eol t)
@@ -93,6 +93,7 @@ and opens up helm switch buffer"
 
 ;; Random utilities
 (evil-space-bind "uc" 'helm-calcul-expression)
+(evil-space-bind "ua" 'helm-apropos)
 
 ;; helm kill ring
 (evil-space-bind "k" 'helm-show-kill-ring)
@@ -105,12 +106,11 @@ and opens up helm switch buffer"
 (define-key evil-normal-state-map (kbd "-j") 'evil-join)
 (define-key evil-motion-state-map (kbd "J") 'evil-avy-goto-word-or-subword-1)
 (define-key evil-motion-state-map (kbd "K") 'evil-avy-goto-char-timer) 
-(define-key evil-normal-state-map (kbd "Y") 'e
 ;;(define-key evil-normal-state-map "c" (evil-change 
 
 ;;; Multiple cursors
 ;; enable
-(use-package evil-mc :ensure t)
+(use-package evil-mc)
 (global-evil-mc-mode 1)
 
 (define-key evil-normal-state-map (kbd "C-H")
