@@ -1,14 +1,12 @@
-(provide 'evil-bindings)
-
 (evil-mode 1)
 
 (use-package evil-anzu)
 (use-package evil-ediff)
 (use-package evil-terminal-cursor-changer
- 
   :if (not 'display-graphic-p)
   :config (evil-terminal-cursor-changer-activate))
 (use-package evil-indent-textobject)
+(use-package evil-magit)
 
 ;;; sanity check
 (setq evil-want-Y-yank-to-eol t)
@@ -23,15 +21,30 @@
    evil-motion-state-map"
   (define-key evil-motion-state-map (kbd (concat "<SPC>" keys)) command))
 
-(evil-space-bind " <SPC>" 'helm-M-x)
+(evil-space-bind " <SPC>" 'helm-smex)
 
 ;;files
-(evil-space-bind "ff" 'helm-find-files)
 
 ;; Buffers
+;;Context specific find files
+;; and buffers
+(defun yf-find-files ()
+  (interactive)
+  (if (projectile-project-p)
+      (helm-projectile-find-file)
+    (helm-find-files t)))
+
+(defun yf-switch-buffer ()
+  (interactive)
+  (if (projectile-project-p)
+      (helm-projectile)
+    (helm-mini)))
+
 (evil-space-bind "bb" 'save-buffer)
-(evil-space-bind "bs" 'helm-buffers-list)
-(evil-space-bind "bo" 'helm-find-files)
+(evil-space-bind "bs" 'yf-switch-buffer)
+(evil-space-bind "bS" 'helm-buffers-list)
+(evil-space-bind "bo" 'yf-find-files)
+(evil-space-bind "bO" 'helm-find-files)
 (evil-space-bind "bx" 'kill-buffer)
 
 ;; Windows
@@ -41,7 +54,7 @@ and opens up helm switch buffer"
   (interactive)
   (evil-window-split)
   (evil-window-next 1)
-  (helm-mini))
+  (yf-switch-buffer))
 
 (defun vsplit-recents ()
   "splits the current window horizontally
@@ -49,7 +62,7 @@ and opens up helm switch buffer"
   (interactive)
   (evil-window-vsplit)
   (evil-window-next 1)
-  (helm-mini))
+  (yf-switch-buffer))
 
 (defun hsplit-files ()
   "splits the current window horizontally
@@ -57,7 +70,7 @@ and opens up helm switch buffer"
   (interactive)
   (evil-window-split)
   (evil-window-next 1)
-  (helm-find-files t))
+  (yf-switch-buffer))
 
 (defun vsplit-files ()
   "splits the current window horizontally
@@ -65,7 +78,7 @@ and opens up helm switch buffer"
   (interactive)
   (evil-window-vsplit)
   (evil-window-next 1)
-  (helm-find-files t))
+  (yf-switch-buffer))
 
 (evil-space-bind "ww" 'evil-window-next)
 (evil-space-bind "wW" 'evil-window-prev)
@@ -82,6 +95,33 @@ and opens up helm switch buffer"
 
 
 ;; Magit
+;;;TODO: fix these SOB's
+(defun yf-stage-file ()
+  "stages file in vc agnostic manner. Currently only implemented for git"
+  (interactive)
+  (let ((list vc (vc-backend (buffer-file-name))))
+    (cond (((string= vc "Git")
+	   (save-buffer)
+	   (magit-stage-file buffer-file-name))))))
+
+(defun yf-push ()
+    "Pushes vc changes to remote server in vc agnostic manner. Currently only implemented for git"
+    (interactive)
+  (let ((list vc (vc-backend (buffer-file-name))))
+    (message vc)
+    (cond (((string= vc "Git")
+	    (magit-commit)
+	    (magit-push-current))))))
+
+(defun yf-status ()
+    "Displays project status in a vc agnostig manner.
+Only implemented for git ATM"
+  (interactive)
+  (let ((list vc (vc-backend (buffer-file-name))))
+    (message vc)
+    (cond (((string= vc "Git")
+	    (magit-status))))))
+
 (evil-space-bind "gw" (lambda () "stage current file"
 			(interactive)
 			(save-buffer)
@@ -90,10 +130,21 @@ and opens up helm switch buffer"
 			(interactive)
 			(magit-commit)
 			(magit-push-current)))
+(evil-space-bind "gg" 'magit-status)
+
+;;(evil-space-bind "gw" 'yf-stage-file)
+;;(evil-space-bind "go" 'yf-push)
+;;(evil-space-bind "gg" 'yf-status)
+
+;; Projectile
+(evil-space-bind "pa" 'helm-projectile-ag)
+(evil-space-bind "ps" 'helm-projectile-switch-project)
 
 ;; Random utilities
 (evil-space-bind "uc" 'helm-calcul-expression)
 (evil-space-bind "ua" 'helm-apropos)
+(evil-space-bind "ub" 'describe-key)
+(evil-space-bind "uu" 'undo-tree-visualize)
 
 ;; helm kill ring
 (evil-space-bind "k" 'helm-show-kill-ring)
@@ -101,17 +152,23 @@ and opens up helm switch buffer"
 ;;; misc bindings
 (define-key evil-motion-state-map "j" 'evil-next-visual-line)
 (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
-(define-key evil-normal-state-map (kbd "J") nil)
+
+;; swap these because i'm weird
+(define-key evil-motion-state-map (kbd "g;") 'goto-last-change)
+(define-key evil-motion-state-map (kbd "g,") 'goto-next-change)
+
 ;; a holdover from my vim days
 (define-key evil-normal-state-map (kbd "-j") 'evil-join)
+
+;; avy
 (define-key evil-motion-state-map (kbd "J") 'evil-avy-goto-word-or-subword-1)
 (define-key evil-motion-state-map (kbd "K") 'evil-avy-goto-char-timer) 
 ;;(define-key evil-normal-state-map "c" (evil-change 
 
 ;;; Multiple cursors
-;; enable
-(use-package evil-mc)
-(global-evil-mc-mode 1)
+(use-package evil-mc
+  :config
+  (global-evil-mc-mode 1))
 
 (define-key evil-normal-state-map (kbd "C-H")
   (lambda () "Moves the cursor left and adds a cursor" (interactive)
@@ -136,3 +193,5 @@ and opens up helm switch buffer"
 ;;; Helm rebinds
 ; make tab completion work normally in helm find files
 (define-key helm-find-files-map "\t" 'helm-execute-persistent-action)
+
+(provide 'evil-bindings)

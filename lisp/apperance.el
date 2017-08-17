@@ -12,6 +12,11 @@
 (use-package tangotango-theme)
 (load-theme 'tangotango t)
 
+;;;Host specific
+(cond (
+       (eq (system-name) "firecakes")	
+	(set-frame-font "ConsolasHacked 22" nil t)
+	))
 
 (use-package rainbow-delimiters
   :config

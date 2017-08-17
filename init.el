@@ -28,51 +28,60 @@
       (add-hook 'prog-mode-hook FUNC)))
 
 ;;; apperance file
-(require 'apperance)
-
+(try-require 'apperance)
+(use-package auto-package-update
+  :config
+  (setq auto-package-update-delete-old-versions t
+	auto-package-update-interval 4)
+  (auto-package-update-maybe))
 ;;; Packages
-
-(use-package markdown-mode)
-(use-package evil
- 
-  :config (require 'evil-bindings))
 (use-package helm
-  :bind ("M-x" . helm-M-x))
+  :config
+  (add-hook 'after-init-hook 'helm-mode))
 (use-package term)
 (use-package avy)
 (use-package projectile)
 (use-package helm-projectile)
 (use-package magit)
-(use-package python)
-(use-package python-django)
-
+(use-package smex)
+(use-package helm-smex
+  :config (setq helm-smex-show-bindings t)
+  :bind ("M-x" . helm-smex))
+;; to add to the pile
 ; ace-flyspell
 ; flyspell
-; ycm
-; company mode
 ; ace-jump-mode
 ; ace-jump-helm-line
+
+(use-package python)
+(use-package python-django)
+(use-package markdown-mode)
+
+(use-package evil
+  :config (require 'evil-bindings))
+
 
 (eval-when-compile
   (require 'use-package))
 
 (require 'helm-config)
 
+(require 'completion)
+
 ;;; global keybinds
 
 (try-require 'global-bindings)
-
-
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(company-quickhelp-mode t)
  '(linum-format (quote dynamic))
  '(package-selected-packages
    (quote
-    (company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode))))
+    (company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
