@@ -40,3 +40,4 @@
 /auto-save-list/**
 /elpa/**
 /smex-items
+/.python-environments/default/bin/activate
