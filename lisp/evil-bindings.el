@@ -122,19 +122,8 @@ Only implemented for git ATM"
     (cond (((string= vc "Git")
 	    (magit-status))))))
 
-(evil-space-bind "gw" (lambda () "stage current file"
-			(interactive)
-			(save-buffer)
-			(magit-stage-file buffer-file-name)))
-(evil-space-bind "go" (lambda () "commit and push to default branch"
-			(interactive)
-			(magit-commit)
-			(magit-push-current)))
-(evil-space-bind "gg" 'magit-status)
-
-;;(evil-space-bind "gw" 'yf-stage-file)
-;;(evil-space-bind "go" 'yf-push)
-;;(evil-space-bind "gg" 'yf-status)
+(evil-space-bind "g" 'magit-status)
+(evil-define-minor-mode-key 'normal 'git-commit-mode "q" 'with-editor-finish)
 
 ;; Projectile
 (evil-space-bind "pa" 'helm-projectile-ag)
