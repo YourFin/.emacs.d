@@ -18,18 +18,14 @@
 
 
 (setq ycmd-server-command `("python3" ,(file-truename "~/.emacs.d/frameworks/ycmd/ycmd/")))
-(if (eq (system-name) "firecakes")
-    
-    (let ()
-      (use-package emacs-ycmd
-	:config
-	(setq ycmd-server-command `("python3" ,(file-truename "~/.emacs.d/frameworks/ycmd/ycmd/"))))
-      (add-hook 'after-init-hook 'global-ycmd-mode)
-      (use-package company-ycmd
-	:config (company-ycmd-setup)))
-
-  ;;todo: other systems
-  nil
-  )
+(cond ([(eq (system-name) "firecakes")
+	(use-package emacs-ycmd
+	  :config
+	  (setq ycmd-server-command `("python3" ,(file-truename "~/.emacs.d/frameworks/ycmd/ycmd/"))))
+	(add-hook 'after-init-hook 'global-ycmd-mode)
+	(use-package company-ycmd
+	  :config (company-ycmd-setup))])
+      ;;todo: other systems
+      )
 
 (provide 'completion)
