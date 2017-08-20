@@ -123,7 +123,9 @@ Only implemented for git ATM"
 	    (magit-status))))))
 
 (evil-space-bind "g" 'magit-status)
-(evil-define-minor-mode-key 'normal 'git-commit-mode "q" 'with-editor-finish)
+(evil-define-minor-mode-key 'normal 'git-commit-mode
+  "q" 'with-editor-finish
+  "z" 'with-editor-cancel)
 
 ;; Projectile
 (evil-space-bind "pa" 'helm-projectile-ag)
