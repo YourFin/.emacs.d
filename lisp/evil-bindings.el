@@ -161,22 +161,22 @@ Only implemented for git ATM"
   :config
   (global-evil-mc-mode 1))
 
-(define-key evil-normal-state-map (kbd "C-H")
+(define-key evil-normal-state-map (kbd "C-S-H")
   (lambda () "Moves the cursor left and adds a cursor" (interactive)
     (evil-backward-char)
     (evil-mc-make-cursor-here)))
 
-(define-key evil-normal-state-map (kbd "C-L")
+(define-key evil-normal-state-map (kbd "C-S-L")
   (lambda () "Moves the cursor right and adds a cursor" (interactive)
     (evil-forward-char)
     (evil-mc-make-cursor-here)))
 
-(define-key evil-normal-state-map (kbd "C-J")
+(define-key evil-normal-state-map (kbd "C-S-J")
   (lambda () "Moves the cursor up and adds a cursor" (interactive)
     (evil-next-line)
      (evil-mc-make-cursor-here)))
 
-(define-key evil-normal-state-map (kbd "C-K")
+(define-key evil-normal-state-map (kbd "C-S-K")
   (lambda () "Moves the cursor down and adds a cursor" (interactive)
     (evil-previous-line)
     (evil-mc-make-cursor-here)))
