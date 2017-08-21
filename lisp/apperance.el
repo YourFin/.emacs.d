@@ -1,4 +1,3 @@
-(provide 'apperance)
 
 ;Get rid of splash screen ffs
 (setq inhibit-startup-message t)
@@ -13,10 +12,9 @@
 (load-theme 'tangotango t)
 
 ;;;Host specific
-(cond (
-       (eq (system-name) "firecakes")	
+(cond ([(eq (system-name) "firecakes")	
 	(set-frame-font "ConsolasHacked 22" nil t)
-	))
+	]))
 
 (use-package rainbow-delimiters
   :config
@@ -59,7 +57,16 @@
       ad-do-it)) 
   (set-face-background 'linum "black"))
 (add-hook 'prog-mode-hook #'my-linum)
+;; Remove wrap arrows
+;; Taken from https://web.archive.org/web/20170820232748/https://stackoverflow.com/questions/27845980/how-do-i-remove-newline-symbols-inside-emacs-vertical-border 
+(setf (cdr (assq 'continuation fringe-indicator-alist))
+       '(nil right-curly-arrow) ;; right indicator only
+      )
+
+(use-package adaptive-wrap
+  :config (add-hook 'prog-mode-hook 'adaptive-wrap-prefix-mode))
 
 (use-package diff-hl
- 
   :config (add-hook 'prog-mode-hook 'diff-hl-flydiff-mode))
+
+(provide 'apperance)
