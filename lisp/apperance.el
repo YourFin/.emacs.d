@@ -56,6 +56,7 @@
       ad-do-it)) 
   (set-face-background 'linum "black"))
 (add-hook 'prog-mode-hook #'my-linum)
+
 ;; Remove wrap arrows
 ;; Taken from https://web.archive.org/web/20170820232748/https://stackoverflow.com/questions/27845980/how-do-i-remove-newline-symbols-inside-emacs-vertical-border 
 (setf (cdr (assq 'continuation fringe-indicator-alist))

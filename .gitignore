@@ -41,3 +41,11 @@
 /elpa/**
 /smex-items
 /.python-environments/default/bin/activate
+/.last-package-update-day
+/.python-environments/default/bin/activate.csh
+/.python-environments/default/bin/activate.fish
+/lisp/apperance.el.rej
+/projectile-bookmarks.eld
+/projectile.cache
+/.python-environments/default/bin/activate_this.py
+*.rej
