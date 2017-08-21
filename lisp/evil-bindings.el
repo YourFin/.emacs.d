@@ -93,7 +93,6 @@ and opens up helm switch buffer"
 (evil-space-bind "wS" 'hsplit-files)
 (evil-space-bind "wV" 'vsplit-files)
 
-
 ;; Magit
 ;;;TODO: fix these SOB's
 (defun yf-stage-file ()
@@ -139,6 +138,21 @@ Only implemented for git ATM"
 
 ;; helm kill ring
 (evil-space-bind "k" 'helm-show-kill-ring)
+
+
+
+;;;END space bindings
+
+
+;;; Clipboard / Register nonsense
+(defun yf-sys-clip-get ()
+  "System-independent clipboard grabbing function. Does nothing to modify the clipboard"
+  (let ([x-clip (lambda ()
+		  ; call-process used as it returns the exit code
+		  (if (eq (call-process "sh" nil nil nil "-c" "xclip -version") 0)
+		      (shell-command-to-string "xclip -o")
+		    (y-or-n-p "Attempt to install xclip locally?")
+  (cond ([(eq system-type "windows-nt")
 
 ;;; misc bindings
 (define-key evil-motion-state-map "j" 'evil-next-visual-line)
