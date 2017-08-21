@@ -35,7 +35,6 @@
 
 
 
-
 (use-package highlight-indent-guides)
 (require 'highlight-indent-guides)
 (setq highlight-indent-guides-method 'column)
@@ -63,10 +62,30 @@
        '(nil right-curly-arrow) ;; right indicator only
       )
 
+;; exclusivly for smooth scrolling
+(use-package sublimity
+  :config
+  (require 'sublimity-scroll)
+  (setq sublimity-scroll-weight 8)
+  (setq sublimity-scroll-drift-length 2)
+  (sublimity-mode 1))
+
 (use-package adaptive-wrap
   :config (add-hook 'prog-mode-hook 'adaptive-wrap-prefix-mode))
 
+;; Margin diff for vc
 (use-package diff-hl
-  :config (add-hook 'prog-mode-hook 'diff-hl-flydiff-mode))
+  :config
+  (set-face-foreground 'diff-hl-change "light goldenrod")
+  (set-face-background 'diff-hl-change "dark goldenrod")
+  (set-face-foreground 'diff-hl-delete "red")
+  (set-face-background 'diff-hl-delete "red4")
+  (set-face-foreground 'diff-hl-insert "green1")
+  (set-face-background 'diff-hl-insert "green4")
+  (when (<= 24.4 (string-to-number emacs-version))
+    (add-hook 'prog-mode-hook 'diff-hl-flydiff-mode)
+    (add-hook 'text-mode-hook 'diff-hl-flydiff-mode))
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+  (add-hook 'prog-mode-hook 'diff-hl-mode))
 
 (provide 'apperance)
