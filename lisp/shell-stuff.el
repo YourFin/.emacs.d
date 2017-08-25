@@ -33,7 +33,9 @@ Assumes a *nix environment"
 (defun yf-sys-clip-set (INPUT-STRING)
   "System-independent terminal-ready clipboard set function. Rather slow, so don't go using it all over the place."
   (redraw-display)
-  (let ((clip-echo (concat "echo '" INPUT-STRING "' | ")))
+  ;; "escape" single quotes
+  (let ((clip-echo (concat "echo '" (replace-regexp-in-string "'" "'\"'\"'" INPUT-STRING) "' | ")))
+    (message clip-echo)
     (cond 
      ;; We're just gonna assume that windows is going to be running the gui version of
      ;; emacs for now, as screw the windows command line.
@@ -60,6 +62,10 @@ Assumes a *nix environment"
 			       (make-variable-frame-local 'yf-clipboard-display)
 			       yf-clipboard-display))))
 	(call-process-shell-command
+	 ;; The -t is VERY NECESSARY and should not be cut.
+	 ;; I do not understand why some of the various methods
+	 ;; of running shell commands in emacs require this,
+	 ;; but I'm not going to argue with it.
 	 (concat clip-echo "xclip -selection clipboard -t UTF8_STRING -d '" display "'"))
 	)
       )
