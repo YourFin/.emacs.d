@@ -72,4 +72,30 @@ Assumes a *nix environment"
      ((eq "darwin" system-type)
       (shell-command-to-string (concat clip-echo "pbcopy"))))))
 
+(defun yf-kill-new-second-pos (string)
+  "Make STRING the second kill in kill ring. Mainly to
+be used in order to redo all of the evil delete commands
+such that they don't overwrite what is in the system clipboard,
+but are still accessable by `helm-show-kill-ring' and similar commands.
+
+Obviously therefore given the intended use of this function, unlike `kill-new'
+it does not worry about whether or not interprogram paste is set or not,
+and always acts like it is not.
+
+It also does not change the `kill-ring-yank-pointer', as it is expected that the
+paste system clipboard buffer is still intended to be what the user wants
+to yank.
+
+Much of the code here is borrowed from `kill-new' in simple.el"
+
+  ;; start stuff that is ripped straight from kill-new
+  (unless (and kill-do-not-save-duplicates
+	       ;; cadr instead of car
+	       (equal-including-properties string (cadr kill-ring)))
+    (if (fboundp 'menu-bar-update-yank-menu)
+	(menu-bar-update-yank-menu string (and replace (car kill-ring))))
+    (setcdr kill-ring (cons string (cdr kill-ring)))
+    (if (> (length kill-ring) kill-ring-max)
+	(set-cdr (nthcdr (1- kill-ring-max) kill-ring) kill-ring) nil)))
+
 (provide 'shell-stuff)
