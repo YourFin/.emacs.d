@@ -1,3 +1,6 @@
+(setq debug-on-error t)
+(setq max-specpdl-size 40)
+
 (setq lisp-dir 
       (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path lisp-dir)
