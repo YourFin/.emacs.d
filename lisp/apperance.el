@@ -35,12 +35,12 @@
 
 
 
-(use-package highlight-indent-guides)
-(require 'highlight-indent-guides)
-(setq highlight-indent-guides-method 'column)
-(setq highlight-indent-guides-auto-odd-face-perc 23)
-(setq highlight-indent-guides-auto-even-face-perc 16)
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+(use-package highlight-indent-guides
+  :config
+  (setq highlight-indent-guides-method 'column)
+  (setq highlight-indent-guides-auto-odd-face-perc 23)
+  (setq highlight-indent-guides-auto-even-face-perc 16)
+  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
 
 ;;; Fringe
 ; Line Numbers
@@ -73,6 +73,9 @@
 
 (use-package adaptive-wrap
   :config (add-hook 'prog-mode-hook 'adaptive-wrap-prefix-mode))
+
+;; turn off audible bell
+(setq visible-bell t)
 
 ;; Margin diff for vc
 (use-package diff-hl

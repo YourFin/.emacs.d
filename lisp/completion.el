@@ -1,4 +1,3 @@
-(provide 'completion)
 
 ;;; This lisp file handles installing and enabling
 ;;; various outside completion frameworks that
@@ -17,14 +16,13 @@
   (setq company-quickhelp-delay 0.5))
 
 
-(setq ycmd-server-command `("python3" ,(file-truename "~/.emacs.d/frameworks/ycmd/ycmd/")))
-(cond ([(eq (system-name) "firecakes")
-	(use-package emacs-ycmd
-	  :config
-	  (setq ycmd-server-command `("python3" ,(file-truename "~/.emacs.d/frameworks/ycmd/ycmd/"))))
-	(add-hook 'after-init-hook 'global-ycmd-mode)
+(cond (t
+	(use-package ycmd
+		     :config
+		     (setq ycmd-server-command (concat "python3" (file-truename "~/.emacs.d/frameworks/ycmd/ycmd/"))
+		     (add-hook 'after-init-hook 'global-ycmd-mode)))
 	(use-package company-ycmd
-	  :config (company-ycmd-setup))])
+		     :config (company-ycmd-setup)))
       ;;todo: other systems
       )
 
