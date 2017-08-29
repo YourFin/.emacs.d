@@ -75,6 +75,10 @@
 
 (try-require 'global-bindings)
 
+;;; automatically wrap comments around correctly
+(auto-fill-mode)
+(setq comment-auto-fill-only-comments t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -85,7 +89,7 @@
  '(linum-format (quote dynamic))
  '(package-selected-packages
    (quote
-    (adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
+    (git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
  '(projectile-mode t nil (projectile)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
