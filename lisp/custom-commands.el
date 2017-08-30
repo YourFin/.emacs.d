@@ -98,4 +98,56 @@ Much of the code here is borrowed from `kill-new' in simple.el"
     (if (> (length kill-ring) kill-ring-max)
 	(set-cdr (nthcdr (1- kill-ring-max) kill-ring) kill-ring) nil)))
 
+;; Note that this should not be moved to init.el,
+;;as there is a good chance that the things required
+;;in this file will be used elsewhere
+(defun try-require (name) 
+  "Attepts to require a file, but doesn't break
+   everything if there's something wrong with the
+   file"
+  (condition-case nil
+      (require name)
+    (error nil)))
+
+(defvar my-prog-mode-hooks
+  '(emacs-lisp-mode-hook)
+  "Programming major modes for
+ older versions of emacs")
+(defun add-prog-hook
+    (FUNC)
+  "Adds to appopriate programming modes"
+  (if (< emacs-version 24.1)
+      (mapc (lambda (HOOK) (add-hook HOOK FUNC)) prog-mode-hooks)
+    (add-hook 'prog-mode-hook FUNC)))
+
+;; Magit
+;;;TODO: fix these SOB's. not really inteded for
+;;; git at this point as magit rocks
+(defun yf-stage-file ()
+  "stages file in vc agnostic manner. Currently only implemented for git"
+  (interactive)
+  (let ((list vc (vc-backend (buffer-file-name))))
+    (cond (((string= vc "Git")
+	    (save-buffer)
+	    (magit-stage-file buffer-file-name))))))
+
+(defun yf-push ()
+  "Pushes vc changes to remote server in vc agnostic manner. Currently only implemented for git"
+  (interactive)
+  (let ((list vc (vc-backend (buffer-file-name))))
+    (message vc)
+    (cond (((string= vc "Git")
+	    (magit-commit)
+	    (magit-push-current))))))
+
+(defun yf-status ()
+  "Displays project status in a vc agnostig manner.
+Only implemented for git ATM"
+  (interactive)
+  (let ((list vc (vc-backend (buffer-file-name))))
+    (message vc)
+    (cond (((string= vc "Git")
+	    (magit-status))))))
+
+
 (provide 'shell-stuff)

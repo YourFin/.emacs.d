@@ -1,14 +1,19 @@
+;; Turn on evil for the love of god
 (evil-mode 1)
 
+;; jumping around
 (use-package evil-anzu)
 (use-package evil-ediff)
+;; change terminal
 (use-package evil-terminal-cursor-changer
-  :if (not 'display-graphic-p)
+  :if (not (display-graphic-p))
   :config (evil-terminal-cursor-changer-activate))
 (use-package evil-indent-textobject)
 (use-package evil-magit)
+(use-package ranger
+  :config (ranger-override-dired-mode))
 
-;;; sanity check
+;;; for everybody's sanity
 (setq evil-want-Y-yank-to-eol t)
 
 ;;;; Space bindings
@@ -25,15 +30,6 @@
 
 ;;files
 
-;; Buffers
-;;Context specific find files
-;; and buffers
-(defun yf-find-files ()
-  (interactive)
-  (if (projectile-project-p)
-      (helm-projectile-find-file)
-    (helm-find-files t)))
-
 (defun yf-switch-buffer ()
   (interactive)
   (if (projectile-project-p)
@@ -43,7 +39,7 @@
 (evil-space-bind "bb" 'save-buffer)
 (evil-space-bind "bs" 'yf-switch-buffer)
 (evil-space-bind "bS" 'helm-buffers-list)
-(evil-space-bind "bo" 'yf-find-files)
+(evil-space-bind "bo" 'ranger)
 (evil-space-bind "bO" 'helm-find-files)
 (evil-space-bind "bx" 'kill-buffer)
 
@@ -70,7 +66,7 @@ and opens up helm switch buffer"
   (interactive)
   (evil-window-split)
   (evil-window-next 1)
-  (yf-switch-buffer))
+  (ranger))
 
 (defun vsplit-files ()
   "splits the current window horizontally
@@ -78,7 +74,7 @@ and opens up helm switch buffer"
   (interactive)
   (evil-window-vsplit)
   (evil-window-next 1)
-  (yf-switch-buffer))
+  (ranger))
 
 (evil-space-bind "ww" 'evil-window-next)
 (evil-space-bind "wW" 'evil-window-prev)
@@ -92,34 +88,6 @@ and opens up helm switch buffer"
 (evil-space-bind "wv" 'vsplit-recents)
 (evil-space-bind "wS" 'hsplit-files)
 (evil-space-bind "wV" 'vsplit-files)
-
-;; Magit
-;;;TODO: fix these SOB's
-(defun yf-stage-file ()
-  "stages file in vc agnostic manner. Currently only implemented for git"
-  (interactive)
-  (let ((list vc (vc-backend (buffer-file-name))))
-    (cond (((string= vc "Git")
-	    (save-buffer)
-	    (magit-stage-file buffer-file-name))))))
-
-(defun yf-push ()
-  "Pushes vc changes to remote server in vc agnostic manner. Currently only implemented for git"
-  (interactive)
-  (let ((list vc (vc-backend (buffer-file-name))))
-    (message vc)
-    (cond (((string= vc "Git")
-	    (magit-commit)
-	    (magit-push-current))))))
-
-(defun yf-status ()
-  "Displays project status in a vc agnostig manner.
-Only implemented for git ATM"
-  (interactive)
-  (let ((list vc (vc-backend (buffer-file-name))))
-    (message vc)
-    (cond (((string= vc "Git")
-	    (magit-status))))))
 
 (evil-space-bind "g" 'magit-status)
 (evil-define-minor-mode-key 'normal 'git-commit-mode

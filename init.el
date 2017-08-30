@@ -1,27 +1,10 @@
+;;; Add .emacs.d/lisp to directories to source from
 (setq lisp-dir 
       (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path lisp-dir)
 
+;;; Get packages setup
 (require 'package-setup)
-
-(defun try-require (name) 
-  "Attepts to require a file, but doesn't break
-   everything if there's something wrong with the
-   file"
-  (condition-case nil
-      (require name)
-    (error nil)))
-
-(defvar my-prog-mode-hooks
-  '(emacs-lisp-mode-hook)
-  "Programming major modes for
- older versions of emacs")
-(defun add-prog-hook
-    (FUNC)
-  "Adds to appopriate programming modes"
-  (if (< emacs-version 24.1)
-      (mapc (lambda (HOOK) (add-hook HOOK FUNC)) prog-mode-hooks)
-    (add-hook 'prog-mode-hook FUNC)))
 
 ;;; apperance file
 (try-require 'apperance)
@@ -87,7 +70,7 @@
  '(linum-format (quote dynamic))
  '(package-selected-packages
    (quote
-    (git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
+    (ranger git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
  '(projectile-mode t nil (projectile)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
