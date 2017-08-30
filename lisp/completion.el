@@ -19,10 +19,14 @@
 (cond (t
 	(use-package ycmd
 		     :config
-		     (setq ycmd-server-command (concat "python3" (file-truename "~/.emacs.d/frameworks/ycmd/ycmd/"))
-		     (add-hook 'after-init-hook 'global-ycmd-mode)))
+		     (setq ycmd-server-command
+			   `("python3" ,(file-truename
+					 (concat
+					  user-emacs-directory
+					  "frameworks/ycmd/ycmd/"))))
+		      (add-hook 'after-init-hook 'global-ycmd-mode)))
 	(use-package company-ycmd
-		     :config (company-ycmd-setup)))
+		     :config (company-ycmd-setup))
       ;;todo: other systems
       )
 
