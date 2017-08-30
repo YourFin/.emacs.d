@@ -74,8 +74,6 @@
 (use-package adaptive-wrap
   :config (add-hook 'prog-mode-hook 'adaptive-wrap-prefix-mode))
 
-;; turn off audible bell
-(setq visible-bell t)
 
 ;; Margin diff for vc
 (use-package diff-hl
