@@ -109,7 +109,6 @@ and opens up helm switch buffer"
 ;; mark ring
 (evil-space-bind "m" 'helm-mark-ring)
 
-
 ;;; misc bindings
 (define-key evil-motion-state-map "j" 'evil-next-visual-line)
 (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
