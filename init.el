@@ -8,9 +8,9 @@
   "Attepts to require a file, but doesn't break
    everything if there's something wrong with the
    file"
-   (condition-case nil
-                   (require name)
-                   (error nil)))
+  (condition-case nil
+      (require name)
+    (error nil)))
 
 (defvar my-prog-mode-hooks
   '(emacs-lisp-mode-hook)
@@ -21,7 +21,7 @@
   "Adds to appopriate programming modes"
   (if (< emacs-version 24.1)
       (mapc (lambda (HOOK) (add-hook HOOK FUNC)) prog-mode-hooks)
-      (add-hook 'prog-mode-hook FUNC)))
+    (add-hook 'prog-mode-hook FUNC)))
 
 ;;; apperance file
 (try-require 'apperance)
@@ -39,20 +39,20 @@
 (use-package projectile)
 (use-package helm-projectile)
 (use-package magit
-             :config
-             (magit-auto-revert-mode -1)
-             (global-auto-revert-mode -1)
-             (add-hook 'after-init-hook 'magit-file-mode-turn-on)
-             (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+  :config
+  (magit-auto-revert-mode -1)
+  (global-auto-revert-mode -1)
+  (add-hook 'after-init-hook 'magit-file-mode-turn-on)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 (use-package smex)
 (use-package helm-smex
   :config (setq helm-smex-show-bindings t)
   :bind ("M-x" . helm-smex))
 ;; to add to the pile
-; ace-flyspell
-; flyspell
-; ace-jump-mode
-; ace-jump-helm-line
+					; ace-flyspell
+					; flyspell
+					; ace-jump-mode
+					; ace-jump-helm-line
 
 (use-package python)
 (use-package python-django)

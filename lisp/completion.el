@@ -9,7 +9,7 @@
   :config
   (add-hook 'prog-mode-hook 'company-mode)
   (setq company-idle-delay 0)
-)
+  )
 (use-package company-quickhelp
   :config
   (company-quickhelp-mode 1)
@@ -17,16 +17,16 @@
 
 
 (cond (t
-	(use-package ycmd
-		     :config
-		     (setq ycmd-server-command
-			   `("python3" ,(file-truename
-					 (concat
-					  user-emacs-directory
-					  "frameworks/ycmd/ycmd/"))))
-		      (add-hook 'after-init-hook 'global-ycmd-mode)))
-	(use-package company-ycmd
-		     :config (company-ycmd-setup))
+       (use-package ycmd
+	 :config
+	 (setq ycmd-server-command
+	       `("python3" ,(file-truename
+			     (concat
+			      user-emacs-directory
+			      "frameworks/ycmd/ycmd/"))))
+	 (add-hook 'after-init-hook 'global-ycmd-mode)))
+      (use-package company-ycmd
+	:config (company-ycmd-setup))
       ;;todo: other systems
       )
 

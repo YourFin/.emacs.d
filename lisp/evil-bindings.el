@@ -100,12 +100,12 @@ and opens up helm switch buffer"
   (interactive)
   (let ((list vc (vc-backend (buffer-file-name))))
     (cond (((string= vc "Git")
-	   (save-buffer)
-	   (magit-stage-file buffer-file-name))))))
+	    (save-buffer)
+	    (magit-stage-file buffer-file-name))))))
 
 (defun yf-push ()
-    "Pushes vc changes to remote server in vc agnostic manner. Currently only implemented for git"
-    (interactive)
+  "Pushes vc changes to remote server in vc agnostic manner. Currently only implemented for git"
+  (interactive)
   (let ((list vc (vc-backend (buffer-file-name))))
     (message vc)
     (cond (((string= vc "Git")
@@ -113,7 +113,7 @@ and opens up helm switch buffer"
 	    (magit-push-current))))))
 
 (defun yf-status ()
-    "Displays project status in a vc agnostig manner.
+  "Displays project status in a vc agnostig manner.
 Only implemented for git ATM"
   (interactive)
   (let ((list vc (vc-backend (buffer-file-name))))
@@ -176,7 +176,7 @@ Only implemented for git ATM"
 (define-key evil-normal-state-map (kbd "C-S-J")
   (lambda () "Moves the cursor up and adds a cursor" (interactive)
     (evil-next-line)
-     (evil-mc-make-cursor-here)))
+    (evil-mc-make-cursor-here)))
 
 (define-key evil-normal-state-map (kbd "C-S-K")
   (lambda () "Moves the cursor down and adds a cursor" (interactive)
@@ -184,7 +184,7 @@ Only implemented for git ATM"
     (evil-mc-make-cursor-here)))
 
 ;;; Helm rebinds
-; make tab completion work normally in helm find files
+					; make tab completion work normally in helm find files
 (define-key helm-find-files-map "\t" 'helm-execute-persistent-action)
 
 (provide 'evil-bindings)
