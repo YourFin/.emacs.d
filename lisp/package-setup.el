@@ -1,5 +1,3 @@
-(provide 'package-setup)
-
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
@@ -14,3 +12,10 @@
   (require 'use-package))
 (require 'diminish)
 (require 'bind-key)
+
+;; Automatically download any file
+;; from use-package
+
+(setq use-package-always-ensure t)
+
+(provide 'package-setup)

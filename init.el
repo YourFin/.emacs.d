@@ -2,11 +2,7 @@
       (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path lisp-dir)
 
-; So I don't get barked at
-; (package-initialize)
-
 (require 'package-setup)
-(setq use-package-always-ensure t)
 
 (defun try-require (name) 
   "Attepts to require a file, but doesn't break
