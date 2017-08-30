@@ -1,6 +1,3 @@
-(setq debug-on-error t)
-(setq max-specpdl-size 40)
-
 (setq lisp-dir 
       (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path lisp-dir)
@@ -45,7 +42,12 @@
 (use-package avy)
 (use-package projectile)
 (use-package helm-projectile)
-(use-package magit)
+(use-package magit
+             :config
+             (magit-auto-revert-mode -1)
+             (global-auto-revert-mode -1)
+             (add-hook 'after-init-hook 'magit-file-mode-turn-on)
+             (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 (use-package smex)
 (use-package helm-smex
   :config (setq helm-smex-show-bindings t)
