@@ -90,6 +90,7 @@ and opens up helm switch buffer"
 (evil-space-bind "wV" 'vsplit-files)
 
 (evil-space-bind "g" 'magit-status)
+;; Make finishing commits faster
 (evil-define-minor-mode-key 'normal 'git-commit-mode
   "q" 'with-editor-finish
   "z" 'with-editor-cancel)
@@ -113,9 +114,11 @@ and opens up helm switch buffer"
 (define-key evil-motion-state-map "j" 'evil-next-visual-line)
 (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
 
-;; swap these because i'm weird
-(define-key evil-motion-state-map (kbd "g;") 'goto-last-change)
-(define-key evil-motion-state-map (kbd "g,") 'goto-next-change)
+;; swap these because I'm weird
+(define-key evil-motion-state-map (kbd ",") 'goto-last-change)
+(define-key evil-motion-state-map (kbd "g,") 'goto-last-change-reverse)
+(define-key evil-motion-state-map (kbd ";") 'evil-repeat-find-char)
+(define-key evil-motion-state-map (kbd "g;") 'evil-repeat-find-char-reverse)
 
 ;; a holdover from my vim days
 (define-key evil-normal-state-map (kbd "-j") 'evil-join)
@@ -151,7 +154,7 @@ and opens up helm switch buffer"
     (evil-mc-make-cursor-here)))
 
 ;;; Helm rebinds
-					; make tab completion work normally in helm find files
+;; make tab completion work normally in helm find files
 (define-key helm-find-files-map "\t" 'helm-execute-persistent-action)
 
 (provide 'evil-bindings)
