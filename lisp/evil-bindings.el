@@ -41,7 +41,8 @@
 (evil-space-bind "bS" 'helm-buffers-list)
 (evil-space-bind "bo" 'ranger)
 (evil-space-bind "bO" 'helm-find-files)
-(evil-space-bind "bx" 'kill-buffer)
+(evil-space-bind "bx" 'kill-this-buffer)
+(evil-space-bind "bX" 'kill-buffer)
 
 ;; Windows
 (defun hsplit-recents ()
