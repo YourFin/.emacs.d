@@ -11,7 +11,10 @@
 (use-package evil-indent-textobject)
 (use-package evil-magit)
 (use-package ranger
-  :config (ranger-override-dired-mode))
+  :config
+  (ranger-override-dired-mode)
+  (define-key ranger-normal-mode-map (kbd "+") 'dired-create-directory)
+  )
 
 ;;; for everybody's sanity
 (setq evil-want-Y-yank-to-eol t)
