@@ -92,6 +92,7 @@ and opens up helm switch buffer"
 (evil-space-bind "wv" 'vsplit-recents)
 (evil-space-bind "wS" 'hsplit-files)
 (evil-space-bind "wV" 'vsplit-files)
+(evil-space-bind "wc" 'window-toggle-split-direction)
 
 (evil-space-bind "g" 'magit-status)
 ;; Make finishing commits faster

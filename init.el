@@ -1,4 +1,11 @@
 ;;; Add .emacs.d/lisp to directories to source from
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (setq lisp-dir 
       (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path lisp-dir)
@@ -7,7 +14,7 @@
 (require 'package-setup)
 
 ;;; apperance file
-(try-require 'apperance)
+(require 'apperance)
 (use-package auto-package-update
   :config
   (setq auto-package-update-delete-old-versions t
@@ -32,34 +39,41 @@
   :config (setq helm-smex-show-bindings t)
   :bind ("M-x" . helm-smex))
 ;; to add to the pile
-					; ace-flyspell
-					; flyspell
-					; ace-jump-mode
-					; ace-jump-helm-line
+;; ace-flyspell
+;; flyspell
+;; ace-jump-mode
+;; ace-jump-helm-line
 
 (use-package python)
 (use-package python-django)
 (use-package markdown-mode)
+(use-package smartparens
+  :config
+  (add-hook 'prog-mode-hook 'smartparens-mode))
 
 (use-package evil
   :config (require 'evil-bindings))
-
 
 (eval-when-compile
   (require 'use-package))
 
 (require 'helm-config)
-
 (require 'completion)
-
-;;; global keybinds
-
-(try-require 'global-bindings)
+(require 'global-bindings)
 
 ;;; automatically wrap comments around correctly
 (auto-fill-mode)
 (setq comment-auto-fill-only-comments t)
 
+(require 'major-mode-hooks)
+
+;; machine specific
+(let* ((machine-dir (expand-file-name "lisp/systems/" user-emacs-directory))
+       (machine-file (concat machine-dir system-name ".el")))
+  (when (file-readable-p machine-file)
+    (load-file machine-file)))
+
+;; do not touch
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -70,7 +84,7 @@
  '(linum-format (quote dynamic))
  '(package-selected-packages
    (quote
-    (ranger git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
+    (latex-preview-pane smartparens xah-find ranger git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
  '(projectile-mode t nil (projectile)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
