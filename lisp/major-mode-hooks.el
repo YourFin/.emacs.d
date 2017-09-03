@@ -78,6 +78,7 @@ of require statements in major-mode-hooks.el"
 ;;--------------------------------------------------
 
 (add-hook 'python-mode-hook (lambda () (require 'python-mode-file)))
+(add-hook 'latex-mode-hook (lambda () (require 'latex-mode-file)))
 
 
 (provide 'major-mode-hooks)
