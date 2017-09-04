@@ -50,6 +50,9 @@
 (use-package smartparens
   :config
   (add-hook 'prog-mode-hook 'smartparens-mode))
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))
 
 (use-package evil
   :config (require 'evil-bindings))
@@ -60,12 +63,8 @@
 (require 'helm-config)
 (require 'completion)
 (require 'global-bindings)
-
-;;; automatically wrap comments around correctly
-(auto-fill-mode)
-(setq comment-auto-fill-only-comments t)
-
 (require 'major-mode-hooks)
+
 
 ;; machine specific
 (let* ((machine-dir (expand-file-name "lisp/systems/" user-emacs-directory))
