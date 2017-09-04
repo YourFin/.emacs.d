@@ -91,8 +91,6 @@ Much of the code here is borrowed from `kill-new' in simple.el"
   (unless (and kill-do-not-save-duplicates
 	       ;; cadr instead of car
 	       (equal-including-properties string (cadr kill-ring)))
-    (if (fboundp 'menu-bar-update-yank-menu)
-	(menu-bar-update-yank-menu string (and replace (car kill-ring))))
     (setcdr kill-ring (cons string (cdr kill-ring)))
     (if (> (length kill-ring) kill-ring-max)
 	(set-cdr (nthcdr (1- kill-ring-max) kill-ring) kill-ring) nil)))
