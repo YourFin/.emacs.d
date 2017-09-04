@@ -90,4 +90,9 @@
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
   (add-hook 'prog-mode-hook 'diff-hl-mode))
 
+;;; automatically wrap comments around correctly
+(auto-fill-mode)
+(setq comment-auto-fill-only-comments t)
+
+
 (provide 'apperance)
