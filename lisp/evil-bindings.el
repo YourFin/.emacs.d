@@ -41,7 +41,7 @@
 
 (evil-space-bind "bb" 'save-buffer)
 (evil-space-bind "bs" 'yf-switch-buffer)
-(evil-space-bind "bS" 'helm-buffers-list)
+(evil-space-bind "bS" 'helm-mini)
 (evil-space-bind "bo" 'ranger)
 (evil-space-bind "bO" 'helm-find-files)
 (evil-space-bind "bx" 'kill-this-buffer)
