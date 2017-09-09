@@ -32,6 +32,8 @@ falls through"
     (text-scale-decrease 1)
     (redraw-display)))
 
+;;Control-v to paste in helm
+(define-key helm-map (kbd "C-v") 'yank)
 
 (define-key global-map (kbd "C-+") 'yf-possible-increase-size)
 (define-key global-map (kbd "C-_") 'yf-possible-decrease-size)
