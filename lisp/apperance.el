@@ -12,7 +12,7 @@
 (load-theme 'tangotango t)
 
 ;;;Host specific
-(cond ([(eq (system-name) "firecakes")	
+(cond ([(string-equal (system-name) "firecakes")	
 	(set-frame-font "ConsolasHacked 22" nil t)
 	]))
 
@@ -74,7 +74,6 @@
 (use-package adaptive-wrap
   :config (add-hook 'prog-mode-hook 'adaptive-wrap-prefix-mode))
 
-
 ;; Margin diff for vc
 (use-package diff-hl
   :config
@@ -94,5 +93,14 @@
 (auto-fill-mode)
 (setq comment-auto-fill-only-comments t)
 
+;;; ------------------------------- Mode Line -------------------------------- ;
+
+(use-package nyan-mode)
+(use-package smart-mode-line
+  :config
+  (setq sml/line-number-format nil)
+  (setq sml/position-percentage-format "%p")
+  (add-hook 'after-init-hook 'sml/setup)
+  )
 
 (provide 'apperance)
