@@ -93,7 +93,10 @@ Much of the code here is borrowed from `kill-new' in simple.el"
 	       (equal-including-properties string (cadr kill-ring)))
     (setcdr kill-ring (cons string (cdr kill-ring)))
     (if (> (length kill-ring) kill-ring-max)
-	(set-cdr (nthcdr (1- kill-ring-max) kill-ring) kill-ring) nil)))
+	(setcdr (nthcdr (1- kill-ring-max) kill-ring) kill-ring) nil))
+  (setq kill-ring-yank-pointer kill-ring))
+
+
 
 ;; Note that this should not be moved to init.el,
 ;;as there is a good chance that the things required
@@ -111,11 +114,11 @@ Much of the code here is borrowed from `kill-new' in simple.el"
   "Programming major modes for
  older versions of emacs")
 (defun add-prog-hook
-    (FUNC)
+    (func)
   "Adds to appopriate programming modes"
   (if (< emacs-version 24.1)
-      (mapc (lambda (HOOK) (add-hook HOOK FUNC)) prog-mode-hooks)
-    (add-hook 'prog-mode-hook FUNC)))
+      (mapc (lambda (HOOK) (add-hook HOOK func)) prog-mode-hooks)
+    (add-hook 'prog-mode-hook func)))
 
 ;; Magit
 ;;;TODO: fix these SOB's. not really inteded for
@@ -163,7 +166,6 @@ i.e. change right window to bottom, or change bottom window to right."
                (neighbour1 (windmove-find-other-window neighbour-dir win))
                (neighbour2 (if next-win (with-selected-window next-win
                                           (windmove-find-other-window neighbour-dir next-win)))))
-          ;;(message "win: %s\nnext-win: %s\nneighbour1: %s\nneighbour2:%s" win next-win neighbour1 neighbour2)
           (setq done (and (eq neighbour1 neighbour2)
                           (not (eq (minibuffer-window) next-win))))
           (if done
@@ -173,4 +175,4 @@ i.e. change right window to bottom, or change bottom window to right."
                     (split-window-vertically)
                   (split-window-horizontally))
                 (set-window-buffer (windmove-find-other-window neighbour-dir) other-buf))))))))
-(provide 'shell-stuff)
+(provide 'custom-commands)

@@ -46,6 +46,7 @@
 (evil-space-bind "bO" 'helm-find-files)
 (evil-space-bind "bx" 'kill-this-buffer)
 (evil-space-bind "bX" 'kill-buffer)
+(evil-space-bind "bl" 'evil-switch-to-windows-last-buffer)
 
 ;; Windows
 (defun hsplit-recents ()
@@ -113,7 +114,8 @@ and opens up helm switch buffer"
 ;; helm kill ring
 (evil-space-bind "k" 'helm-show-kill-ring)
 ;; mark ring
-(evil-space-bind "m" 'helm-mark-ring)
+(evil-space-bind "m" 'helm-global-mark-ring)
+(evil-space-bind "M" 'helm-mark-ring)
 
 ;;; misc bindings
 (define-key evil-motion-state-map "j" 'evil-next-visual-line)
@@ -131,9 +133,11 @@ and opens up helm switch buffer"
 ;; avy
 (define-key evil-motion-state-map (kbd "J") 'evil-avy-goto-word-or-subword-1)
 (define-key evil-motion-state-map (kbd "K") 'evil-avy-goto-char-timer) 
-;;(define-key evil-normal-state-map "c" (evil-change 
 
-;;; Multiple cursors
+;;;evil-delete stuff
+(require 'evil-custom-reg)
+
+;; Multiple cursors
 (use-package evil-mc
   :config
   (global-evil-mc-mode 1))
