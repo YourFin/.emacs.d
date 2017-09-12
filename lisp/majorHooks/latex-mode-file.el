@@ -4,4 +4,9 @@
   :config
   (latex-preview-pane-enable))
 
+(sp-local-pair 'LaTeX-mode "$" "$")
+(sp-local-pair 'latex-mode "$" "$")
+
+(evil-define-key 'insert 'latex-mode-map (kbd "C-m") (lambda () (interactive) (yas-expand-snippet (yas-lookup-snippet "math-mode"))))
+
 (provide 'latex-mode-file)
