@@ -12,6 +12,7 @@
 
 ;;; Get packages setup
 (require 'package-setup)
+(require 'custom-commands)
 
 ;;; apperance file
 (require 'apperance)
@@ -57,6 +58,8 @@
 (use-package evil
   :config (require 'evil-bindings))
 
+(setq find-function-C-source-directory (concat (getenv "emacs_home") "/path/to/source-dir"))
+
 (eval-when-compile
   (require 'use-package))
 
@@ -87,7 +90,7 @@
  '(nyan-mode t)
  '(package-selected-packages
    (quote
-    (smart-mode-line nyan-mode latex-preview-pane smartparens xah-find ranger git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
+    (evil-mc smart-mode-line nyan-mode latex-preview-pane smartparens xah-find ranger git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
  '(projectile-mode t nil (projectile)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
