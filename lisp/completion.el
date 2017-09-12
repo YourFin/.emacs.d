@@ -1,4 +1,3 @@
-
 ;;; This lisp file handles installing and enabling
 ;;; various outside completion frameworks that
 ;;; I do not want installed on machines
