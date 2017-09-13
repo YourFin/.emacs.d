@@ -6,8 +6,11 @@ I type with a [dvorak keyboard layout](https://www.google.com/search?q=dvorak+ke
 
 The way that vim (and evil mode) handle the clipboard by default infuriates me; I only want the damn thing to change when I explicitly say so. As such, `m` has been rebound to `d` but actually interacts with the clipboard, and all other keys that result in deletion dump to the second spot in the kill ring. 
 
+That said, I am not at all afraid to move keys or drop feature bindings that I don't like, i.e. q being bound to `with-editor-finish` in git commit mode.
+
 I use helm. I should probably try ivy one of these days given all the hype it gets, but I haven't gotten around to it yet.
 
 As a vim expat, I am not typically a fan of using my mouse to run around my text editor; as such, my emacs config is designed to be entirely keyboard driven.
+
 
 I typically am running emacs on half of a [13 inch](https://www.notebookcheck.net/Dell-XPS-13-9350-InfinityEdge-Ultrabook-Review.153376.0.html) screen next to firefox, and as such space is very much at a premium; some design descions may reflect this. 
