@@ -136,7 +136,7 @@ and opens up helm switch buffer"
 (defun yf--swiper-advice (&rest r)
   (evil-search-previous))
 (advice-add 'swiper :after #'yf--swiper-advice)
-(define-key evil-normal-state-map (kbd "/") 'swiper)
+(define-key evil-motion-state-map (kbd "/") 'swiper)
 
 ;; avy
 (define-key evil-motion-state-map (kbd "J") 'evil-avy-goto-word-or-subword-1)
