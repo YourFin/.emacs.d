@@ -42,38 +42,17 @@
 ;; to add to the pile
 ;; ace-flyspell
 ;; flyspell
-;; ace-jump-mode
-;; ace-jump-helm-line
 
 (use-package python)
 (use-package python-django)
 (use-package markdown-mode)
-(use-package smartparens
-  :config
-  ;;taken from http://web.archive.org/web/20170912005704/https://github.com/Fuco1/smartparens/issues/286
-  (sp-with-modes sp--lisp-modes
-  ;; disable ', it's the quote character!
-  (sp-local-pair "'" nil :actions nil)
-  ;; also only use the pseudo-quote inside strings where it serve as
-  ;; hyperlink.
-  (sp-local-pair "`" "'" :when '(sp-in-string-p sp-in-comment-p))
-  (sp-local-pair "`" nil
-                 :skip-match (lambda (ms mb me)
-                               (cond
-                                ((equal ms "'")
-                                 (or (sp--org-skip-markup ms mb me)
-                                     (not (sp-point-in-string-or-comment))))
-                                (t (not (sp-point-in-string-or-comment)))))))
-  (add-hook 'prog-mode-hook 'smartparens-mode))
 
-(use-package yasnippet
-  :config
-  (yas-global-mode 1))
+(require 'editing-file)
+
+(setq find-function-C-source-directory (concat (getenv "emacs_home") "/path/to/source-dir"))
 
 (use-package evil
   :config (require 'evil-bindings))
-
-(setq find-function-C-source-directory (concat (getenv "emacs_home") "/path/to/source-dir"))
 
 (eval-when-compile
   (require 'use-package))
@@ -105,7 +84,7 @@
  '(nyan-mode t)
  '(package-selected-packages
    (quote
-    (evil-mc smart-mode-line nyan-mode latex-preview-pane smartparens xah-find ranger git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
+    (swiper-helm helm-flycheck xclip flycheck evil-mc smart-mode-line nyan-mode latex-preview-pane smartparens xah-find ranger git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
  '(projectile-mode t nil (projectile)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
