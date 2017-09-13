@@ -130,6 +130,14 @@ and opens up helm switch buffer"
 ;; a holdover from my vim days
 (define-key evil-normal-state-map (kbd "-j") 'evil-join)
 
+;;; better search
+;; Make swiper act like evil in terms
+;; of where it leaves the cursor
+(defun yf--swiper-advice (&rest r)
+  (evil-search-previous))
+(advice-add 'swiper :after #'yf--swiper-advice)
+(define-key evil-normal-state-map (kbd "/") 'swiper)
+
 ;; avy
 (define-key evil-motion-state-map (kbd "J") 'evil-avy-goto-word-or-subword-1)
 (define-key evil-motion-state-map (kbd "K") 'evil-avy-goto-char-timer) 
