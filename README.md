@@ -4,9 +4,9 @@ After getting fed up with vimscript being utter s#!%, I decided it was time for 
 ## A few of my oddities worth mentioning
 I type with a [dvorak keyboard layout](https://www.google.com/search?q=dvorak+keyboard). Would I say that this was a wise switch from qwerty? No, I would not; all I've gained as far as I can tell is neckbeard cred and a poor anti-theft mechanism. However, I'm too far gone at this point to relearn all my muscle memory, so I'm sticking with it. As such some keybindings may be awkward given their apparent usage frequency, however they mostly stick to vim defaults.
 
-The way that vim (and evil mode) handle the clipboard by default infuriates me; I only want the damn thing to change when I explicitly say so. As such, `m` has been rebound to `d` but actually interacts with the clipboard, and all other keys that result in deletion dump to the second spot in the kill ring. 
-
 That said, I am not at all afraid to move keys or drop feature bindings that I don't like, i.e. q being bound to `with-editor-finish` in git commit mode.
+
+The way that vim (and evil mode) handle the clipboard by default infuriates me; I only want the damn thing to change when I explicitly say so. As such, `m` has been rebound to `d` but actually interacts with the clipboard, and all other keys that result in deletion dump to the second spot in the kill ring. 
 
 I use helm. I should probably try ivy one of these days given all the hype it gets, but I haven't gotten around to it yet.
 
