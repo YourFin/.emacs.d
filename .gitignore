@@ -50,3 +50,5 @@
 /.python-environments/default/bin/activate_this.py
 *.rej
 /recentf
+/var/*.el
+/var/projectile/known-projects.el
