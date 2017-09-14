@@ -10,11 +10,6 @@
   :config (evil-terminal-cursor-changer-activate))
 (use-package evil-indent-textobject)
 (use-package evil-magit)
-(use-package ranger
-  :config
-  (ranger-override-dired-mode)
-  (define-key ranger-normal-mode-map (kbd "+") 'dired-create-directory)
-  )
 
 ;;; for everybody's sanity
 (setq evil-want-Y-yank-to-eol t)
@@ -137,6 +132,7 @@ and opens up helm switch buffer"
   (evil-search-previous))
 (advice-add 'swiper :after #'yf--swiper-advice)
 (define-key evil-motion-state-map (kbd "/") 'swiper)
+(define-key swiper-map (kbd "C-j") 'down)
 
 ;; avy
 (define-key evil-motion-state-map (kbd "J") 'evil-avy-goto-word-or-subword-1)
@@ -173,5 +169,18 @@ and opens up helm switch buffer"
 ;;; Helm rebinds
 ;; make tab completion work normally in helm find files
 (define-key helm-find-files-map "\t" 'helm-execute-persistent-action)
+
+;;; Swiper rebinds
+(define-key swiper-map (kbd "A-j") 'ivy-next-line)
+(define-key swiper-map (kbd "A-k") 'ivy-previous-line)
+(define-key swiper-map (kbd "C-v") 'yank)
+
+(use-package ranger
+  :config
+  (ranger-override-dired-mode)
+  (define-key ranger-normal-mode-map (kbd "+") 'dired-create-directory)
+  (define-key ranger-normal-mode-map (kbd "c") 'magit-clone)
+  )
+
 
 (provide 'evil-bindings)
