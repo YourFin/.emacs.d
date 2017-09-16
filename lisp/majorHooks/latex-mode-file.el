@@ -7,6 +7,11 @@
 (sp-local-pair 'LaTeX-mode "$" "$")
 (sp-local-pair 'latex-mode "$" "$")
 
-(evil-define-key 'insert 'latex-mode-map (kbd "C-m") (lambda () (interactive) (yas-expand-snippet (yas-lookup-snippet "math-mode"))))
+(evil-define-key 'insert 'latex-mode-map (kbd "A-m") (lambda () (interactive) (yas-expand-snippet (yas-lookup-snippet "math-mode"))))
+(evil-define-key 'insert 'LaTeX-mode-map (kbd "A-m") (lambda () (interactive) (yas-expand-snippet (yas-lookup-snippet "math-mode"))))
 
+(use-package company-math
+  :config (setq-local company-backends
+		      (append '((company-math-symbols-latex company-latex-commands))
+			      company-backends)))
 (provide 'latex-mode-file)

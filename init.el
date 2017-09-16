@@ -1,19 +1,29 @@
-;;; Add .emacs.d/lisp to directories to source from
-
+;;; init.el --- Summary:
+;; my dog gone init.el file.
+;;; Commentary:
+;; my dog gone init.el file.  Enough said.
+;;; Code:
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
 (package-initialize)
 
-(setq lisp-dir 
-      (expand-file-name "lisp" user-emacs-directory))
+(defvar lisp-dir (expand-file-name "lisp" user-emacs-directory) "Lisp file dir.")
 (add-to-list 'load-path lisp-dir)
 
 ;;; Get packages setup
 (require 'package-setup)
-(require 'custom-commands)
 
+;;;No littering!
+(use-package no-littering)
+(setq auto-save-file-name-transforms
+      `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+(require 'recentf)
+(add-to-list 'recentf-exclude no-littering-var-directory)
+(add-to-list 'recentf-exclude no-littering-etc-directory)
+
+;;; custom lib
+(require 'custom-commands)
 ;;; apperance file
 (require 'apperance)
 (use-package auto-package-update
@@ -84,11 +94,14 @@
  '(nyan-mode t)
  '(package-selected-packages
    (quote
-    (swiper-helm helm-flycheck xclip flycheck evil-mc smart-mode-line nyan-mode latex-preview-pane smartparens xah-find ranger git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
+    (company-math yatemplate iedit YATemplate evil-iedit-state hydra no-littering swiper-helm helm-flycheck xclip flycheck evil-mc smart-mode-line nyan-mode latex-preview-pane smartparens xah-find ranger git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
  '(projectile-mode t nil (projectile)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#2e3434" :foreground "#eeeeec" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 218 :width normal :foundry "PfEd" :family "Consolas Hacked 3 ")))))
+ '(default ((t (:inherit nil :stipple nil :background "#2e3434" :foreground "#eeeeec" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 218 :width normal :foundry "nil" :family "ConsolasHacked")))))
+
+(provide 'init)
+;;; init.el ends here
