@@ -1,9 +1,13 @@
 
+(require 'evil)
 ;;setup
 (defvar yf/kill-to-second nil "Whether to kill to the second position or first")
 (defadvice kill-new (around ny-kill-new-2nd)
   "If `my-kill-2nd' is non-nil, kills go to the second position of the `kill-ring'."
   (cond
+   ((bound-and-true-p evil-mc-cursor-list)
+    (let ((interprogram-cut-function nil))
+      ad-do-it))
    ((and kill-ring (bound-and-true-p yf/kill-to-second))
     (let ((real-kill-ring kill-ring)
 	  (kill-ring (cdr kill-ring))

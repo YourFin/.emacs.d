@@ -93,6 +93,9 @@
 (auto-fill-mode)
 (setq comment-auto-fill-only-comments t)
 
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+
 ;;; ------------------------------- Mode Line -------------------------------- ;
 
 (use-package nyan-mode)

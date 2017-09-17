@@ -11,6 +11,7 @@
 (use-package evil-indent-textobject)
 (use-package evil-magit)
 
+(use-package evil-iedit-state)
 ;;; for everybody's sanity
 (setq evil-want-Y-yank-to-eol t)
 
@@ -138,13 +139,14 @@ and opens up helm switch buffer"
 (define-key evil-motion-state-map (kbd "J") 'evil-avy-goto-word-or-subword-1)
 (define-key evil-motion-state-map (kbd "K") 'evil-avy-goto-char-timer) 
 
-;;;evil-delete stuff
-(require 'evil-custom-reg)
 
 ;; Multiple cursors
 (use-package evil-mc
   :config
   (global-evil-mc-mode 1))
+
+;;;evil-delete stuff
+(require 'evil-custom-reg)
 
 (define-key evil-normal-state-map (kbd "C-S-H")
   (lambda () "Moves the cursor left and adds a cursor" (interactive)
@@ -171,16 +173,30 @@ and opens up helm switch buffer"
 (define-key helm-find-files-map "\t" 'helm-execute-persistent-action)
 
 ;;; Swiper rebinds
-(define-key swiper-map (kbd "A-j") 'ivy-next-line)
-(define-key swiper-map (kbd "A-k") 'ivy-previous-line)
+(define-key swiper-map (kbd "M-j") 'ivy-next-line)
+(define-key swiper-map (kbd "M-k") 'ivy-previous-line)
 (define-key swiper-map (kbd "C-v") 'yank)
+(define-key swiper-map (kbd "C-c") 'minibuffer-keyboard-quit)
+
+;;; Ranger
+(defun yf--magit-clone-ranger (repository directory)
+  "Closes magit if `yf/magit-clone-ranger' is non-nil
+Intended to stop the magit window from appearing after
+calling magit-clone from ranger."
+  (interactive
+   (let  ((url (magit-read-string-ns "Clone repository")))
+     (list url (read-directory-name
+                "Clone to: " nil nil nil
+                (and (string-match "\\([^/:]+?\\)\\(/?\\.git\\)?$" url)
+                     (match-string 1 url))))))
+  (magit-clone repository directory)
+  (magit-mode-bury-buffer))
 
 (use-package ranger
   :config
   (ranger-override-dired-mode)
   (define-key ranger-normal-mode-map (kbd "+") 'dired-create-directory)
-  (define-key ranger-normal-mode-map (kbd "c") 'magit-clone)
+  (define-key ranger-normal-mode-map (kbd "c") 'yf--magit-clone-ranger)
   )
-
 
 (provide 'evil-bindings)
