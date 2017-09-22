@@ -131,6 +131,14 @@ Much of the code here is borrowed from `kill-new' in simple.el"
 	    (save-buffer)
 	    (magit-stage-file buffer-file-name))))))
 
+
+(defun yf-buffer-contains-substring-p (string)
+  "Checks if the current buffer contains STRING"
+  (save-excursion
+    (save-match-data
+      (goto-char (point-min))
+      (search-forward string nil t))))
+
 (defun yf-push ()
   "Pushes vc changes to remote server in vc agnostic manner. Currently only implemented for git"
   (interactive)
