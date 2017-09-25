@@ -52,3 +52,4 @@
 /recentf
 /var/*.el
 /var/projectile/known-projects.el
+/var
