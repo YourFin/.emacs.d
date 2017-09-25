@@ -55,7 +55,6 @@
   ("N" evil-prev-flyspell-error)
   ("a" yf-add-word-to-dictinary)
   ("c" flyspell-auto-correct-previous-word))
-;;poppet salad
 
 (use-package quickrun)
 (use-package iedit)
