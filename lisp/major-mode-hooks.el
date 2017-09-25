@@ -80,6 +80,8 @@ of require statements in major-mode-hooks.el"
 (add-hook 'python-mode-hook (lambda () (require 'python-mode-file)))
 (add-hook 'latex-mode-hook (lambda () (require 'latex-mode-file)))
 (add-hook 'fundamental-mode-hook (lambda () (require 'fundamental-mode-file)))
+(add-hook 'ruby-mode-hook (lambda () (require 'ruby-mode-file)))
+(add-hook 'markdown-mode-hook (lambda () (require 'markdown-mode-file)))
 
 
 (provide 'major-mode-hooks)
