@@ -97,6 +97,13 @@ Much of the code here is borrowed from `kill-new' in simple.el"
   (setq kill-ring-yank-pointer kill-ring))
 
 
+(defun yf-switch-buffer ()
+  "Uses projectile if in project
+Defaults to helm-mini"
+  (interactive)
+  (if (projectile-project-p)
+      (helm-projectile)
+    (helm-mini)))
 
 ;; Note that this should not be moved to init.el,
 ;;as there is a good chance that the things required
