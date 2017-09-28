@@ -111,7 +111,7 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
   ("L" evil-window-increase-width)
   ("H" evil-window-decrease-width)
   ("u" winner-undo )
-  ("C-r" winner-redo )
+  ("C-r" (progn (winner-undo) (setq this-command 'winner-undo)))
   ("o" ranger  :color blue)
   ("O" helm-find-files :color red)
   ("b" yf-switch-buffer  :color blue)
