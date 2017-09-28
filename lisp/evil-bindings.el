@@ -29,12 +29,6 @@
 
 ;;files
 
-(defun yf-switch-buffer ()
-  (interactive)
-  (if (projectile-project-p)
-      (helm-projectile)
-    (helm-mini)))
-
 (evil-space-bind "bb" 'save-buffer)
 (evil-space-bind "bs" 'yf-switch-buffer)
 (evil-space-bind "bS" 'helm-mini)
@@ -78,18 +72,62 @@ and opens up helm switch buffer"
   (ranger))
 
 (evil-space-bind "ww" 'evil-window-next)
-(evil-space-bind "wW" 'evil-window-prev)
 (evil-space-bind "wj" 'evil-window-down)
 (evil-space-bind "wk" 'evil-window-up)
 (evil-space-bind "wl" 'evil-window-right)
 (evil-space-bind "wh" 'evil-window-left)
 (evil-space-bind "wx" 'evil-window-delete)
 (evil-space-bind "wo" 'delete-other-windows)
-(evil-space-bind "ws" 'hsplit-recents)
-(evil-space-bind "wv" 'vsplit-recents)
-(evil-space-bind "wS" 'hsplit-files)
-(evil-space-bind "wV" 'vsplit-files)
-(evil-space-bind "wc" 'window-toggle-split-direction)
+
+(defvar yf/evilwin-hydra-stack nil)
+
+(defun yf--evilwin-hydra-push (expr)
+  (push `(lambda () ,expr) yf/evilwin-hydra-stack))
+
+(defun yf--evilwin-hydra-pop ()
+  (interactive)
+  (let ((x (pop yf/evilwin-hydra-stack)))
+    (when x
+      (funcall x))))
+
+(defhydra yf-evil-windows (:hint nil
+				 :pre (winner-mode 1)
+				 :post (redraw-display))
+  "
+Movement & RESIZE^^^^  
+^ ^ _k_ ^ ^       _o__O_pen File  _C-o_nly win
+_h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
+^ ^ _j_ ^ ^       _u_ _C-r_ undo    _s_plit _v_ertically"   
+
+  ;; For some reason the evil
+  ;; commands behave better than
+  ;; the emacs ones
+  ("j" evil-window-down)
+  ("k" evil-window-up)
+  ("l" evil-window-right)
+  ("h" evil-window-left)
+  ("J" evil-window-increase-height)
+  ("K" evil-window-decrease-height)
+  ("L" evil-window-increase-width)
+  ("H" evil-window-decrease-width)
+  ("u" winner-undo )
+  ("C-r" winner-redo )
+  ("o" ranger  :color blue)
+  ("O" helm-find-files :color red)
+  ("b" yf-switch-buffer  :color blue)
+  ("B" yf-switch-buffer  :color red)
+  ("C-o" delete-other-windows :color blue)
+  ("x" delete-window)
+  ("s" split-window-horizontally :color red)
+  ("v" split-window-vertically :color red)
+  ("SPC" nil  :color blue))
+
+(define-key evil-normal-state-map (kbd "C-w") nil)
+(define-key evil-motion-state-map (kbd "C-w") nil)
+(define-key evil-insert-state-map (kbd "C-w") nil)
+;; I'm sorry emacs users, but I can't not being
+;; able to get to this from everywhere
+(global-set-key (kbd "C-w") 'yf-evil-windows/body)
 
 (evil-space-bind "g" 'magit-status)
 ;; Make finishing commits faster
@@ -106,6 +144,7 @@ and opens up helm switch buffer"
 (evil-space-bind "ua" 'helm-apropos)
 (evil-space-bind "ub" 'describe-key)
 (evil-space-bind "uu" 'undo-tree-visualize)
+(evil-space-bind "ur" 'redraw-display)
 
 ;; helm kill ring
 (evil-space-bind "k" 'helm-show-kill-ring)

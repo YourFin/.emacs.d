@@ -48,6 +48,9 @@
     (when (consp word)    
       (flyspell-do-correct 'save nil (car word) current-location (cadr word) (caddr word) current-location))))
 
+;; Enable window history
+(add-hook 'after-init-hook 'winner-mode)
+
 (defhydra yf-spellcheck (:body-pre (flyspell-prog-mode)
 	   :post (flyspell-mode-off))
   "Spellchecking!"
