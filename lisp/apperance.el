@@ -33,8 +33,6 @@
   (set-face-foreground 'rainbow-delimiters-depth-8-face "#ff87ff")
   )
 
-
-
 (use-package highlight-indent-guides
   :config
   (setq highlight-indent-guides-method 'column)
