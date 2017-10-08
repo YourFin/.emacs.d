@@ -45,6 +45,9 @@
   (global-auto-revert-mode -1)
   (add-hook 'after-init-hook 'magit-file-mode-turn-on)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+(use-package magithub
+  :after magit
+  :config (magithub-feature-autoinject t))
 (use-package smex)
 (use-package helm-smex
   :config (setq helm-smex-show-bindings t)
@@ -94,7 +97,7 @@
  '(nyan-mode t)
  '(package-selected-packages
    (quote
-    (dumb-jump markdown-toc rvm robe eclim lua-mode company-math yatemplate iedit YATemplate evil-iedit-state hydra no-littering swiper-helm helm-flycheck xclip flycheck evil-mc smart-mode-line nyan-mode latex-preview-pane smartparens xah-find ranger git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
+    (magithub dumb-jump markdown-toc rvm robe eclim lua-mode company-math yatemplate iedit YATemplate evil-iedit-state hydra no-littering swiper-helm helm-flycheck xclip flycheck evil-mc smart-mode-line nyan-mode latex-preview-pane smartparens xah-find ranger git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
  '(projectile-mode t nil (projectile)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
