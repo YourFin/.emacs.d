@@ -209,7 +209,11 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 
 ;;; Helm rebinds
 ;; make tab completion work normally in helm find files
-(define-key helm-find-files-map "\t" 'helm-execute-persistent-action)
+(define-key helm-map (kbd "M-j") 'helm-next-line)
+(define-key helm-map (kbd "M-k") 'helm-previous-line)
+(define-key helm-map (kbd "M-l") 'helm-next-source)
+(define-key helm-map (kbd "M-h") 'helm-previous-source)
+
 
 ;;; Swiper rebinds
 (define-key swiper-map (kbd "M-j") 'ivy-next-line)
