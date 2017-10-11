@@ -62,4 +62,24 @@
 (use-package quickrun)
 (use-package iedit)
 
+;;; Git
+(use-package magit
+  :config
+  (magit-auto-revert-mode -1)
+  (global-auto-revert-mode -1)
+  (add-hook 'after-init-hook 'magit-file-mode-turn-on)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+(use-package magithub
+  :after magit
+  :config (magithub-feature-autoinject t))
+
+(use-package git-gutter+
+  ;; Purely for hunk staging
+  :config
+  (setq git-gutter+-added-sign nil)
+  (setq git-gutter+-deleted-sign nil)
+  (setq git-gutter+-modified-sign nil)
+  (setq git-gutter+-unchanged-sign nil)
+  (setq git-gutter+-separator-sign nil))
+
 (provide 'editing-file)
