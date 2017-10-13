@@ -82,4 +82,7 @@
   (setq git-gutter+-unchanged-sign nil)
   (setq git-gutter+-separator-sign nil))
 
+;; ------ additional major modes ------ ;
+(use-package logview)
+
 (provide 'editing-file)
