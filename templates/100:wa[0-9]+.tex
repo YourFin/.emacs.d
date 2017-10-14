@@ -1,0 +1,27 @@
+\\documentclass{article}
+
+\\usepackage{amsfonts}
+\\usepackage{amsmath}
+\\usepackage{amsthm}
+\\usepackage{amssymb}
+\\usepackage{changepage}
+\\usepackage{enumitem}
+\\newcommand*{\\QED}{\\hfill\\ensuremath{\\square}}%
+\\newtheoremstyle{case}{}{}{}{}{}{:}{ }{}
+\\theoremstyle{case}
+\\newtheorem{case}{Case}
+
+\\newcommand*\\colvec[3][]{
+    \\begin{pmatrix}\\ifx\\relax#1\\relax\\else#1\\\\\\fi#2\\\\#3\\end{pmatrix}
+}
+\\begin{document}
+
+\\begin{flushleft}
+	Patrick Nuckolls \\\\
+	Mat 215-02 \\\\
+	Problem Set `(let ((file-string (file-name-nondirectory buffer-file-name))) (string-match "[0-9]+" file-string) (match-string 0 file-string))` \\\\
+\\end{flushleft}
+
+$1$0
+
+\\end{document}
