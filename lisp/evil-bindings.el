@@ -184,17 +184,8 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
   (evil-local-mode 1))
 (advice-add 'undo-tree-visualize :after #'yf--undo-tree-visualizer-advice)
 
-;;; TODO: clean up this mess. Most of these lines probably aren't necessary
-(define-key undo-tree-visualizer-mode-map (kbd "j") 'undo-tree-visualize-redo)
-(define-key undo-tree-visualizer-mode-map (kbd "k") 'undo-tree-visualize-undo)
 (evil-define-key 'motion undo-tree-visualizer-mode-map (kbd "j") 'undo-tree-visualize-redo)
 (evil-define-key 'motion undo-tree-visualizer-mode-map (kbd "k") 'undo-tree-visualize-undo)
-(define-key undo-tree-visualizer-selection-mode-map (kbd "k") 'undo-tree-node-previous)
-(define-key undo-tree-visualizer-selection-mode-map (kbd "j") 'undo-tree-visualizer-select-next)
-(evil-define-key 'normal undo-tree-visualizer-selection-mode-map (kbd "k") 'undo-tree-node-previous)
-(evil-define-key 'normal undo-tree-visualizer-selection-mode-map (kbd "j") 'undo-tree-visualizer-select-next)
-(evil-define-key 'motion undo-tree-visualizer-selection-mode-map (kbd "k") 'undo-tree-node-previous)
-(evil-define-key 'motion undo-tree-visualizer-selection-mode-map (kbd "j") 'undo-tree-visualizer-select-next)
 
 ;; Multiple cursors
 (use-package evil-mc
