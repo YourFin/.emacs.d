@@ -165,6 +165,8 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 (define-key evil-motion-state-map (kbd ";") 'evil-repeat-find-char)
 (define-key evil-motion-state-map (kbd "g;") 'evil-repeat-find-char-reverse)
 
+(define-key evil-visual-state-map (kbd "r") 'quickrun-region)
+
 ;; a holdover from my vim days
 (define-key evil-normal-state-map (kbd "-j") 'evil-join)
 
