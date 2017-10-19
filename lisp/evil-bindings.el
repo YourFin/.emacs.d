@@ -12,10 +12,8 @@
 (use-package evil-magit)
 
 (use-package evil-iedit-state)
-;;; for everybody's sanity
-(setq evil-want-Y-yank-to-eol t)
 
-;;;; Space bindings
+; ----------- Space binds ------------ ;
 ;; unmap normal space
 (define-key evil-motion-state-map " " nil)
 
@@ -152,7 +150,12 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 (evil-space-bind "m" 'helm-global-mark-ring)
 (evil-space-bind "M" 'helm-mark-ring)
 
-;;; misc bindings
+
+;; ---------- Misc Bindings ----------- ;
+
+;; for everybody's sanity
+(setq evil-want-Y-yank-to-eol t)
+
 (define-key evil-motion-state-map "j" 'evil-next-visual-line)
 (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
 
