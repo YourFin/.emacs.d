@@ -1,5 +1,5 @@
 
-;;----------Various editing tweaks that aren't evil related------------;;
+;;----This file dedicated to various editing tweaks that aren't evil related----;;
 
 (use-package smartparens
   :config
@@ -26,8 +26,7 @@
 (use-package flycheck
   :config
   (with-eval-after-load 'flycheck
-    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
-  (global-flycheck-mode))
+    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))))
 
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 (setq flyspell-prog-text-faces '(font-lock-comment-face font-lock-doc-face))

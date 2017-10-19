@@ -41,7 +41,7 @@
   (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
 
 ;;; Fringe
-; Line Numbers
+;; Line Numbers
 (defun my-linum ()
   "Turns on and colors line numbers"
   (linum-mode)
@@ -54,6 +54,10 @@
       ad-do-it)) 
   (set-face-background 'linum "black"))
 (add-hook 'prog-mode-hook #'my-linum)
+
+(defvar yf/wrapping-linum-display
+  `((magin lefit-margin) ,(propertize "-----" 'face 'linum))
+  "string used on margin")
 
 ;; Remove wrap arrows
 ;; Taken from https://web.archive.org/web/20170820232748/https://stackoverflow.com/questions/27845980/how-do-i-remove-newline-symbols-inside-emacs-vertical-border 
@@ -135,8 +139,6 @@
             ;;("\\(;;\\)"                    #Xe129)
             ("\\(/\\*\\)"                  #Xe12a)
             ("\\(/\\*\\*\\)"               #Xe12b)
-            ("\\(/=\\)"                    #Xe12c)
-            ("\\(/==\\)"                   #Xe12d)
             ("\\(/>\\)"                    #Xe12e)
             ("\\(//\\)"                    #Xe12f)
             ("\\(///\\)"                   #Xe130)
