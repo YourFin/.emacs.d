@@ -26,14 +26,24 @@ end run
 				   (t "#"))
   "The command called when pulling up an outside terminal. Should not include a -e flag. Used by `yf-run-outside-terminal'")
 
-(defvar yf/default-shell "zsh || bash || tcsht" )
+(defvar yf/default-shell "$(which zsh || which fish || which bash || which sh)" "The default command run for yf-run-outside-terminal")
+(defvar yf/run-outside-terminal-default-dir "the default directory for `yf-run-outside-terminal'
+In place for buffers that don't have files associated with them, i.e. Messages")
 
-(defun yf-run-outside-terminal (&optional external-command)
+(defun yf-run-outside-terminal (directory &optional external-command)
   "Open a terminal in the directory containing the current buffer.
 If EXTERNAL-COMMAND is set, pass that through to the shell with the -e flag. Ignored on windows.
 Terminal command is stored in `yf/terminal-command'"
-  (interactive)
-  (call-process-shell-command (concat yf/terminal-command " " (if (bound-and-true-p external-command) (concat " -e " external-command) "") " &") nil nil nil))
+  (interactive (list (let ((open-file (buffer-file-name (current-buffer))))
+		       (cond ((not open-file) yf/run-outside-termial-default-dir)
+			     ((file-directory-p open-file) open-file)
+			     ((file-exists-p open-file)  (file-name-directory open-file))))))
+  (let ((run-command (or external-command yf/default-shell)))
+    (call-process-shell-command
+     (concat "$(cd " directory " && "
+	     yf/terminal-command
+	     " -e " run-command
+	     " ) &") nil nil nil)))
 
 (use-package smartparens
   :config
