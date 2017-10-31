@@ -143,6 +143,7 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 (evil-space-bind "ub" 'describe-key)
 (evil-space-bind "uu" 'undo-tree-visualize)
 (evil-space-bind "ur" 'redraw-display)
+(evil-space-bind "ut" 'yf-run-outside-terminal)
 
 ;; helm kill ring
 (evil-space-bind "k" 'helm-show-kill-ring)
