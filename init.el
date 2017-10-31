@@ -63,11 +63,12 @@
 (require 'major-mode-hooks)
 
 
-;; machine specific
+;; Machine specific Configurations
 (let* ((machine-dir (expand-file-name "lisp/systems/" user-emacs-directory))
-       (machine-file (concat machine-dir system-name ".el")))
-  (when (file-readable-p machine-file)
-    (load-file machine-file)))
+       (machine-req (concat "init-" system-name))
+       (machine-file (concat machine-dir machine-req)))
+  (add-to-list 'load-path machine-dir)
+  (require machine-req nil 'noerror))
 
 ;; do not touch
 (custom-set-variables
