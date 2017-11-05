@@ -150,7 +150,10 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 ;; mark ring
 (evil-space-bind "m" 'helm-global-mark-ring)
 (evil-space-bind "M" 'helm-mark-ring)
-
+;; quickrun
+(evil-space-bind "r" 'quickrun)
+(define-key evil-normal-state-map "<SPC>r" 'quickrun)
+(define-key evil-visual-state-map "<SPC>r" 'quickrun)
 
 ;; ---------- Misc Bindings ----------- ;
 
