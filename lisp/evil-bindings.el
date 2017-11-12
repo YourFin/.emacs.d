@@ -152,8 +152,7 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 (evil-space-bind "M" 'helm-mark-ring)
 ;; quickrun
 (evil-space-bind "r" 'quickrun)
-(define-key evil-normal-state-map "<SPC>r" 'quickrun)
-(define-key evil-visual-state-map "<SPC>r" 'quickrun)
+
 
 ;; ---------- Misc Bindings ----------- ;
 
@@ -162,6 +161,12 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 
 (define-key evil-motion-state-map "j" 'evil-next-visual-line)
 (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+
+(define-key evil-insert-state-map (kbd "M-j") 'evil-next-visual-line)
+(define-key evil-insert-state-map (kbd "M-k") 'evil-previous-visual-line)
+(define-key evil-insert-state-map (kbd "M-h") 'evil-backward-char)
+(define-key evil-insert-state-map (kbd "M-l") 'evil-forward-char)
+(define-key evil-insert-state-map (kbd "M-w") 'evil-forward-word)
 
 ;; swap these because I'm weird
 (define-key evil-motion-state-map (kbd ",") 'goto-last-change)
@@ -231,7 +236,6 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 (define-key helm-map (kbd "M-l") 'helm-next-source)
 (define-key helm-map (kbd "M-h") 'helm-previous-source)
 
-
 ;;; Swiper rebinds
 (define-key swiper-map (kbd "M-j") 'ivy-next-line)
 (define-key swiper-map (kbd "M-k") 'ivy-previous-line)
@@ -244,7 +248,7 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 Intended to stop the magit window from appearing after
 calling magit-clone from ranger."
   (interactive
-   (let  ((url (magit-read-string-ns "Clone repository")))
+   (let ((url (magit-read-string-ns "Clone repository")))
      (list url (read-directory-name
                 "Clone to: " nil nil nil
                 (and (string-match "\\([^/:]+?\\)\\(/?\\.git\\)?$" url)

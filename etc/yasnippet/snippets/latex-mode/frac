@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
 # name: fraction
-# key: frac
+# key: fc
 # --
-\frac{$1}{$2}$0
+\ensuremath{\frac{$1}{$2}$0}

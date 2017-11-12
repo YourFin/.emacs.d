@@ -2,4 +2,4 @@
 # name: Big O (Cs)
 # key: bigo
 # --
-$\mathcal{O}(${1:n})$$0
+\ensuremath{\mathcal{O}(${1:n})}$0

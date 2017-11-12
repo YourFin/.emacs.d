@@ -8,6 +8,9 @@
   :config
   ;; Add yasnippet support for all company backends
   ;; https://github.com/syl20bnr/spacemacs/pull/179
+  (use-package company-statistics
+    :config
+    (add-hook 'after-init-hook 'company-statistics-mode))
   (defvar company-mode/enable-yas t
     "Enable yasnippet for all backends.")
   (defun company-mode/backend-with-yas (backend)

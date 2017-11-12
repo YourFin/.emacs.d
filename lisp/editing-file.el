@@ -102,7 +102,9 @@ Terminal command is stored in `yf/terminal-command'"
   ("a" yf-add-word-to-dictinary)
   ("c" flyspell-auto-correct-previous-word))
 
-(use-package quickrun)
+(use-package quickrun
+  :config
+  (setq quickrun-focus-p nil))
 (use-package iedit)
 
 ;;; Git

@@ -2,6 +2,7 @@
 
 (use-package latex-preview-pane
   :config
+  (setq pdf-latex-command "lualatex")
   (latex-preview-pane-enable))
 
 (sp-local-pair 'LaTeX-mode "$" "$")

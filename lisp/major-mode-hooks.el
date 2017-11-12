@@ -82,6 +82,8 @@ of require statements in major-mode-hooks.el"
 (add-hook 'fundamental-mode-hook (lambda () (require 'fundamental-mode-file)))
 (add-hook 'ruby-mode-hook (lambda () (require 'ruby-mode-file)))
 (add-hook 'markdown-mode-hook (lambda () (require 'markdown-mode-file)))
+(add-hook 'doc-view-mode-hook (lambda () (require 'doc-view-mode-file)))
+(add-hook 'org-mode-hook (lambda () (require 'org-mode-file)))
 
 
 (provide 'major-mode-hooks)

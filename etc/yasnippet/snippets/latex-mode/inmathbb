@@ -2,4 +2,4 @@
 # name: In Mathbb
 # key: inmathbb
 # --
-\in\mathbb{${0}}
+\ensuremath{\in\mathbb{${0}}}
