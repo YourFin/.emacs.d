@@ -38,7 +38,10 @@
 (use-package term)
 (use-package avy)
 (use-package projectile)
-(use-package helm-projectile)
+(use-package helm-projectile
+  :config
+  ;; Ripgrep instead of ag
+  (setq helm-grep-ag-command "rg --smart-case --no-heading --line-number %s %s %s"))
 (use-package helm-smex
   :config (setq helm-smex-show-bindings t)
   :bind ("M-x" . helm-smex))
