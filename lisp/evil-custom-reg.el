@@ -51,19 +51,19 @@
 
 (evil-define-operator yf-Y (beg end type register yank-handler)
   "Evil-yank-line that goes to clipboard as well as kill ring"
-  :motion evil-line
+  :motion evil-end-of-line
   :move-point nil
   :repeat nil
   (interactive "<R><x>")
   (let ((yf/kill-to-second nil))
-    (evil-yank-line beg end type register yank-handler))
+    (evil-yank-line beg end type register))
   )
 (define-key evil-normal-state-map "Y" 'yf-Y)
 (define-key evil-visual-state-map "Y" 'yf-Y)
 
 (evil-define-operator yf-gY (beg end type register yank-handler)
   "Evil-yank-line that dumps to 2nd in kill ring but not clipboard"
-  :motion evil-line
+  :motion evil-end-of-line
   :move-point nil
   :repeat nil
   (interactive "<R><x>")
