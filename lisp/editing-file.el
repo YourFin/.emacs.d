@@ -102,6 +102,11 @@ Terminal command is stored in `yf/terminal-command'"
   ("a" yf-add-word-to-dictinary)
   ("c" flyspell-auto-correct-previous-word))
 
+(use-package undo-tree
+  :config
+  ;; Persistent undo
+  (setq undo-tree-save-history t))
+
 (use-package quickrun
   :config
   (setq quickrun-focus-p nil))
