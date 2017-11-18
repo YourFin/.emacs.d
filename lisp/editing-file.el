@@ -127,6 +127,10 @@ Terminal command is stored in `yf/terminal-command'"
   (setq git-gutter+-unchanged-sign nil)
   (setq git-gutter+-separator-sign nil))
 
+(use-package atomic-chrome
+  :config
+  (add-hook 'after-init-hook 'atomic-chrome-start-server))
+
 ;; ------ additional major modes ------ ;
 (use-package logview)
 
