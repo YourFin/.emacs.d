@@ -188,6 +188,8 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 (define-key evil-motion-state-map (kbd "/") 'swiper)
 (define-key swiper-map (kbd "C-j") 'down)
 
+(define-key evil-motion-state-map (kbd "C-y") 'yas-expand)
+
 ;; avy
 (define-key evil-motion-state-map (kbd "J") 'evil-avy-goto-word-or-subword-1)
 (define-key evil-normal-state-map (kbd "J") 'evil-avy-goto-word-or-subword-1)
@@ -252,7 +254,7 @@ calling magit-clone from ranger."
                 (and (string-match "\\([^/:]+?\\)\\(/?\\.git\\)?$" url)
                      (match-string 1 url))))))
   (magit-clone repository directory)
-  (magit-mode-bury-buffer))
+  (magit-mode-bury-buffer t))
 
 (use-package ranger
   :config
