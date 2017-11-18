@@ -208,28 +208,27 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 ;;;evil-delete stuff
 (require 'evil-custom-reg)
 
-(define-key evil-normal-state-map (kbd "C-S-H")
-  (lambda () "Moves the cursor left and adds a cursor" (interactive)
-    (evil-backward-char)
-    (evil-mc-make-cursor-here)))
-
-(define-key evil-normal-state-map (kbd "C-S-L")
-  (lambda () "Moves the cursor right and adds a cursor" (interactive)
-    (evil-forward-char)
-    (evil-mc-make-cursor-here)))
-
-(define-key evil-normal-state-map (kbd "C-S-J")
-  (lambda () "Moves the cursor up and adds a cursor" (interactive)
-    (evil-next-line)
-    (evil-mc-make-cursor-here)))
-
-(define-key evil-normal-state-map (kbd "C-S-K")
-  (lambda () "Moves the cursor down and adds a cursor" (interactive)
-    (evil-previous-line)
-    (evil-mc-make-cursor-here)))
+;(define-key evil-normal-state-map (kbd "C-S-H")
+;  (lambda () "Moves the cursor left and adds a cursor" (interactive)
+;    (evil-backward-char)
+;    (evil-mc-make-cursor-here)))
+;
+;(define-key evil-normal-state-map (kbd "C-S-L")
+;  (lambda () "Moves the cursor right and adds a cursor" (interactive)
+;    (evil-forward-char)
+;    (evil-mc-make-cursor-here)))
+;
+;(define-key evil-normal-state-map (kbd "C-S-J")
+;  (lambda () "Moves the cursor up and adds a cursor" (interactive)
+;    (evil-next-line)
+;    (evil-mc-make-cursor-here)))
+;
+;(define-key evil-normal-state-map (kbd "C-S-K")
+;  (lambda () "Moves the cursor down and adds a cursor" (interactive)
+;    (evil-previous-line)
+;    (evil-mc-make-cursor-here)))
 
 ;;; Helm rebinds
-;; make tab completion work normally in helm find files
 (define-key helm-map (kbd "M-j") 'helm-next-line)
 (define-key helm-map (kbd "M-k") 'helm-previous-line)
 (define-key helm-map (kbd "M-l") 'helm-next-source)
