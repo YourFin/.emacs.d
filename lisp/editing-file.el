@@ -123,15 +123,6 @@ Terminal command is stored in `yf/terminal-command'"
   :after magit
   :config (magithub-feature-autoinject t))
 
-(use-package git-gutter+
-  ;; Purely for hunk staging
-  :config
-  (setq git-gutter+-added-sign nil)
-  (setq git-gutter+-deleted-sign nil)
-  (setq git-gutter+-modified-sign nil)
-  (setq git-gutter+-unchanged-sign nil)
-  (setq git-gutter+-separator-sign nil))
-
 (use-package atomic-chrome
   :config
   (add-hook 'after-init-hook 'atomic-chrome-start-server))
