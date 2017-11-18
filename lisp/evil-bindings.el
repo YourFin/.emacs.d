@@ -197,7 +197,6 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 (defun yf--undo-tree-visualizer-advice (&rest r)
   (evil-local-mode 1))
 (advice-add 'undo-tree-visualize :after #'yf--undo-tree-visualizer-advice)
-
 (evil-define-key 'motion undo-tree-visualizer-mode-map (kbd "j") 'undo-tree-visualize-redo)
 (evil-define-key 'motion undo-tree-visualizer-mode-map (kbd "k") 'undo-tree-visualize-undo)
 
