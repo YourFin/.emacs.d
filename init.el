@@ -67,11 +67,10 @@
 
 
 ;; Machine specific Configurations
-(let* ((machine-dir (expand-file-name "lisp/systems/" user-emacs-directory))
-       (machine-req (concat "init-" system-name))
-       (machine-file (concat machine-dir machine-req)))
-  (add-to-list 'load-path machine-dir)
-  (require (quote machine-req) nil 'noerror))
+(let ((machine-dir (expand-file-name "lisp/systems/" user-emacs-directory)))
+  (add-to-list 'load-path machine-dir))
+(defvar yf/machine-file-symb (intern (concat "init-" system-name)))
+(require yf/machine-file-symb)
 
 ;; do not touch
 (custom-set-variables
@@ -88,7 +87,7 @@
  '(nyan-mode t)
  '(package-selected-packages
    (quote
-    (helm-rails projectile-rails company-statistics julia-shell julia-repl julia-mode racket-mode logview git-gutter+-added-sign git-gutter+ magithub dumb-jump markdown-toc rvm robe eclim lua-mode company-math yatemplate iedit YATemplate evil-iedit-state hydra no-littering swiper-helm helm-flycheck xclip flycheck evil-mc smart-mode-line nyan-mode latex-preview-pane smartparens xah-find ranger git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
+    (atomic-chrome helm-rails projectile-rails company-statistics julia-shell julia-repl julia-mode racket-mode logview git-gutter+-added-sign git-gutter+ magithub dumb-jump markdown-toc rvm robe eclim lua-mode company-math yatemplate iedit YATemplate evil-iedit-state hydra no-littering swiper-helm helm-flycheck xclip flycheck evil-mc smart-mode-line nyan-mode latex-preview-pane smartparens xah-find ranger git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
  '(projectile-mode t nil (projectile)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
