@@ -39,11 +39,14 @@ Terminal command is stored in `yf/terminal-command'"
 			     ((file-directory-p open-file) open-file)
 			     ((file-exists-p open-file)  (file-name-directory open-file))))))
   (let ((run-command (or external-command yf/default-shell)))
-    (call-process-shell-command
-     (concat "$(cd " directory " && "
+    (start-process
+     (concat "Terminal--" directory "--" external-command) ;; name the process something reasonable
+     nil;; blackhole output
+     "bash"
+     "-c"
+     (concat "cd " directory " && "
 	     yf/terminal-command
-	     " -e " run-command
-	     " ) &") nil nil nil)))
+	     " -e " run-command))))
 
 (use-package smartparens
   :config
