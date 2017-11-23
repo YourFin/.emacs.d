@@ -161,6 +161,23 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 
 (define-key evil-motion-state-map "j" 'evil-next-visual-line)
 (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+;; As these binds make zero sense in visual line mode:
+(evil-define-motion yf-visual-j (count)
+  "Wrapper for `evil-next-visual-line' ignores the visual in visual-line mode"
+  :type line
+  (if (eq (evil-visual-type) 'line)
+      (evil-next-line count)
+    (evil-next-visual-line count))
+  )
+(evil-define-motion yf-visual-k (count)
+  "Wrapper for `evil-previous-visual-line' ignores the visual in visual-line mode"
+  :type line
+  (if (eq (evil-visual-type) 'line)
+      (evil-previous-line count)
+    (evil-previous-visual-line count))
+  )
+(define-key evil-visual-state-map "j" 'yf-visual-j)
+(define-key evil-visual-state-map "k" 'yf-visual-k)
 
 (define-key evil-insert-state-map (kbd "M-j") 'evil-next-visual-line)
 (define-key evil-insert-state-map (kbd "M-k") 'evil-previous-visual-line)
