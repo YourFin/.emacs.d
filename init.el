@@ -49,6 +49,8 @@
 (use-package python)
 (use-package python-django)
 (use-package markdown-mode)
+(use-package vimrc-mode
+  :defer t)
 
 (require 'editing-file)
 
