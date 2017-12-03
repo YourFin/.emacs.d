@@ -205,7 +205,7 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 (define-key evil-motion-state-map (kbd "/") 'swiper)
 (define-key swiper-map (kbd "C-j") 'down)
 
-(define-key evil-motion-state-map (kbd "C-y") 'yas-expand)
+(define-key evil-insert-state-map (kbd "C-y") 'yas-expand)
 
 ;; avy
 (define-key evil-motion-state-map (kbd "J") 'evil-avy-goto-word-or-subword-1)
