@@ -1,7 +1,7 @@
 ;;; Add filetype specific files to load path
 (add-to-list 'load-path (concat lisp-dir "/majorHooks"))
 
-(defun yf-add-major-hook (REQUIREMENT HOOK)
+(defun yf-add-major-hook (requirement hook)
   "Adds requiring REQUIREMENT to HOOK"
   (add-hook hook (lambda () (try-require requirement))))
 
