@@ -1,7 +1,6 @@
 
 ;;----This file dedicated to various editing tweaks that aren't evil related----;;
 
-
 (defvar yf/terminal-command (cond ((eq system-type 'gnu/linux) "xterm")
 				 ((eq system-type 'darwin) "echo '
 echo '\"'\"'
@@ -129,6 +128,9 @@ Terminal command is stored in `yf/terminal-command'"
 (use-package atomic-chrome
   :config
   (add-hook 'after-init-hook 'atomic-chrome-start-server))
+
+;; Better buffer names
+(require 'uniquify)
 
 ;; ------ additional major modes ------ ;
 (use-package logview)
