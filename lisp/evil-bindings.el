@@ -252,6 +252,9 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 (define-key helm-map (kbd "M-k") 'helm-previous-line)
 (define-key helm-map (kbd "M-l") 'helm-next-source)
 (define-key helm-map (kbd "M-h") 'helm-previous-source)
+(define-key helm-map (kbd "C-r") 'yank)
+(define-key helm-map (kbd "C-l") 'helm-minibuffer-history)
+(define-key helm-minibuffer-history-map (kbd "C-l") 'helm-keyboard-quit)
 
 ;;; Swiper rebinds
 (define-key swiper-map (kbd "M-j") 'ivy-next-line)
