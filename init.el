@@ -46,6 +46,8 @@
   :config (setq helm-smex-show-bindings t)
   :bind ("M-x" . helm-smex))
 
+
+
 (use-package python)
 (use-package python-django)
 (use-package markdown-mode)
@@ -72,7 +74,7 @@
 (let ((machine-dir (expand-file-name "lisp/systems/" user-emacs-directory)))
   (add-to-list 'load-path machine-dir))
 (defvar yf/machine-file-symb (intern (concat "init-" system-name)))
-(require yf/machine-file-symb)
+(try-require yf/machine-file-symb)
 
 ;; do not touch
 (custom-set-variables
