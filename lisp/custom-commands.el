@@ -191,6 +191,21 @@ i.e. change right window to bottom, or change bottom window to right."
                   (split-window-horizontally))
                 (set-window-buffer (windmove-find-other-window neighbour-dir) other-buf))))))))
 
+(defvar yf/clone-location "~/gitprojects"
+  "The location that `yf-clone-clipoard' clones to.")
+
+(defun yf-clone-clipboard ()
+  "Run git clone on the stuff in the clipboard at `yf/clone-location'"
+  (interactive)
+  (let* ((url (yf-sys-clip-get))
+	(project-name (and (string-match "\\([^/:]+?\\)\\(/?\\.git\\)?$" url)
+		  (match-string 1 url))))
+    (if project-name
+	(progn
+	    (message (concat "Cloning " project-name " to " yf/clone-location))
+	    (magit-clone url (concat yf/clone-location "/" project-name)))
+      (message "Clipboard not a URL"))))
+  
 (defun yf-sudo ()
   "Edit the file that is associated with the current buffer as root"
   (interactive)
