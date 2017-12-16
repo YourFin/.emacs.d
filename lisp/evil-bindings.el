@@ -12,6 +12,8 @@
 (use-package evil-magit)
 
 (use-package evil-iedit-state)
+(use-package evil-matchit
+  :config (global-evil-matchit-mode 1))
 
 ; ----------- Space binds ------------ ;
 ;; unmap normal space
@@ -196,7 +198,7 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 ;; a holdover from my vim days
 (define-key evil-normal-state-map (kbd "-j") 'evil-join)
 
-;;; better search
+;;; better search: Swiper!
 ;; Make swiper act like evil in terms
 ;; of where it leaves the cursor
 (defun yf--swiper-advice (&rest r)
@@ -204,6 +206,12 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 (advice-add 'swiper :after #'yf--swiper-advice)
 (define-key evil-motion-state-map (kbd "/") 'swiper)
 (define-key swiper-map (kbd "C-j") 'down)
+(defun yf-swipe-selection (start end)
+  "Calls swiper with the text from START to END in the current buffer
+Returns the current selection if called interactively"
+  (interactive "r")
+  (swiper (buffer-substring-no-properties start end)))
+(define-key evil-visual-state-map (kbd "*") 'yf-swipe-selection)
 
 (define-key evil-insert-state-map (kbd "C-y") 'yas-expand)
 
