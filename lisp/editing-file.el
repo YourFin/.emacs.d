@@ -121,9 +121,9 @@ Terminal command is stored in `yf/terminal-command'"
   (global-auto-revert-mode -1)
   (add-hook 'after-init-hook 'magit-file-mode-turn-on)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
-(use-package magithub
-  :after magit
-  :config (magithub-feature-autoinject t))
+;;(use-package magithub
+;;  :after magit
+;;  :config (magithub-feature-autoinject t))
 
 (use-package atomic-chrome
   :config
