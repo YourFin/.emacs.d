@@ -215,6 +215,11 @@ Returns the current selection if called interactively"
     (swiper selection)))
 (define-key evil-visual-state-map (kbd "*") 'yf-swipe-selection)
 
+(define-key swiper-map (kbd "M-j") 'ivy-next-line)
+(define-key swiper-map (kbd "M-k") 'ivy-previous-line)
+(define-key swiper-map (kbd "C-v") 'yank)
+(define-key swiper-map (kbd "C-c") 'minibuffer-keyboard-quit)
+
 (define-key evil-insert-state-map (kbd "C-y") 'yas-expand)
 
 ;; avy
@@ -265,12 +270,6 @@ Returns the current selection if called interactively"
 (define-key helm-map (kbd "C-r") 'yank)
 (define-key helm-map (kbd "C-l") 'helm-minibuffer-history)
 (define-key helm-minibuffer-history-map (kbd "C-l") 'helm-keyboard-quit)
-
-;;; Swiper rebinds
-(define-key swiper-map (kbd "M-j") 'ivy-next-line)
-(define-key swiper-map (kbd "M-k") 'ivy-previous-line)
-(define-key swiper-map (kbd "C-v") 'yank)
-(define-key swiper-map (kbd "C-c") 'minibuffer-keyboard-quit)
 
 ;;; Ranger
 (defun yf--magit-clone-ranger (repository directory)
