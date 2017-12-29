@@ -8,6 +8,10 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(unless (package-installed-p 'diminish)
+  (package-refresh-contents)
+  (package-install 'diminish))
+
 (eval-when-compile
   (require 'use-package))
 (require 'diminish)
