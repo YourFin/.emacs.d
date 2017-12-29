@@ -210,7 +210,9 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
   "Calls swiper with the text from START to END in the current buffer
 Returns the current selection if called interactively"
   (interactive "r")
-  (swiper (buffer-substring-no-properties start end)))
+  (let ((selection (buffer-substring-no-properties start end)))
+    (evil-exit-visual-state)
+    (swiper selection)))
 (define-key evil-visual-state-map (kbd "*") 'yf-swipe-selection)
 
 (define-key evil-insert-state-map (kbd "C-y") 'yas-expand)
