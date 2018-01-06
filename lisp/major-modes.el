@@ -16,7 +16,11 @@
   :defer t)
 ;; clojure ide
 (use-package cider
-  :defer t)
+  :defer t
+  :config
+  (setq cider-repl-use-clojure-font-lock t)
+  (add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
+  (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion))
 ;; For log files
 (use-package logview
   :defer t)
