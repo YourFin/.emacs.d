@@ -135,4 +135,8 @@ Terminal command is stored in `yf/terminal-command'"
 ;; Better buffer names
 (require 'uniquify)
 
+;;;Variable Sets
+;; I'm sorry RMS but you're wrong about this one
+(setq sentence-end-double-space nil)
+
 (provide 'editing-file)
