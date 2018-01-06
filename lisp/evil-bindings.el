@@ -11,6 +11,7 @@
 (use-package evil-indent-textobject)
 (use-package evil-magit)
 
+;; It's vim-surround but so much better!
 (use-package evil-embrace
   :config
   (evil-embrace-enable-evil-surround-integration))
