@@ -14,7 +14,11 @@
   :defer t)
 (use-package yaml-mode
   :defer t)
+;; clojure ide
 (use-package cider
+  :defer t)
+;; For log files
+(use-package logview
   :defer t)
 
 (provide 'major-modes)

@@ -135,7 +135,4 @@ Terminal command is stored in `yf/terminal-command'"
 ;; Better buffer names
 (require 'uniquify)
 
-;; ------ additional major modes ------ ;
-(use-package logview)
-
 (provide 'editing-file)
