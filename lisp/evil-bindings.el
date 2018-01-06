@@ -11,11 +11,15 @@
 (use-package evil-indent-textobject)
 (use-package evil-magit)
 
+(use-package evil-embrace
+  :config
+  (evil-embrace-enable-evil-surround-integration))
+
 (use-package evil-iedit-state)
 (use-package evil-matchit
   :config (global-evil-matchit-mode 1))
 
-; ----------- Space binds ------------ ;
+					; ----------- Space binds ------------ ;
 ;; unmap normal space
 (define-key evil-motion-state-map " " nil)
 
