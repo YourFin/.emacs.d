@@ -215,7 +215,7 @@
 
 ;;; ------------------------------- Mode Line -------------------------------- ;
 
-(use-package nyan-mode)
+;;(use-package nyan-mode)
 (use-package smart-mode-line
   :config
   (setq sml/line-number-format nil)
