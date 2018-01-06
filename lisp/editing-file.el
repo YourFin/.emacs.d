@@ -65,6 +65,10 @@ Terminal command is stored in `yf/terminal-command'"
 				  (t (not (sp-point-in-string-or-comment)))))))
   (add-hook 'prog-mode-hook 'smartparens-mode))
 
+(use-package aggressive-indent
+  :config
+  (global-aggressive-indent-mode 1))
+
 (use-package yasnippet
   :config
   (yas-global-mode 1))
