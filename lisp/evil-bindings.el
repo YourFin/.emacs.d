@@ -14,21 +14,28 @@
 ;; It's vim-surround but so much better!
 (use-package evil-embrace
   :config
+  (global-evil-surround-mode t)
   (evil-embrace-enable-evil-surround-integration))
 
 ;; Our lord and savior-cleverparens
 (use-package evil-cleverparens
   :config
+  ;; Adds some nice text objects - (around/in) (f)orm, (c)omment, and (d)efun or a top level text object
   (require 'evil-cleverparens-text-objects)
   ;; TODO: move this to a lispy-mode file
   (mapc (lambda (lisp) (add-hook (intern lisp) #'evil-cleverparens-mode))
 	'("clojure-mode-hook" "emacs-lisp-mode-hook" "scheme-mode-hook" "lisp-mode-hook")))
 
+(use-package expand-region
+  :config
+  (define-key evil-visual-state-map "o" 'er/expand-region)
+  (define-key evil-visual-state-map "O" 'er/contract-region))
+
 (use-package evil-iedit-state)
 (use-package evil-matchit
   :config (global-evil-matchit-mode 1))
 
-					; ----------- Space binds ------------ ;
+;; ----------- Space binds ------------ ;
 ;; unmap normal space
 (define-key evil-motion-state-map " " nil)
 
