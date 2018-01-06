@@ -116,7 +116,6 @@ Terminal command is stored in `yf/terminal-command'"
 (use-package quickrun
   :config
   (setq quickrun-focus-p nil))
-(use-package iedit)
 
 ;;; Git
 (use-package magit
