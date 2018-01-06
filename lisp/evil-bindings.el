@@ -16,6 +16,14 @@
   :config
   (evil-embrace-enable-evil-surround-integration))
 
+;; Our lord and savior-cleverparens
+(use-package evil-cleverparens
+  :config
+  (require 'evil-cleverparens-text-objects)
+  ;; TODO: move this to a lispy-mode file
+  (mapc (lambda (lisp) (add-hook (intern lisp) #'evil-cleverparens-mode))
+	'("clojure-mode-hook" "emacs-lisp-mode-hook" "scheme-mode-hook" "lisp-mode-hook")))
+
 (use-package evil-iedit-state)
 (use-package evil-matchit
   :config (global-evil-matchit-mode 1))
