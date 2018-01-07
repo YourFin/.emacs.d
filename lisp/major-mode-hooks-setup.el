@@ -5,16 +5,41 @@
     (concat user-emacs-directory "major-hooks/"))
   "The directory that is used for major mode configuration files")
 
-(add-to-list 'load-path yf/major-mode-hooks-dir)
+(defvar yf/major-mode-hooks--table
+  (let ((dir-list (directory-files yf/major-mode-hooks-dir)))
+    ;;Weakness determines the garbage collection rate;
+    ;;key-and-value requires that both a key and value
+    ;;be present in order to avoid garbage collection
+    ;;if they are unused in any other context
+    (make-hash-table :weakness nil
+		     :size (length dir-list)
+		     :rehash-size 1.1))
+  "The table to keep track of which modes have
+files that should be loaded after they open")
+
+
+(defun yf-major-mode-hooks--populate-table ()
+  "Populates `yf/major-mode-hooks--table' with the files in `yf/major-mode-hooks-dir'"
+  (cl-flet* ((get-mode-symbol (lambda (filename)
+				(intern
+				 (file-name-nondirectory
+				  (file-name-sans-extension filename)))))
+	     (put-hash-hooks-table (lambda (filename)
+				     (puthash (get-mode-symbol filename)
+					      (file-truename filename)
+					      yf/major-mode-hooks--table)))
+	     (filter-func-factory
+	      (lambda (extension)
+		(lambda (filtee) (string= extension (file-name-extension filtee))))))
+    (let* ((dir-list (directory-files yf/major-mode-hooks-dir))
+	   (el-list (seq-filter (filter-func-factory "el") dir-list))
+	   (elc-list (seq-filter (filter-func-factory "elc") dir-list)))
+      (mapc 'put-hash-hooks-table el-list)
+      (mapc 'put-hash-hooks-table elc-list))))
 
 (defun yf-add-major-hook (requirement hook)
   "Adds requiring REQUIREMENT to HOOK"
   (add-hook hook (lambda () (try-require requirement))))
-
-;;(defun yf-add-hook-file (mode)
-;;  ""
-;;  (let ((hook-file (concat ))))
-;;  (if (file-exists-p )))
 
 ;; symbol-name converts symbol to string nitwit
 (defun yf-edit-major-mode-hook (&optional mode)
