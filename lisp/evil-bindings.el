@@ -196,10 +196,11 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
   :type line
   (if (eq (evil-visual-type) 'line)
       (evil-previous-line count)
-    (evil-previous-visual-line count))
-  )
+    (evil-previous-visual-line count)))
+
 (define-key evil-visual-state-map "j" 'yf-visual-j)
 (define-key evil-visual-state-map "k" 'yf-visual-k)
+(define-key evil-insert-state-map (kbd "M-RET") 'comment-indent-new-line)
 
 (define-key evil-insert-state-map (kbd "M-j") 'evil-next-visual-line)
 (define-key evil-insert-state-map (kbd "M-k") 'evil-previous-visual-line)
@@ -289,7 +290,7 @@ Returns the current selection if called interactively"
 (define-key helm-map (kbd "M-h") 'helm-previous-source)
 (define-key helm-map (kbd "C-r") 'yank)
 (define-key helm-map (kbd "C-l") 'helm-minibuffer-history)
-(define-key helm-minibuffer-history-map (kbd "C-l") 'helm-keyboard-quit)
+;;(define-key helm-minibuffer-history-map (kbd "C-l") 'helm-keyboard-quit)
 
 ;;; Ranger
 (defun yf--magit-clone-ranger (repository directory)
