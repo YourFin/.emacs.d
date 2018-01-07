@@ -3,20 +3,34 @@
   (if (file-exists-p (concat user-emacs-directory "etc/"))
       (concat user-emacs-directory "etc/major-hooks/")
     (concat user-emacs-directory "major-hooks/"))
-  "The directory that is used for major mode configuration files")
+  "The directory that is used for major mode configuration files.")
 
-(defvar yf/major-mode-hooks--table
+(defun yf-major-mode-hooks--make-table ()
+  "Builds the hash table for `yf/major-mode-hooks--table'
+It should be noted that this function does nothing to actually populate
+said table; that should be done with `yf-major-mode-hooks--populate-table',
+usually called through `yf-major-mode-hooks-refresh'."
   (let ((dir-list (directory-files yf/major-mode-hooks-dir)))
     ;;Weakness determines the garbage collection rate;
     ;;key-and-value requires that both a key and value
     ;;be present in order to avoid garbage collection
     ;;if they are unused in any other context
     (make-hash-table :weakness nil
+		     :test 'equal
 		     :size (length dir-list)
-		     :rehash-size 1.1))
-  "The table to keep track of which modes have
-files that should be loaded after they open")
+		     :rehash-size 1.1
+		     :rehash-threshold 1)))
 
+(defvar yf/major-mode-hooks--table
+  (yf-major-mode-hooks--make-table)
+  "The table to keep track of which modes have
+files that should be loaded after they open
+
+Load precedence is minor mode files then major mode files;
+at this point in time there isn't any way to customize this,
+but hopefully in the future this will be part of the file
+name, as a way to allow multiple files to be loaded in
+whatever order the user desires.")
 
 (defun yf-major-mode-hooks--populate-table ()
   "Populates `yf/major-mode-hooks--table' with the files in `yf/major-mode-hooks-dir'"
@@ -27,15 +41,64 @@ files that should be loaded after they open")
 	     (put-hash-hooks-table (lambda (filename)
 				     (puthash (get-mode-symbol filename)
 					      (file-truename filename)
-					      yf/major-mode-hooks--table)))
-	     (filter-func-factory
-	      (lambda (extension)
-		(lambda (filtee) (string= extension (file-name-extension filtee))))))
+					      yf/major-mode-hooks--table))))
     (let* ((dir-list (directory-files yf/major-mode-hooks-dir))
-	   (el-list (seq-filter (filter-func-factory "el") dir-list))
-	   (elc-list (seq-filter (filter-func-factory "elc") dir-list)))
-      (mapc 'put-hash-hooks-table el-list)
-      (mapc 'put-hash-hooks-table elc-list))))
+	   (el-list (seq-filter (lambda (filtee)
+				  (string= "el" (file-name-extension filtee)))
+				dir-list))
+	   (elc-list (seq-filter (lambda (filtee)
+				   (string= "elc" (file-name-extension filtee)))
+				 dir-list)))
+      ;; We want to use the compiled version if it exists;
+      ;; hence the explicit split between the found el files
+      ;; and elc files
+      ;;
+      ;; TODO: figure out how to access the function portion
+      ;; of put-hash-hooks-table to get rid of these stupid
+      ;; lambdas
+      (mapc (lambda (a) (put-hash-hooks-table a)) el-list)
+      (mapc (lambda (a) (put-hash-hooks-table a)) elc-list))))
+
+(defun yf-major-mode-hooks-refresh ()
+  "Refresh the state of the files in 
+Clears `yf/major-mode-hooks--table' and then populates it
+with `yf-major-mode-hooks--populate-table'."
+  (interactive)
+  ;; Flush out the old values to make
+  ;; available for garbage collection
+  (clrhash yf/major-mode-hooks--table) 
+  ;; Make a new table to avoid a bunch
+  ;; of resizing if the new set is massively bigger
+  (setq yf/major-mode-hooks--table (yf-major-mode-hooks--make-table))
+  ;; Populate the new table
+  (yf-major-mode-hooks--populate-table))
+
+;; To allow the user to set `yf/major-mode-hooks-dir' after
+;; loading this file and not have to worry about running
+;; the refresh function twice on startup
+(add-hook 'after-init-hook 'yf-major-mode-hooks-refresh)
+
+(defun yf-major-mode-hooks--run-symbol-internal (symbol)
+  "Not to be used externally!
+
+Essentialy the same thing as `yf-major-mode-hooks-run-symbol',
+however it doesn't throw an error on a non-existant file"
+  (let ((file-name (gethash symbol yf/major-mode-hooks--table)))
+    (if file-name
+	(load-file file-name)
+      nil)))
+
+(defun yf-major-mode-hooks-run-symbol (symbol)
+  "Runs the file matching SYMBOL in `yf/major-mode-hooks-dir'
+Note: this function cannot be called before startup without
+running `yf-major-mode-hooks-refresh' somewhere along the
+line in your .emacs || init.el
+
+This is to allow you to manually set `yf/major-mode-hooks-dir'
+without slowing down startup by calling `yf-major-mode-hooks-refresh',
+and to make clear that this should not be used in place of `require' on startup"
+  (load-file (or (gethash symbol yf/major-mode-hooks--table)
+		 (error (concat "Error: `yf-major-mode-hooks-run-symbol' could not find a file to match symbol " )))))
 
 (defun yf-add-major-hook (requirement hook)
   "Adds requiring REQUIREMENT to HOOK"
@@ -60,21 +123,17 @@ of require statements in major-mode-hooks.el"
   (interactive (list major-mode))
   (let* ((acting-mode-name (symbol-name mode))
 	 (hook-file-symbol-name (concat acting-mode-name "-hook"))
-	 (hook-file-symbol-name-file (concat acting-mode-name "-file"))
 	 (major-mode-file-dir (file-truename yf/major-mode-hooks-dir))
 	 (major-hooks-file (concat major-mode-file-dir "/major-mode-hooks.el"))
-	 (hook-file-path (concat major-mode-file-dir "/" hook-file-symbol-name-file ".el")))
+	 (hook-file-path (concat major-mode-file-dir "/" hook-file-symbol-name ".el")))
     (message major-hooks-file)
-    (if (not (file-exists-p major-hooks-file))
-	(shell-command (concat
-			"echo \";;;;This file was automatically generated by;;;;\\n;;;;major-mode-hooks-setup.el and shouldn't;;;;\\n;;;;need to be edited manually;;;;\\n\\n\\n;;end of major-mode-hooks.el\" > " major-hooks-file) nil nil))
     (if (file-exists-p hook-file-path)
 	(find-file hook-file-path)
       ;; create the hook file dir if it doesn't exist
       (if (not (file-exists-p major-mode-file-dir))
 	  (make-directory major-mode-file-dir t))
       (let ((major-mode-hooks-buffer
-	     ;; This nonesense is here just to check if
+	     ;; This nonsense is here just to check if
 	     ;;The buffer is already open, so it can be
 	     ;;closed automatically if it wasn't and
 	     ;;and left open if it was.
@@ -93,7 +152,6 @@ of require statements in major-mode-hooks.el"
 	       ;;isn't an issue.
 	       (forward-line (count-lines (point-max) (point-min)))
 	       (forward-line -2)
-	       (insert (concat "(add-hook '" hook-file-symbol-name " (lambda () (load-file (concat yf/major-mode-hooks-dir \"" hook-file-symbol-name-file ".el\"))))\n"))
 	       ))
 	    (current-buffer (buffer-name)))
 	(if (not major-mode-hooks-buffer)
@@ -109,7 +167,7 @@ of require statements in major-mode-hooks.el"
       (find-file hook-file-path)
       (insert (concat
 	       ";;;;;;;;;;Automatically generated by yf-edit-major-mode-hook;;;;;;;;;;;\n\n\n;;'"
-	       hook-file-symbol-name-file ".el ends here"))
+	       hook-file-symbol-name ".el ends here"))
       (forward-line -2)
       (save-buffer))))
 
