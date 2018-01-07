@@ -60,7 +60,7 @@
 (require 'completion)
 (require 'global-bindings)
 (require 'major-modes)
-(require 'major-mode-hooks)
+(require 'major-mode-hooks-setup)
 
 
 ;; Machine specific Configurations
