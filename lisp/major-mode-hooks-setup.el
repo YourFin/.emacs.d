@@ -75,6 +75,8 @@ of require statements in major-mode-hooks.el"
 	    (with-temp-buffer
 	      (insert-file-contents major-hooks-file)
 	      (funcall insert-hook-require)
+	      ;; To add our new hook in
+	      (eval-buffer)
 	      (write-file major-hooks-file))
 	  (set-buffer (find-file-existing major-hooks-file))
 	  (funcall insert-hook-require)
