@@ -10,6 +10,9 @@
   :config (evil-terminal-cursor-changer-activate))
 (use-package evil-indent-textobject)
 (use-package evil-magit)
+(use-package evil-collection
+  :custom (evil-collection-setup-minibuffer t)
+  :init (evil-collection-init))
 
 ;; It's vim-surround but so much better!
 (use-package evil-embrace
@@ -170,8 +173,7 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 ;; helm kill ring
 (evil-space-bind "k" 'helm-show-kill-ring)
 ;; mark ring
-(evil-space-bind "m" 'helm-global-mark-ring)
-(evil-space-bind "M" 'helm-mark-ring)
+(evil-space-bind "m" 'helm-all-mark-rings)
 ;; quickrun
 (evil-space-bind "r" 'quickrun)
 
