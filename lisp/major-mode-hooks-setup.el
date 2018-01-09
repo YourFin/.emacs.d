@@ -142,4 +142,11 @@ of require statements in major-mode-hooks.el"
 	  (make-thread #'yf-major-mode-hooks--populate-table)
 	(yf-major-mode-hooks--populate-table)))))
 
+(defun yf-major-mode-hooks--hook-func ()
+  "The function called by various hooks to load files from `yf/major-mode-hooks-dir'"
+  (mapc 'yf-major-mode-hooks--run-symbol-internal (append minor-mode-list '(major-mode))))
+(add-hook 'find-file-hook #'yf-major-mode-hooks--hook-func)
+(add-hook 'after-change-major-mode-hook #'yf-major-mode-hooks--hook-func)
+
+
 (provide 'major-mode-hooks-setup)
