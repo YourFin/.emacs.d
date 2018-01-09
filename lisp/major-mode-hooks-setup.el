@@ -97,8 +97,8 @@ line in your .emacs || init.el
 This is to allow you to manually set `yf/major-mode-hooks-dir'
 without slowing down startup by calling `yf-major-mode-hooks-refresh',
 and to make clear that this should not be used in place of `require' on startup"
-  (load-file (or (gethash symbol yf/major-mode-hooks--table)
-		 (error (concat "Error: `yf-major-mode-hooks-run-symbol' could not find a file to match symbol " )))))
+  (or (yf-major-mode-hooks--run-symbol-internal symbol)
+      (error (concat "Error: `yf-major-mode-hooks-run-symbol' could not find a file to match symbol " ))))
 
 (defun yf-add-major-hook (requirement hook)
   "Adds requiring REQUIREMENT to HOOK"
