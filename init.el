@@ -34,7 +34,8 @@
 ;;; Major Packages
 (use-package helm
   :config
-  (add-hook 'after-init-hook 'helm-mode))
+  (add-hook 'after-init-hook 'helm-mode)
+  (helm-autoresize-mode 1))
 (use-package term)
 (use-package avy)
 (use-package projectile)
@@ -84,7 +85,7 @@
  '(nyan-mode nil)
  '(package-selected-packages
    (quote
-    (expand-reigon evil-cleverparens evil-embrace cider clojure-mode clojure aggressive-indent aggressive-indent-mode smart-tabs-mode yaml-mode crystal-mode emacs-crystal-mode wcheck evil-matchit evil-org undohist atomic-chrome helm-rails projectile-rails company-statistics julia-shell julia-repl julia-mode racket-mode logview git-gutter+-added-sign git-gutter+ magithub dumb-jump markdown-toc rvm robe eclim lua-mode company-math yatemplate iedit YATemplate evil-iedit-state hydra no-littering swiper-helm helm-flycheck xclip flycheck evil-mc smart-mode-line nyan-mode latex-preview-pane smartparens xah-find ranger git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
+    (evil-collection expand-reigon evil-cleverparens evil-embrace cider clojure-mode clojure aggressive-indent aggressive-indent-mode smart-tabs-mode yaml-mode crystal-mode emacs-crystal-mode wcheck evil-matchit evil-org undohist atomic-chrome helm-rails projectile-rails company-statistics julia-shell julia-repl julia-mode racket-mode logview git-gutter+-added-sign git-gutter+ magithub dumb-jump markdown-toc rvm robe eclim lua-mode company-math yatemplate iedit YATemplate evil-iedit-state hydra no-littering swiper-helm helm-flycheck xclip flycheck evil-mc smart-mode-line nyan-mode latex-preview-pane smartparens xah-find ranger git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
  '(projectile-mode t nil (projectile)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
