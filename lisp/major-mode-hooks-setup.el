@@ -19,7 +19,7 @@ usually called through `yf-major-mode-hooks-refresh'."
 		     :test 'equal
 		     :size (length dir-list)
 		     :rehash-size 1.1
-		     :rehash-threshold 1)))
+		     :rehash-threshold 0.9)))
 
 (defvar yf/major-mode-hooks--table
   (yf-major-mode-hooks--make-table)
@@ -55,7 +55,7 @@ whatever order the user desires.")
       ;;
       ;; TODO: figure out how to access the function portion
       ;; of put-hash-hooks-table to get rid of these stupid
-      ;; lambdas
+      ;; lambdas, and why symbol-function doesn't work for this
       (mapc (lambda (a) (put-hash-hooks-table a)) el-list)
       (mapc (lambda (a) (put-hash-hooks-table a)) elc-list))))
 
@@ -98,7 +98,7 @@ This is to allow you to manually set `yf/major-mode-hooks-dir'
 without slowing down startup by calling `yf-major-mode-hooks-refresh',
 and to make clear that this should not be used in place of `require' on startup"
   (or (yf-major-mode-hooks--run-symbol-internal symbol)
-      (error (concat "Error: `yf-major-mode-hooks-run-symbol' could not find a file to match symbol " ))))
+      (error (concat "Error: `yf-major-mode-hooks-run-symbol' could not find a file to match symbol " (symbol-name symbol)))))
 
 (defun yf-add-major-hook (requirement hook)
   "Adds requiring REQUIREMENT to HOOK"
