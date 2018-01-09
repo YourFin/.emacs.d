@@ -28,6 +28,8 @@ end run
 (defvar yf/default-shell "$(which zsh || which fish || which bash || which sh)" "The default command run for yf-run-outside-terminal")
 (defvar yf/run-outside-terminal-default-dir "the default directory for `yf-run-outside-terminal'
 In place for buffers that don't have files associated with them, i.e. Messages")
+(defvar yf/run-outside-terminal-daemonize t
+  "Whether to fork called terminals such that killing emacs will not kill them")
 
 (defun yf-run-outside-terminal (directory &optional external-command)
   "Open a terminal in the directory containing the current buffer.
@@ -37,15 +39,26 @@ Terminal command is stored in `yf/terminal-command'"
 		       (cond ((not open-file) yf/run-outside-termial-default-dir)
 			     ((file-directory-p open-file) open-file)
 			     ((file-exists-p open-file)  (file-name-directory open-file))))))
-  (let ((run-command (or external-command yf/default-shell)))
-    (start-process
-     (concat "Terminal--" directory "--" external-command) ;; name the process something reasonable
-     nil;; blackhole output
-     "bash"
-     "-c"
-     (concat "cd " directory " && "
-	     yf/terminal-command
-	     " -e " run-command))))
+  (let* ((run-command (or external-command yf/default-shell))
+	 (bash-command (concat
+			"cd " directory " && "
+			yf/terminal-command
+			" -e " run-command
+			(if yf/run-outside-terminal-daemonize "&"))))
+    (if yf/run-outside-terminal-daemonize
+	(start-process
+	 (concat "Terminal--" directory "--" external-command) ;; name the process something reasonable
+	 nil;; blackhole output
+	 "nohup"
+	 "bash"
+	 "-c"
+	 bash-command)
+      (start-process
+       (concat "Terminal--" directory "--" external-command)
+       nil
+       "bash"
+       "-c"
+       bash-command))))
 
 (use-package smartparens
   :config
