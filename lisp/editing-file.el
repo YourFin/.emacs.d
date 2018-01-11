@@ -86,6 +86,10 @@ Terminal command is stored in `yf/terminal-command'"
   :config
   (yas-global-mode 1))
 
+(use-package whitespace-cleanup-mode
+  :config
+  (global-whitespace-cleanup-mode))
+
 (use-package flycheck
   :config
   (with-eval-after-load 'flycheck
