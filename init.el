@@ -34,7 +34,8 @@
 ;;; Major Packages
 (use-package helm
   :config
-  (add-hook 'after-init-hook 'helm-mode))
+  (add-hook 'after-init-hook 'helm-mode)
+  (helm-autoresize-mode 1))
 (use-package term)
 (use-package avy)
 (use-package projectile)

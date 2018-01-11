@@ -25,6 +25,15 @@
   :config
   ;; Adds some nice text objects - (around/in) (f)orm, (c)omment, and (d)efun or a top level text object
   (require 'evil-cleverparens-text-objects)
+  (evil-define-key 'motion evil-cleverparens-mode-map
+    (kbd "{") 'evil-backward-paragraph
+    (kbd "}") 'evil-forward-paragraph)
+  (evil-define-key 'normal evil-cleverparens-mode-map
+    (kbd "{") 'evil-backward-paragraph
+    (kbd "}") 'evil-forward-paragraph)
+  (evil-define-key 'visual evil-cleverparens-mode-map
+    (kbd "{") 'evil-backward-paragraph
+    (kbd "}") 'evil-forward-paragraph)
   ;; TODO: move this to a lispy-mode file
   (mapc (lambda (lisp) (add-hook (intern lisp) #'evil-cleverparens-mode))
 	'("clojure-mode-hook" "emacs-lisp-mode-hook" "scheme-mode-hook" "lisp-mode-hook")))
@@ -225,7 +234,7 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 ;; Make swiper act like evil in terms
 ;; of where it leaves the cursor
 (defun yf--swiper-advice (&rest r)
-  (setq isearch-string (substring-no-properties (car swiper-history)))
+  ;;(setq isearch-string (substring-no-properties (car swiper-history)))
   (setq isearch-forward t)
   (evil-search-previous))
 (advice-add 'swiper :after #'yf--swiper-advice)
