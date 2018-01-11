@@ -225,10 +225,12 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 ;; Make swiper act like evil in terms
 ;; of where it leaves the cursor
 (defun yf--swiper-advice (&rest r)
+  (setq isearch-string (substring-no-properties (car swiper-history)))
+  (setq isearch-forward t)
   (evil-search-previous))
 (advice-add 'swiper :after #'yf--swiper-advice)
 (define-key evil-motion-state-map (kbd "/") 'swiper)
-(define-key swiper-map (kbd "C-j") 'down)
+
 (defun yf-swipe-selection (start end)
   "Calls swiper with the text from START to END in the current buffer
 Returns the current selection if called interactively"
