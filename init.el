@@ -52,6 +52,7 @@
 (setq find-function-C-source-directory (concat (getenv "emacs_home") "/path/to/source-dir"))
 
 (use-package evil
+  :init (evil-want-integration nil) ;; To make `evil-collection' happy
   :config (require 'evil-bindings))
 
 (eval-when-compile
