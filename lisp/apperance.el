@@ -11,10 +11,13 @@
 (use-package tangotango-theme)
 (load-theme 'tangotango t)
 
+(use-package beacon
+  :config (beacon-mode 1))
+
 ;;;Host specific
 (cond ((string-equal (system-name) "firecakes")	
-	(set-face-attribute 'default t :font "FiraHacked-22" :height 219)
-	))
+       (set-face-attribute 'default t :font "FiraHacked-22" :height 219)
+       ))
 
 (use-package rainbow-delimiters
   :config
