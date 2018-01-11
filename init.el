@@ -34,8 +34,7 @@
 ;;; Major Packages
 (use-package helm
   :config
-  (add-hook 'after-init-hook 'helm-mode)
-  (helm-autoresize-mode 1))
+  (add-hook 'after-init-hook 'helm-mode))
 (use-package term)
 (use-package avy)
 (use-package projectile)
@@ -52,7 +51,7 @@
 (setq find-function-C-source-directory (concat (getenv "emacs_home") "/path/to/source-dir"))
 
 (use-package evil
-  :init (evil-want-integration nil) ;; To make `evil-collection' happy
+  :init (setq evil-want-integration nil) ;; To make `evil-collection' happy
   :config (require 'evil-bindings))
 
 (eval-when-compile
@@ -62,7 +61,8 @@
 (require 'completion)
 (require 'global-bindings)
 (require 'major-modes)
-(require 'major-mode-hooks-setup)
+(add-to-list 'load-path "~/.emacs.d/lisp/auto-mode-files/")
+(require 'auto-mode-files-setup)
 
 
 ;; Machine specific Configurations
@@ -81,12 +81,13 @@
  '(custom-safe-themes
    (quote
     ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+ '(evil-collection-setup-minibuffer t)
  '(global-ycmd-mode t)
  '(linum-format (quote dynamic))
  '(nyan-mode nil)
  '(package-selected-packages
    (quote
-    (evil-collection expand-reigon evil-cleverparens evil-embrace cider clojure-mode clojure aggressive-indent aggressive-indent-mode smart-tabs-mode yaml-mode crystal-mode emacs-crystal-mode wcheck evil-matchit evil-org undohist atomic-chrome helm-rails projectile-rails company-statistics julia-shell julia-repl julia-mode racket-mode logview git-gutter+-added-sign git-gutter+ magithub dumb-jump markdown-toc rvm robe eclim lua-mode company-math yatemplate iedit YATemplate evil-iedit-state hydra no-littering swiper-helm helm-flycheck xclip flycheck evil-mc smart-mode-line nyan-mode latex-preview-pane smartparens xah-find ranger git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
+    (beacon evil-collection expand-reigon evil-cleverparens evil-embrace cider clojure-mode clojure aggressive-indent aggressive-indent-mode smart-tabs-mode yaml-mode crystal-mode emacs-crystal-mode wcheck evil-matchit evil-org undohist atomic-chrome helm-rails projectile-rails company-statistics julia-shell julia-repl julia-mode racket-mode logview git-gutter+-added-sign git-gutter+ magithub dumb-jump markdown-toc rvm robe eclim lua-mode company-math yatemplate iedit YATemplate evil-iedit-state hydra no-littering swiper-helm helm-flycheck xclip flycheck evil-mc smart-mode-line nyan-mode latex-preview-pane smartparens xah-find ranger git-gutter-fringe+ git-gutter sublimity adaptive-wrap ycmd company-ycm evil-magit helm-ag company-quickhelp company-jedi auto-package-update helm-smex smex company-ycmd emacs-ycmd python-django company jinja2-mode python-mode avy tangotange-theme use-package tangotango-theme markdown-mode helm evil ace-jump-mode)))
  '(projectile-mode t nil (projectile)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
