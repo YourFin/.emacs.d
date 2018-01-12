@@ -14,6 +14,9 @@
   :custom (evil-collection-setup-minibuffer t)
   :init (evil-collection-init))
 
+(use-package general
+  :config (general-evil-setup))
+
 ;; It's vim-surround but so much better!
 (use-package evil-embrace
   :config
@@ -55,7 +58,8 @@
   "Throws a space at the front of $keys
    and adds the binding to command to 
    evil-motion-state-map"
-  (define-key evil-motion-state-map (kbd (concat "<SPC>" keys)) command))
+  (general-nmap :prefix "SPC"
+		keys command))
 
 (evil-space-bind " <SPC>" 'helm-smex)
 
