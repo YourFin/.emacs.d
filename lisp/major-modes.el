@@ -24,5 +24,7 @@
 ;; For log files
 (use-package logview
   :defer t)
+(use-package geiser
+  :defer t)
 
 (provide 'major-modes)
