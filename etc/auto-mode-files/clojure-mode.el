@@ -14,8 +14,9 @@
  :prefix "SPC"
  :non-normal-prefix "M-SPC"
  :states '(normal insert emacs)
- "re" 'cider-eval-last-sexp
- "rE" (lambda () (cider-eval-last-sexp t))
+ "rs" 'cider-eval-last-sexp
+ "rS" (lambda () (cider-eval-last-sexp t))
+ "r" nil
  "rb" 'cider-eval-buffer
  "rd" 'cider-eval-defun-at-point
  "T" 'cider-test-run-project-tests
