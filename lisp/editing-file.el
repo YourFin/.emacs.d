@@ -81,6 +81,9 @@ Terminal command is stored in `yf/terminal-command'"
 (use-package aggressive-indent
   :config
   (global-aggressive-indent-mode 1))
+(use-package dtrt-indent
+  :config
+  (add-hook 'prog-mode-hook #'dtrt-indent-mode))
 
 (use-package yasnippet
   :config
