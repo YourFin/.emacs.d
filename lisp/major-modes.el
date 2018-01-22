@@ -26,5 +26,7 @@
   :defer t)
 (use-package geiser
   :defer t)
+(use-package dockerfile-mode
+  :defer t)
 
 (provide 'major-modes)
