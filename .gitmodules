@@ -1,0 +1,3 @@
+[submodule "gitfiles/auto-mode-files"]
+	path = gitfiles/auto-mode-files
+	url = https://github.com/YourFin/auto-mode-files.git
