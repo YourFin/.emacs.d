@@ -2,7 +2,7 @@
 ;;----This file dedicated to various editing tweaks that aren't evil related----;;
 
 (defvar yf/terminal-command (cond ((eq system-type 'gnu/linux) "xterm")
-				 ((eq system-type 'darwin) "echo '
+				  ((eq system-type 'darwin) "echo '
 echo '\"'\"'
 on run argv
   if length of argv is equal to 0
@@ -18,11 +18,11 @@ on run argv
   return newTab
 end run
 '\"'\"' | osascript - \"$2\" > /dev/null' | sh")
-				 ;; Partially stolen from:
-				 ;; https://web.archive.org/web/20171029205649/https://stackoverflow.com/questions/4404242/programmatically-launch-terminal-app-with-a-specified-command-and-custom-colors
-				 ;; I feel disgusting
-				 ;; TODO: figure out how the **** this works on windoze
-				   (t "#"))
+				  ;; Partially stolen from:
+				  ;; https://web.archive.org/web/20171029205649/https://stackoverflow.com/questions/4404242/programmatically-launch-terminal-app-with-a-specified-command-and-custom-colors
+				  ;; I feel disgusting
+				  ;; TODO: figure out how the **** this works on windoze
+				  (t "#"))
   "The command called when pulling up an outside terminal. Should not include a -e flag. Used by `yf-run-outside-terminal'")
 
 (defvar yf/default-shell "$(which zsh || which fish || which bash || which sh)" "The default command run for yf-run-outside-terminal")
@@ -154,6 +154,9 @@ Terminal command is stored in `yf/terminal-command'"
 
 ;; Better buffer names
 (require 'uniquify)
+
+;; Treemacs
+(require 'treemacs-setup)
 
 ;;;Variable Sets
 ;; I'm sorry RMS but you're wrong about this one
