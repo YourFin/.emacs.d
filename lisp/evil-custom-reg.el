@@ -1,4 +1,6 @@
-
+;; Evil-custom-reg.el
+;; This file contains all of the special binds I have that make killing things in
+;; emacs behave better.
 (require 'evil)
 ;;setup
 (defvar yf/kill-to-second nil "Whether to kill to the second position or first")
