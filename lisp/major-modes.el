@@ -28,5 +28,8 @@
   :defer t)
 (use-package dockerfile-mode
   :defer t)
+(use-package ensime
+  :defer t
+  :pin melpa-stable)
 
 (provide 'major-modes)
