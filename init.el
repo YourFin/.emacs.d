@@ -65,7 +65,6 @@
 
 (add-to-list 'load-path "~/.emacs.d/gitfiles/auto-mode-files/")
 (require 'auto-mode-files-setup)
-(auto-mode-files-refresh)
 
 
 ;; Machine specific Configurations
