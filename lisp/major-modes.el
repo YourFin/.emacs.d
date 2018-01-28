@@ -24,10 +24,14 @@
 ;; For log files
 (use-package logview
   :defer t)
+;; Scheme
 (use-package geiser
+  :defer t)
+(use-package racket-mode
   :defer t)
 (use-package dockerfile-mode
   :defer t)
+;; scala
 (use-package ensime
   :defer t
   :pin melpa-stable)
