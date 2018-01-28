@@ -4,10 +4,14 @@
   (interactive (list (buffer-file-name)))
   "Automatically runs the tests in `file-to-test'-test.rkt
 and complains about the failed cases"
-  (let* ((test-file-name
+  (let* ((test-file-essential-name
+	  (file-name-nondirectory (file-name-sans-extension file-to-test)))
+	 (test-file-name
 	  (concat (file-name-directory file-to-test)
-		  (file-name-nondirectory (file-name-sans-extension file-to-test))
-		  "-test."
+		  test-file-essential-name
+		  (if (string-match-p "-test$" test-file-essential-name)
+		      "."
+		    "-test.")
 		  (file-name-extension file-to-test))))
     (message (or (shell-command-to-string (concat "raco test " test-file-name)) "All tests passed"))
     ))
