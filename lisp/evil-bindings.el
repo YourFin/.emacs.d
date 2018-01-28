@@ -228,11 +228,6 @@ Returns the current selection if called interactively"
 
 (define-key evil-insert-state-map (kbd "C-y") 'yas-expand)
 
-;; avy
-(define-key evil-motion-state-map (kbd "J") 'evil-avy-goto-word-or-subword-1)
-(define-key evil-normal-state-map (kbd "J") 'evil-avy-goto-word-or-subword-1)
-(define-key evil-motion-state-map (kbd "K") 'evil-avy-goto-char-timer) 
-
 ;; Undo-tree
 (defun yf--undo-tree-visualizer-advice (&rest r)
   (evil-local-mode 1))
