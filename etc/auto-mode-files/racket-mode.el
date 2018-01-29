@@ -16,4 +16,16 @@ and complains about the failed cases"
     (message (or (shell-command-to-string (concat "raco test " test-file-name)) "All tests passed"))
     ))
 
+(general-define-key
+ :keymaps 'racket-mode-map
+ :prefix "SPC"
+ :non-normal-prefix "M-SPC"
+ :states '(normal insert emacs)
+ "rb" 'racket-run
+ "rB" 'racket-run-and-switch-to-repl
+ "t" 'yf-run-raco-tests)
+
+(turn-on-pretty-mode)
+
+
 ;;racket-mode.el ends here
