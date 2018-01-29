@@ -35,5 +35,7 @@
 (use-package ensime
   :defer t
   :pin melpa-stable)
+(use-package pdf-tools
+  :defer t)
 
 (provide 'major-modes)
