@@ -226,7 +226,10 @@ Returns the current selection if called interactively"
 (define-key swiper-map (kbd "C-v") 'yank)
 (define-key swiper-map (kbd "C-c") 'minibuffer-keyboard-quit)
 
-(define-key evil-insert-state-map (kbd "C-y") 'yas-expand)
+(general-define-key
+ :states '(normal insert)
+ "C-y" 'yas-expand
+ "C-s" 'sp-forward-slurp-sexp)
 
 ;; Undo-tree
 (defun yf--undo-tree-visualizer-advice (&rest r)
