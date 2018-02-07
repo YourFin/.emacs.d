@@ -52,7 +52,10 @@ Terminal command is stored in `yf/terminal-command'"
 	 "nohup"
 	 "bash"
 	 "-c"
-	 bash-command)
+	 bash-command
+	 "</dev/null"
+	 ">/dev/null"
+	 "2>&1")
       (start-process
        (concat "Terminal--" directory "--" external-command)
        nil
