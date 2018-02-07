@@ -37,5 +37,12 @@
   :pin melpa-stable)
 (use-package pdf-tools
   :defer t)
+(use-package rust-mode
+  :defer t
+  :config
+  (use-package racer
+    :config
+    (add-hook 'rust-mode-hook #'racer-mode)
+    (add-hook 'racer-mode-hook #'eldoc-mode)))
 
 (provide 'major-modes)
