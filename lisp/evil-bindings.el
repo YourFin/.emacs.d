@@ -76,6 +76,7 @@
 
 ;;files
 (evil-space-bind "bb" 'save-buffer)
+(evil-space-bind "bB" 'write-file)
 (evil-space-bind "bs" 'yf-switch-buffer)
 (evil-space-bind "bS" 'helm-mini)
 (evil-space-bind "bo" 'ranger)
