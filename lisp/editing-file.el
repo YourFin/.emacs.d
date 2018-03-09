@@ -78,7 +78,19 @@ Terminal command is stored in `yf/terminal-command'"
 				  ((equal ms "'")
 				   (or (sp--org-skip-markup ms mb me)
 				       (not (sp-point-in-string-or-comment))))
-				  (t (not (sp-point-in-string-or-comment)))))))
+				  (t (not (sp-point-in-string-or-comment))))))
+    )
+  (sp-local-pair 'c++-mode "{" nil :post-handlers '((yf--create-newline-and-enter-sexp "RET")))
+  (sp-local-pair 'c-mode "{" nil :post-handlers '((yf--create-newline-and-enter-sexp "RET")))
+  (sp-local-pair 'java-mode "{" nil :post-handlers '((yf--create-newline-and-enter-sexp "RET")))
+  (sp-local-pair 'ruby-mode "{" nil :post-handlers '((yf--create-newline-and-enter-sexp "RET")))
+
+  (defun yf--create-newline-and-enter-sexp (&rest _ignored)
+    "Open a new brace or bracket expression, with relevant newlines and indent. "
+    (newline)
+    (indent-according-to-mode)
+    (forward-line -1)
+    (indent-according-to-mode))
   (add-hook 'prog-mode-hook 'smartparens-mode))
 
 (use-package aggressive-indent
