@@ -14,6 +14,8 @@
   :defer t)
 (use-package yaml-mode
   :defer t)
+(use-package toml-mode
+  :defer t)
 ;; clojure ide
 (use-package cider
   :defer t
@@ -44,5 +46,14 @@
     :config
     (add-hook 'rust-mode-hook #'racer-mode)
     (add-hook 'racer-mode-hook #'eldoc-mode)))
+(use-package ess
+  :defer t
+  :config
+  (setq ess-use-auto-complete t)
+  (setq ess-tab-complete-in-script t))
+;;(use-package julia-mode
+;;  :defer t
+;;  :config
+;;  (use-package julia-shell))
 
 (provide 'major-modes)
