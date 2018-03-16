@@ -57,9 +57,26 @@
   (set-face-background 'linum "black"))
 (add-hook 'prog-mode-hook #'my-linum)
 
+;; Wrapping
 (defvar yf/wrapping-linum-display
   `((magin lefit-margin) ,(propertize "-----" 'face 'linum))
   "string used on margin")
+
+(use-package adaptive-wrap
+  :config (add-hook 'prog-mode-hook 'adaptive-wrap-prefix-mode))
+
+;;; automatically wrap comments around correctly
+(auto-fill-mode)
+(setq comment-auto-fill-only-comments t)
+
+;; Draws a line at fill column length
+(use-package fill-column-indicator
+  :defer t
+  :config
+  (defun yf-fill-column-indicator-mode
+      "alias to fci-mode"
+    (interactive)
+    (fci-mode)))
 
 ;;; Specific to GUI emacs
 (when (display-graphic-p) 
@@ -197,21 +214,6 @@
 
     (add-hook 'prog-mode-hook
               #'add-fira-code-symbol-keywords)))
-
-;; exclusivly for smooth scrolling
-;;(use-package sublimity
-;;  :config
-;;  (require 'sublimity-scroll)
-;;  (setq sublimity-scroll-weight 8)
-;;  (setq sublimity-scroll-drift-length 2)
-;;  (sublimity-mode 1))
-
-(use-package adaptive-wrap
-  :config (add-hook 'prog-mode-hook 'adaptive-wrap-prefix-mode))
-
-;;; automatically wrap comments around correctly
-(auto-fill-mode)
-(setq comment-auto-fill-only-comments t)
 
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
