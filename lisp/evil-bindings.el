@@ -230,7 +230,7 @@ Returns the current selection if called interactively"
 (general-define-key
  :states '(normal insert)
  "C-y" 'yas-expand
- "C-s" 'sp-forward-slurp-sexp)
+ "C-s" 'evil-cp->)
 
 ;; Undo-tree
 (defun yf--undo-tree-visualizer-advice (&rest r)
