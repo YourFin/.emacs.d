@@ -251,4 +251,4 @@ but theoretically any minor mode could be added fairly trivially"
   (when heretic-evil-clipboard-mode
     (heretic-evil-clipboard-mode)))
 
-(provide 'heretic-evil-clipboard)
+(provide 'heretic-evil-clipboard-mode)
