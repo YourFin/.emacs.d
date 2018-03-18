@@ -13,6 +13,7 @@ other truthy value: kill-new inserts into the second position in the kill ring
 Should start with a space")
 (defvar heretic-evil-clipboard//paste-kill nil
   "Internal variable for handling `heretic-evil-clipboard-p'")
+;; This advice does most of the heavy lifting for heretic-evil-clipboard-mode.
 (defadvice kill-new (around my-kill-new-2nd)
   "Advice around `kill-new' for `heretic-evil-clipboard/kill-to-second'"
   (cond
@@ -72,29 +73,27 @@ and adds replaced text to second location in kill ring
 if needed. The return value is the yanked text."
   :suppress-operator t
   (interactive "P<x>")
-  ;; The reason for this redefining of how `current-kill'
-  ;; works has to do with how `evil-visual-paste'
-  ;; is implemented, and its interaction with the advice
-  ;; for `kill-new' at the top of this file. Down a few lines
-  ;; in the definition of evil visual paste there are these
-  ;; three lines, which handle
-  ;;(evil-normal-state)
-  ;;(setq new-kill (current-kill 0))
-  ;;(current-kill 1)
+  ;; See the above `kill-new' advice for
+  ;; comments on the rational here
   (let ((heretic-evil-clipboard//paste-kill 'first))
     (evil-paste-after count register yank-handler))
+  ;; Make sure we always set `heretic-evil-clipboard//paste-kill'
+  ;; back to nil
   (setq heretic-evil-clipboard//paste-kill nil))
 (heretic-evil-clipboard--bind "p" #'heretic-evil-clipboard-p)
 
 (evil-define-command heretic-evil-clipboard-P
   (count &optional register yank-handler)
-  "Pastes the latest yanked text in front of point,
-and adds replaced text to second location in kill ring
-if needed. The return value is the yanked text."
+  "Pastes the latest yanked text in front of point.
+In visual mode, it instead replaces the text and does
+put it at the top of the kill ring, unlike
+`heretic-evil-clipboard-p'"
   :suppress-operator t
   (interactive "P<x>")
-  (let ((heretic-evil-clipboard/kill-to-second t))
-    (evil-paste-before count register yank-handler)))
+  (if (evil-visual-state-p)
+      (evil-paste-after count register yank-handler)
+    (let ((heretic-evil-clipboard/kill-to-second t))
+      (evil-paste-after count register yank-handler))))
 (heretic-evil-clipboard--bind "P" #'heretic-evil-clipboard-P)
 
 (evil-define-operator heretic-evil-clipboard-gy (beg end type register yank-handler)
