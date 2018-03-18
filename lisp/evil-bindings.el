@@ -41,6 +41,10 @@
   (mapc (lambda (lisp) (add-hook (intern lisp) #'evil-cleverparens-mode))
 	'("clojure-mode-hook" "emacs-lisp-mode-hook" "scheme-mode-hook" "lisp-mode-hook")))
 
+;; Heretic evil clipboard mode
+(require 'heretic-evil-clipboard-mode)
+(add-hook 'evil-mode-hook #'heretic-evil-clipboard-mode-on)
+
 (use-package expand-region
   :config
   (define-key evil-visual-state-map "o" 'er/expand-region)
@@ -294,29 +298,25 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
 ;; able to get to this from everywhere
 (global-set-key (kbd "C-w") 'yf-evil-windows/body)
 
-
-;;;evil-delete stuff
-(require 'evil-custom-reg)
-
-;(define-key evil-normal-state-map (kbd "C-S-H")
-;  (lambda () "Moves the cursor left and adds a cursor" (interactive)
-;    (evil-backward-char)
-;    (evil-mc-make-cursor-here)))
-;
-;(define-key evil-normal-state-map (kbd "C-S-L")
-;  (lambda () "Moves the cursor right and adds a cursor" (interactive)
-;    (evil-forward-char)
-;    (evil-mc-make-cursor-here)))
-;
-;(define-key evil-normal-state-map (kbd "C-S-J")
-;  (lambda () "Moves the cursor up and adds a cursor" (interactive)
-;    (evil-next-line)
-;    (evil-mc-make-cursor-here)))
-;
-;(define-key evil-normal-state-map (kbd "C-S-K")
-;  (lambda () "Moves the cursor down and adds a cursor" (interactive)
-;    (evil-previous-line)
-;    (evil-mc-make-cursor-here)))
+;;(define-key evil-normal-state-map (kbd "C-S-H")
+;;  (lambda () "Moves the cursor left and adds a cursor" (interactive)
+;;    (evil-backward-char)
+;;    (evil-mc-make-cursor-here)))
+;;
+;;(define-key evil-normal-state-map (kbd "C-S-L")
+;;  (lambda () "Moves the cursor right and adds a cursor" (interactive)
+;;    (evil-forward-char)
+;;    (evil-mc-make-cursor-here)))
+;;
+;;(define-key evil-normal-state-map (kbd "C-S-J")
+;;  (lambda () "Moves the cursor up and adds a cursor" (interactive)
+;;    (evil-next-line)
+;;    (evil-mc-make-cursor-here)))
+;;
+;;(define-key evil-normal-state-map (kbd "C-S-K")
+;;  (lambda () "Moves the cursor down and adds a cursor" (interactive)
+;;    (evil-previous-line)
+;;    (evil-mc-make-cursor-here)))
 
 ;;; Helm rebinds
 (define-key helm-map (kbd "M-j") 'helm-next-line)
