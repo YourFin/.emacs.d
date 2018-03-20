@@ -46,6 +46,12 @@
     :config
     (add-hook 'rust-mode-hook #'racer-mode)
     (add-hook 'racer-mode-hook #'eldoc-mode)))
+(use-package kotlin-mode
+  :defer t
+  :config
+  (use-package flycheck-kotlin
+    :config
+    (flycheck-kotlin-setup)))
 (use-package ess
   :defer t
   :config

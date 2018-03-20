@@ -83,6 +83,7 @@ Terminal command is stored in `yf/terminal-command'"
   (sp-local-pair 'c++-mode "{" nil :post-handlers '((yf--create-newline-and-enter-sexp "RET")))
   (sp-local-pair 'c-mode "{" nil :post-handlers '((yf--create-newline-and-enter-sexp "RET")))
   (sp-local-pair 'java-mode "{" nil :post-handlers '((yf--create-newline-and-enter-sexp "RET")))
+  (sp-local-pair 'kotlin-mode "{" nil :post-handlers '((yf--create-newline-and-enter-sexp "RET")))
   (sp-local-pair 'ruby-mode "{" nil :post-handlers '((yf--create-newline-and-enter-sexp "RET")))
 
   (defun yf--create-newline-and-enter-sexp (&rest _ignored)
