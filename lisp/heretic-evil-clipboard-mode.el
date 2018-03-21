@@ -239,13 +239,13 @@ but theoretically any minor mode could be added fairly trivially"
   (heretic-evil-clipboard--bind "p" #'heretic-evil-clipboard-p)
 )
 
-(defun heretic-evil-clipboard-mode-on
-    "Turn on `heretic-evil-clipboard-mode'."
+(defun heretic-evil-clipboard-mode-on ()
+  "Turn on `heretic-evil-clipboard-mode'."
   (interactive)
   (unless heretic-evil-clipboard-mode
     (heretic-evil-clipboard-mode)))
-(defun heretic-evil-clipboard-mode-off
-    "Turn off `heretic-evil-clipboard-mode'"
+(defun heretic-evil-clipboard-mode-off ()
+  "Turn off `heretic-evil-clipboard-mode'"
   (interactive)
   (when heretic-evil-clipboard-mode
     (heretic-evil-clipboard-mode)))
