@@ -148,7 +148,71 @@ and opens up helm switch buffer"
 (evil-space-bind "ur" 'redraw-display)
 (evil-space-bind "ut" 'yf-run-outside-terminal)
 
-;; helm kill ring
+;; evil helm kill ring
+(require 'helm-ring)
+(defcustom yf-evil-helm-kill-ring--actions
+  '(("Paste after (no override in visual)" .
+     (lambda (_str)
+       (let ((marked (helm-marked-candidates))
+             (sep (if (equal helm-current-prefix-arg '(16))
+                      (read-string "Separator: ")
+                    helm-kill-ring-separator))
+             kill-ring
+             interprogram-cut-function
+             interprogram-paste-function)
+         ;; Mask off the old kill ring, and don't
+         ;; paste anywhere
+         (kill-new 
+          ;; Taken from `helm-kill-ring-action-yank'
+          (cl-loop for c in (butlast marked)
+                   concat (concat c sep) into str
+                   finally return (concat str (car (last marked)))))
+         (heretic-evil-clipboard-p 1))))
+    ("Paste before (override in visual)" .
+     (lambda (_str)
+       (let ((marked (helm-marked-candidates))
+             (sep (if (equal helm-current-prefix-arg '(16))
+                      (read-string "Separator: ")
+                    helm-kill-ring-separator))
+             kill-ring
+             interprogram-cut-function
+             interprogram-paste-function)
+         ;; Mask off the old kill ring, and don't
+         ;; paste anywhere
+         (kill-new 
+          ;; Taken from `helm-kill-ring-action-yank'
+          (cl-loop for c in (butlast marked)
+                   concat (concat c sep) into str
+                   finally return (concat str (car (last marked)))))
+         (heretic-evil-clipboard-P 1)))))
+  "List of actions for yf kill ring source"
+  ;; From `helm-kill-ring-actions'
+  :group 'helm-ring
+  :type '(alist :key-type string :value-type function))
+
+(defvar yf-evil-helm-kill-ring--source
+  (helm-build-sync-source "Kill Ring"
+    :init (lambda ()
+            (helm-attrset 'last-command last-command)
+            (helm-attrset 'multiline helm-kill-ring-max-offset))
+    :candidates #'helm-kill-ring-candidates
+    :filtered-candidate-transformer #'helm-kill-ring-transformer
+    :action 'yf-evil-helm-kill-ring--actions
+    :persistent-action 'ignore
+    :help-message 'helm-kill-ring-help-message
+    :persistent-help "DoNothing"
+    :keymap helm-kill-ring-map
+    :migemo t
+    :multiline 'helm-kill-ring-max-offset
+    :group 'helm-ring)
+  "Helm source for `yf-evil-helm-kill-ring'")
+
+(defun yf-evil-helm-kill-ring ()
+  (interactive)
+  (let ((enable-recursive-minibuffers t))
+    (helm :sources yf-evil-helm-kill-ring--source
+          :buffer "*helm evil kill ring"
+          :resume 'noresume)))
 (evil-space-bind "k" 'helm-show-kill-ring)
 ;; mark ring
 (evil-space-bind "m" 'helm-all-mark-rings)
