@@ -157,16 +157,16 @@ and opens up helm switch buffer"
              (sep (if (equal helm-current-prefix-arg '(16))
                       (read-string "Separator: ")
                     helm-kill-ring-separator))
-             kill-ring
-             interprogram-cut-function
-             interprogram-paste-function)
+             (old-kill-ring kill-ring)
+             (to-paste
+              ;; Taken from `helm-kill-ring-action-yank'
+              (cl-loop for c in (butlast marked)
+                       concat (concat c sep) into str
+                       finally return (concat str (car (last marked))))))
          ;; Mask off the old kill ring, and don't
          ;; paste anywhere
          (kill-new 
-          ;; Taken from `helm-kill-ring-action-yank'
-          (cl-loop for c in (butlast marked)
-                   concat (concat c sep) into str
-                   finally return (concat str (car (last marked)))))
+          )
          (heretic-evil-clipboard-p 1))))
     ("Paste before (override in visual)" .
      (lambda (_str)
