@@ -87,9 +87,8 @@ put it at the top of the kill ring, unlike
   :suppress-operator t
   (interactive "P<x>")
   (if (evil-visual-state-p)
-      (evil-paste-after count register yank-handler)
-    (let ((heretic-evil-clipboard/kill-to-second t))
-      (evil-paste-after count register yank-handler))))
+      (heretic-evil-clipboard-p count register yank-hander)
+    (evil-paste-before count register yank-handler)))
 (heretic-evil-clipboard--bind "P" #'heretic-evil-clipboard-P)
 
 (evil-define-operator heretic-evil-clipboard-gy (beg end type register yank-handler)
@@ -235,7 +234,10 @@ so as to keep them accessible, and adds a dedicated deletion key
 clipboard.
 
 This mode currently has built in support for `evil-cleverparens-mode',
-but theoretically any minor mode could be added in a similar manner"
+but theoretically any minor mode could be added in a similar manner
+
+To further motivate usage of your new and improved `kill-ring', 
+`heretic-evil-clipboard-mode' provides heretic-evil-helm-kill-ring"
   :lighter heretic-evil-clipboard/mode-line-name
   :keymap (make-sparse-keymap)
   ;; Keymap switching handled by evil mode
@@ -257,5 +259,73 @@ but theoretically any minor mode could be added in a similar manner"
   (interactive)
   (when heretic-evil-clipboard-mode
     (heretic-evil-clipboard-mode)))
+
+;; evil helm kill ring
+(when (boundp 'helm-mode)
+  (require 'helm-ring)
+  (defcustom heretic-evil-helm-kill-ring--actions
+    '(("Paste after (no override in visual)" .
+       (lambda (_str)
+         (let ((marked (helm-marked-candidates))
+               (sep (if (equal helm-current-prefix-arg '(16))
+                        (read-string "Separator: ")
+                      helm-kill-ring-separator))
+               (old-kill-ring kill-ring)
+               (to-paste
+                ;; Taken from `helm-kill-ring-action-yank'
+                (cl-loop for c in (butlast marked)
+                         concat (concat c sep) into str
+                         finally return (concat str (car (last marked))))))
+           ;; Mask off the old kill ring, and don't
+           ;; paste anywhere
+           (kill-new 
+            )
+           (heretic-evil-clipboard-p 1))))
+      ("Paste before (override in visual)" .
+       (lambda (_str)
+         (let ((marked (helm-marked-candidates))
+               (sep (if (equal helm-current-prefix-arg '(16))
+                        (read-string "Separator: ")
+                      helm-kill-ring-separator))
+               kill-ring
+               interprogram-cut-function
+               interprogram-paste-function)
+           ;; Mask off the old kill ring, and don't
+           ;; paste anywhere
+           (kill-new 
+            ;; Taken from `helm-kill-ring-action-yank'
+            (cl-loop for c in (butlast marked)
+                     concat (concat c sep) into str
+                     finally return (concat str (car (last marked)))))
+           (heretic-evil-clipboard-P 1)))))
+    "List of actions for heretic kill ring source"
+    ;; From `helm-kill-ring-actions'
+    :group 'helm-ring
+    :type '(alist :key-type string :value-type function))
+
+  (defvar heretic-evil-helm-kill-ring--source
+    (helm-build-sync-source "Kill Ring"
+      :init (lambda ()
+              (helm-attrset 'last-command last-command)
+              (helm-attrset 'multiline helm-kill-ring-max-offset))
+      :candidates #'helm-kill-ring-candidates
+      :filtered-candidate-transformer #'helm-kill-ring-transformer
+      :action 'heretic-evil-helm-kill-ring--actions
+      :persistent-action 'ignore
+      :help-message 'helm-kill-ring-help-message
+      :persistent-help "DoNothing"
+      :keymap helm-kill-ring-map
+      :migemo t
+      :multiline 'helm-kill-ring-max-offset
+      :group 'helm-ring)
+    "Helm source for `heretic-evil-helm-kill-ring'")
+
+  (defun heretic-evil-helm-kill-ring ()
+    (interactive)
+    (let ((enable-recursive-minibuffers t))
+      (helm :sources heretic-evil-helm-kill-ring--source
+            :buffer "*helm evil kill ring"
+            :resume 'noresume)))
+  )
 
 (provide 'heretic-evil-clipboard-mode)
