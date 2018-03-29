@@ -11,6 +11,9 @@
 (use-package tangotango-theme)
 (load-theme 'tangotango t)
 
+;; Make scrolling happen not quite at the bottom of the screen
+(setq scroll-margin 3)
+
 (use-package beacon
   :config (beacon-mode 1))
 
