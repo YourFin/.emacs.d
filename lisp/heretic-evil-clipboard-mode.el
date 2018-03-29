@@ -5,8 +5,7 @@
 
 (defvar heretic-evil-clipboard/kill-to-second nil
   "nil: `kill-new' acts normally
-'blackhole : kill-new ignores the kill ring and doesn't affect the clipboard
-other truthy value: kill-new inserts into the second position in the kill ring
+truthy value: kill-new inserts into the second position in the kill ring
                      and ignores the system clipboard")
 (defvar heretic-evil-clipboard/mode-line-name " heretic-clip"
   "The mode-line name for `heretic-evil-clipboard-mode'.
@@ -40,9 +39,6 @@ Should start with a space")
     (let ((kill-do-not-save-duplicates t))
       (kill-new (cadr kill-ring))
       ))
-   ((eq heretic-evil-clipboard/kill-to-second 'blackhole)
-    ;; Don't do anything
-    )
    ((and kill-ring (bound-and-true-p heretic-evil-clipboard/kill-to-second))
     (let ((real-kill-ring kill-ring)
 	  (kill-ring (cdr kill-ring))
@@ -131,20 +127,22 @@ put it at the top of the kill ring, unlike
   "Evil-delete-char that dumps to 2nd in kill ring by default"
   :motion evil-forward-char
   (interactive "<R><x>")
-  (let ((heretic-evil-clipboard/kill-to-second 'blackhole))
-    (if evil-cleverparens-mode
-        (evil-cp-delete-or-splice beg end type register)
-      (evil-delete-char beg end type register))))
+  ;; Blackhole by default
+  (unless register (setq register ?_))
+  (if evil-cleverparens-mode
+      (evil-cp-delete-char-or-splice beg end type register)
+    (evil-delete-char beg end type register)))
 (heretic-evil-clipboard--bind "x" #'heretic-evil-clipboard-x)
 
 (evil-define-operator heretic-evil-clipboard-X (beg end type register)
   "Evil-delete-backward-char that dumps to 2nd in kill ring by default"
   :motion evil-backward-char
   (interactive "<R><x>")
-  (let ((heretic-evil-clipboard/kill-to-second blackhole))
-    (if evil-cleverparens-mode
-        (evil-cp-delete-or-splice-backwards beg end type register)
-      (evil-delete-backward-char beg end type register))))
+  ;; Blackhole by default
+  (unless register (setq register ?_))
+  (if evil-cleverparens-mode
+      (evil-cp-delete-char-or-splice-backwards beg end type register)
+    (evil-delete-backward-char beg end type register)))
 (heretic-evil-clipboard--bind "X" #'heretic-evil-clipboard-X)
 
 (evil-define-operator heretic-evil-clipboard-d (beg end type register yank-handler)
@@ -223,7 +221,9 @@ put it at the top of the kill ring, unlike
 (evil-define-operator heretic-evil-clipboard-s (beg end type register)
   :motion evil-forward-char
   (interactive "<R><x>")
-  (let ((heretic-evil-clipboard/kill-to-second 'blackhole))
+  (unless register (setq register ?_))
+  (if evil-cleverparens-mode
+      (evil-cp-change beg end type register)
     (evil-change beg end type register)))
 (heretic-evil-clipboard--bind "s" #'heretic-evil-clipboard-s)
 
@@ -235,18 +235,23 @@ so as to keep them accessible, and adds a dedicated deletion key
 clipboard.
 
 This mode currently has built in support for `evil-cleverparens-mode',
-but theoretically any minor mode could be added fairly trivially"
+but theoretically any minor mode could be added in a similar manner"
   :lighter heretic-evil-clipboard/mode-line-name
   :keymap (make-sparse-keymap)
+  ;; Keymap switching handled by evil mode
   :global nil
-  (heretic-evil-clipboard--bind "p" #'heretic-evil-clipboard-p)
-)
+  )
 
+;;;###autoload
 (defun heretic-evil-clipboard-mode-on ()
   "Turn on `heretic-evil-clipboard-mode'."
   (interactive)
   (unless heretic-evil-clipboard-mode
     (heretic-evil-clipboard-mode)))
+;;;###autoload
+(define-globalized-minor-mode global-heretic-evil-clipboard-mode
+  heretic-evil-clipboard-mode  heretic-evil-clipboard-mode-on)
+;;;###autoload
 (defun heretic-evil-clipboard-mode-off ()
   "Turn off `heretic-evil-clipboard-mode'"
   (interactive)
