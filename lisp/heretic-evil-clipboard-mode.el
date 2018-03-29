@@ -124,8 +124,7 @@ put it at the top of the kill ring, unlike
   :repeat nil
   (interactive "<R><x>")
   (let ((heretic-evil-clipboard/kill-to-second t))
-    (evil-yank-line beg end type register yank-handler))
-  )
+    (evil-yank-line beg end type register yank-handler)))
 (heretic-evil-clipboard--bind "gY" #'heretic-evil-clipboard-gY)
 
 (evil-define-operator heretic-evil-clipboard-x (beg end type register)
@@ -133,7 +132,9 @@ put it at the top of the kill ring, unlike
   :motion evil-forward-char
   (interactive "<R><x>")
   (let ((heretic-evil-clipboard/kill-to-second 'blackhole))
-    (evil-delete-char beg end type register)))
+    (if evil-cleverparens-mode
+        (evil-cp-delete-or-splice beg end type register)
+      (evil-delete-char beg end type register))))
 (heretic-evil-clipboard--bind "x" #'heretic-evil-clipboard-x)
 
 (evil-define-operator heretic-evil-clipboard-X (beg end type register)
@@ -141,14 +142,16 @@ put it at the top of the kill ring, unlike
   :motion evil-backward-char
   (interactive "<R><x>")
   (let ((heretic-evil-clipboard/kill-to-second blackhole))
-    (evil-delete-backward-char beg end type register)))
+    (if evil-cleverparens-mode
+        (evil-cp-delete-or-splice-backwards beg end type register)
+      (evil-delete-backward-char beg end type register))))
 (heretic-evil-clipboard--bind "X" #'heretic-evil-clipboard-X)
 
 (evil-define-operator heretic-evil-clipboard-d (beg end type register yank-handler)
   "Evil-delete that dumps to 2nd in kill ring by default"
   (interactive "<R><x><y>")
   (let ((heretic-evil-clipboard/kill-to-second t))
-    (if (fboundp 'evil-cp-delete)
+    (if evil-cleverparens-mode
         (evil-cp-delete beg end type register)
       (evil-delete beg end type register))))
 (heretic-evil-clipboard--bind "d" #'heretic-evil-clipboard-d)
@@ -158,7 +161,7 @@ put it at the top of the kill ring, unlike
   :motion evil-end-of-line
   (interactive "<R><x>")
   (let ((heretic-evil-clipboard/kill-to-second t))
-    (if (fboundp 'evil-cp-delete-line)
+    (if evil-cleverparens-mode
         (evil-cp-delete-line beg end type register)
       (evil-delete-line beg end type register))))
 (heretic-evil-clipboard--bind "D" #'heretic-evil-clipboard-D)
@@ -167,7 +170,7 @@ put it at the top of the kill ring, unlike
   "Evil-delete that sets custom clipboard along with standard kill"
   (interactive "<R><x><y>")
   (let ((heretic-evil-clipboard/kill-to-second nil))
-    (if (fboundp 'evil-cp-delete)
+    (if evil-cleverparens-mode
         (evil-cp-delete beg end type register yank-handler)
       (evil-delete beg end type register yank-handler))))
 (heretic-evil-clipboard--bind "m" #'heretic-evil-clipboard-m)
@@ -177,7 +180,7 @@ put it at the top of the kill ring, unlike
   :motion evil-end-of-line
   (interactive "<R><x>")
   (let ((heretic-evil-clipboard/kill-to-second nil))
-    (if (fboundp 'evil-cp-delete-line)
+    (if evil-cleverparens-mode
         (evil-cp-delete-line beg end type register)
       (evil-delete-line beg end type register))))
 (heretic-evil-clipboard--bind "M" #'heretic-evil-clipboard-M)
@@ -186,7 +189,7 @@ put it at the top of the kill ring, unlike
   "Evil-change that dumps to 2nd in kill ring but not clipboard"
   (interactive "<R><x><y>")
   (let ((heretic-evil-clipboard/kill-to-second t))
-    (if (fboundp 'evil-cp-change)
+    (if evil-cleverparens-mode
         (evil-cp-change beg end type register yank-handler)
       (evil-change beg end type register yank-handler)))
   )
