@@ -45,6 +45,8 @@
 (require 'heretic-evil-clipboard-mode)
 (add-hook 'evil-mode-hook #'heretic-evil-clipboard-mode-on)
 
+(require 'evil-space-binds)
+
 (use-package expand-region
   :config
   (define-key evil-visual-state-map "o" 'er/expand-region)
@@ -64,172 +66,12 @@
    "M-j" 'treemacs-next-line-other-window
    "M-k" 'treemacs-previous-line-other-window))
 
-
-;; ----------- Space binds ------------ ;
-;; unmap normal space
-(define-key evil-motion-state-map " " nil)
-
-(defun evil-space-bind (keys command)
-  "Throws a space at the front of $keys
-   and adds the binding to command to 
-   evil-motion-state-map"
-  (general-nmap :prefix "SPC"
-		keys command))
-
-(evil-space-bind " <SPC>" 'helm-smex)
-
-;;files
-(evil-space-bind "bb" 'save-buffer)
-(evil-space-bind "bB" 'write-file)
-(evil-space-bind "bs" 'yf-switch-buffer)
-(evil-space-bind "bS" 'helm-mini)
-(evil-space-bind "bo" 'ranger)
-(evil-space-bind "bO" 'helm-find-files)
-(evil-space-bind "bx" 'kill-this-buffer)
-(evil-space-bind "bX" 'kill-buffer)
-(evil-space-bind "bl" 'evil-switch-to-windows-last-buffer)
-
-;; Windows
-(defun hsplit-recents ()
-  "splits the current window horizontally
-and opens up helm switch buffer"
-  (interactive)
-  (evil-window-split)
-  (evil-window-next 1)
-  (yf-switch-buffer))
-
-(defun vsplit-recents ()
-  "splits the current window horizontally
-and opens up helm switch buffer"
-  (interactive)
-  (evil-window-vsplit)
-  (evil-window-next 1)
-  (yf-switch-buffer))
-
-(defun hsplit-files ()
-  "splits the current window horizontally
-and opens up helm switch buffer"
-  (interactive)
-  (evil-window-split)
-  (evil-window-next 1)
-  (ranger))
-
-(defun vsplit-files ()
-  "splits the current window horizontally
-and opens up helm switch buffer"
-  (interactive)
-  (evil-window-vsplit)
-  (evil-window-next 1)
-  (ranger))
-
-(evil-space-bind "ww" 'evil-window-next)
-(evil-space-bind "wj" 'evil-window-down)
-(evil-space-bind "wk" 'evil-window-up)
-(evil-space-bind "wl" 'evil-window-right)
-(evil-space-bind "wh" 'evil-window-left)
-(evil-space-bind "wx" 'evil-window-delete)
-(evil-space-bind "wo" 'delete-other-windows)
-
-(evil-space-bind "g" 'magit-status)
 ;; Make finishing commits faster
 (evil-define-minor-mode-key 'normal 'git-commit-mode
   "q" 'with-editor-finish
   "z" 'with-editor-cancel)
 
-;; Projectile
-(evil-space-bind "pa" 'helm-projectile-ag)
-(evil-space-bind "ps" 'helm-projectile-switch-project)
-
-;; Random utilities
-(evil-space-bind "uc" 'helm-calcul-expression)
-(evil-space-bind "ua" 'helm-apropos)
-(evil-space-bind "ub" 'describe-key)
-(evil-space-bind "uu" 'undo-tree-visualize)
-(evil-space-bind "ur" 'redraw-display)
-(evil-space-bind "ut" 'yf-run-outside-terminal)
-
-;; evil helm kill ring
-(require 'helm-ring)
-(defcustom yf-evil-helm-kill-ring--actions
-  '(("Paste after (no override in visual)" .
-     (lambda (_str)
-       (let ((marked (helm-marked-candidates))
-             (sep (if (equal helm-current-prefix-arg '(16))
-                      (read-string "Separator: ")
-                    helm-kill-ring-separator))
-             (old-kill-ring kill-ring)
-             (to-paste
-              ;; Taken from `helm-kill-ring-action-yank'
-              (cl-loop for c in (butlast marked)
-                       concat (concat c sep) into str
-                       finally return (concat str (car (last marked))))))
-         ;; Mask off the old kill ring, and don't
-         ;; paste anywhere
-         (kill-new 
-          )
-         (heretic-evil-clipboard-p 1))))
-    ("Paste before (override in visual)" .
-     (lambda (_str)
-       (let ((marked (helm-marked-candidates))
-             (sep (if (equal helm-current-prefix-arg '(16))
-                      (read-string "Separator: ")
-                    helm-kill-ring-separator))
-             kill-ring
-             interprogram-cut-function
-             interprogram-paste-function)
-         ;; Mask off the old kill ring, and don't
-         ;; paste anywhere
-         (kill-new 
-          ;; Taken from `helm-kill-ring-action-yank'
-          (cl-loop for c in (butlast marked)
-                   concat (concat c sep) into str
-                   finally return (concat str (car (last marked)))))
-         (heretic-evil-clipboard-P 1)))))
-  "List of actions for yf kill ring source"
-  ;; From `helm-kill-ring-actions'
-  :group 'helm-ring
-  :type '(alist :key-type string :value-type function))
-
-(defvar yf-evil-helm-kill-ring--source
-  (helm-build-sync-source "Kill Ring"
-    :init (lambda ()
-            (helm-attrset 'last-command last-command)
-            (helm-attrset 'multiline helm-kill-ring-max-offset))
-    :candidates #'helm-kill-ring-candidates
-    :filtered-candidate-transformer #'helm-kill-ring-transformer
-    :action 'yf-evil-helm-kill-ring--actions
-    :persistent-action 'ignore
-    :help-message 'helm-kill-ring-help-message
-    :persistent-help "DoNothing"
-    :keymap helm-kill-ring-map
-    :migemo t
-    :multiline 'helm-kill-ring-max-offset
-    :group 'helm-ring)
-  "Helm source for `yf-evil-helm-kill-ring'")
-
-(defun yf-evil-helm-kill-ring ()
-  (interactive)
-  (let ((enable-recursive-minibuffers t))
-    (helm :sources yf-evil-helm-kill-ring--source
-          :buffer "*helm evil kill ring"
-          :resume 'noresume)))
-(evil-space-bind "k" 'helm-show-kill-ring)
-;; mark ring
-(evil-space-bind "m" 'helm-all-mark-rings)
-;; quickrun
-(evil-space-bind "r" 'quickrun)
-;; Treemacs
-(defun yf-treemacs ()
-  "Runs `treemacs-projectile' if in project, otherwise `treemacs'"
-  (interactive)
-  (if (projectile-project-p)
-      (treemacs-projectile)
-    (treemacs)))
-
-(evil-space-bind "d" 'yf-treemacs)
-
 ;; ---------- Misc Bindings ----------- ;
-
 ;; for everybody's sanity
 (setq evil-want-Y-yank-to-eol t)
 
@@ -276,12 +118,8 @@ and opens up helm switch buffer"
  "M-l" 'evil-forward-char
  "M-w" 'evil-forward-word)
 
-;; swap these because I'm weird
-(define-key evil-visual-state-map (kbd "<SPC>r") 'quickrun-region)
-
 ;; a holdover from my vim days
 (define-key evil-normal-state-map (kbd "-j") 'evil-join)
-
 
 (defun yf-swipe-selection (start end)
   "Calls swiper with the text from START to END in the current buffer
@@ -296,7 +134,6 @@ Returns the current selection if called interactively"
 (define-key swiper-map (kbd "M-k") 'ivy-previous-line)
 (define-key swiper-map (kbd "C-v") 'yank)
 (define-key swiper-map (kbd "C-c") 'minibuffer-keyboard-quit)
-
 
 ;; Undo-tree
 (defun yf--undo-tree-visualizer-advice (&rest r)
@@ -383,15 +220,6 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win    ^_C-w_ _C-j_
 ;;  (lambda () "Moves the cursor down and adds a cursor" (interactive)
 ;;    (evil-previous-line)
 ;;    (evil-mc-make-cursor-here)))
-
-;;; Helm rebinds
-(define-key helm-map (kbd "M-j") 'helm-next-line)
-(define-key helm-map (kbd "M-k") 'helm-previous-line)
-(define-key helm-map (kbd "M-l") 'helm-next-source)
-(define-key helm-map (kbd "M-h") 'helm-previous-source)
-(define-key helm-map (kbd "C-r") 'yank)
-(define-key helm-map (kbd "C-l") 'helm-minibuffer-history)
-;;(define-key helm-minibuffer-history-map (kbd "C-l") 'helm-keyboard-quit)
 
 ;;; Ranger
 (defun yf--magit-clone-ranger (repository directory)
