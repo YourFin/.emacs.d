@@ -233,44 +233,20 @@ and opens up helm switch buffer"
 ;; for everybody's sanity
 (setq evil-want-Y-yank-to-eol t)
 
-(define-key evil-motion-state-map "j" 'evil-next-visual-line)
-(define-key evil-motion-state-map "k" 'evil-previous-visual-line)
-;; As these binds make zero sense in visual line mode:
+;;;; Global evil bindings:
+;; As visual line movements make no sense in visual line or block mode
 (evil-define-motion yf-visual-j (count)
   "Wrapper for `evil-next-visual-line' ignores the visual in visual-line mode"
   :type line
-  (if (eq (evil-visual-type) 'line)
-      (evil-next-line count)
-    (evil-next-visual-line count))
-  )
+  (if (or (not (evil-state-p 'visual)) (eq (evil-visual-type) 'inclusive))
+      (evil-next-visual-line count)
+    (evil-next-line count)))
 (evil-define-motion yf-visual-k (count)
   "Wrapper for `evil-previous-visual-line' ignores the visual in visual-line mode"
   :type line
-  (if (eq (evil-visual-type) 'line)
-      (evil-previous-line count)
-    (evil-previous-visual-line count)))
-
-(define-key evil-visual-state-map "j" 'yf-visual-j)
-(define-key evil-visual-state-map "k" 'yf-visual-k)
-(define-key evil-insert-state-map (kbd "M-RET") 'comment-indent-new-line)
-
-(define-key evil-insert-state-map (kbd "M-j") 'evil-next-visual-line)
-(define-key evil-insert-state-map (kbd "M-k") 'evil-previous-visual-line)
-(define-key evil-insert-state-map (kbd "M-h") 'evil-backward-char)
-(define-key evil-insert-state-map (kbd "M-l") 'evil-forward-char)
-(define-key evil-insert-state-map (kbd "M-w") 'evil-forward-word)
-
-;; swap these because I'm weird
-(define-key evil-motion-state-map (kbd ",") 'goto-last-change)
-(define-key evil-motion-state-map (kbd "g,") 'goto-last-change-reverse)
-(define-key evil-motion-state-map (kbd ";") 'evil-repeat-find-char)
-(define-key evil-motion-state-map (kbd "g;") 'evil-repeat-find-char-reverse)
-
-(define-key evil-visual-state-map (kbd "<SPC>r") 'quickrun-region)
-
-;; a holdover from my vim days
-(define-key evil-normal-state-map (kbd "-j") 'evil-join)
-
+  (if (or (not (evil-state-p 'visual)) (eq (evil-visual-type) 'inclusive))
+      (evil-previous-visual-line count)
+    (evil-previous-line count)))
 ;;; better search: Swiper!
 ;; Make swiper act like evil in terms
 ;; of where it leaves the cursor
@@ -279,7 +255,33 @@ and opens up helm switch buffer"
   (setq isearch-forward t)
   (evil-search-previous))
 (advice-add 'swiper :after #'yf--swiper-advice)
-(define-key evil-motion-state-map (kbd "/") 'swiper)
+(general-def 'motion
+  "j" 'yf-visual-j
+  "k" 'yf-visual-k
+  "," 'goto-last-change
+  "g," 'goto-last-change-reverse
+  ";" 'evil-repeat-find-char
+  "g;" 'evil-repeat-find-char-reverse
+  "/" 'swiper)
+(general-define-key
+ :states '(normal insert)
+ "C-y" 'yas-expand
+ "C-s" 'evil-cp->
+ "M-RET" 'comment-indent-new-line)
+(general-define-key
+ :states 'insert
+ "M-j" 'evil-next-visual-line
+ "M-k" 'evil-previous-visual-line
+ "M-h" 'evil-backward-char
+ "M-l" 'evil-forward-char
+ "M-w" 'evil-forward-word)
+
+;; swap these because I'm weird
+(define-key evil-visual-state-map (kbd "<SPC>r") 'quickrun-region)
+
+;; a holdover from my vim days
+(define-key evil-normal-state-map (kbd "-j") 'evil-join)
+
 
 (defun yf-swipe-selection (start end)
   "Calls swiper with the text from START to END in the current buffer
@@ -295,10 +297,6 @@ Returns the current selection if called interactively"
 (define-key swiper-map (kbd "C-v") 'yank)
 (define-key swiper-map (kbd "C-c") 'minibuffer-keyboard-quit)
 
-(general-define-key
- :states '(normal insert)
- "C-y" 'yas-expand
- "C-s" 'evil-cp->)
 
 ;; Undo-tree
 (defun yf--undo-tree-visualizer-advice (&rest r)
@@ -413,7 +411,6 @@ calling magit-clone from ranger."
   :config
   (ranger-override-dired-mode)
   (define-key ranger-normal-mode-map (kbd "+") 'dired-create-directory)
-  (define-key ranger-normal-mode-map (kbd "c") 'yf--magit-clone-ranger)
-  )
+  (define-key ranger-normal-mode-map (kbd "c") 'yf--magit-clone-ranger))
 
 (provide 'evil-bindings)
