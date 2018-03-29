@@ -328,10 +328,9 @@ Returns the current selection if called interactively"
 				 :post (redraw-display))
   "
 Movement & RESIZE^^^^  
-^ ^ _k_ ^ ^       _o__O_pen File  _C-o_nly win
-_h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
-^ ^ _j_ ^ ^       _u_ _C-r_ undo    _s_plit _v_ertically"   
-
+^ ^ _k_ ^ ^       _o__O_pen File  _C-o_nly win             ^Vim _C-k_ 
+_h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win    ^_C-w_ _C-j_
+^ ^ _j_ ^ ^       _u_ _C-r_ undo    _s_plit _v_ertically     ^_C-h_ _C-l_"
   ;; For some reason the evil
   ;; commands behave better than
   ;; the emacs ones
@@ -353,6 +352,11 @@ _h_ ^✜^ _l_       _b__B_ Sw-Buffer  _x_ Delete this win
   ("x" delete-window)
   ("s" split-window-horizontally)
   ("v" split-window-vertically)
+  ("C-w" evil-window-next :color blue)
+  ("C-k" evil-window-up :color blue)
+  ("C-j" evil-window-down :color blue)
+  ("C-h" evil-window-left :color blue)
+  ("C-l" evil-window-right :color blue)
   ("SPC" nil  :color blue))
 
 (define-key evil-normal-state-map (kbd "C-w") nil)
