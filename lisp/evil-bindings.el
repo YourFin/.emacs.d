@@ -97,9 +97,15 @@
   (setq isearch-forward t)
   (evil-search-previous))
 (advice-add 'swiper :after #'yf--swiper-advice)
+
+;; Force use of motion bindings
+(general-def 'normal
+  "J" nil)
 (general-def 'motion
   "j" 'yf-visual-j
   "k" 'yf-visual-k
+  "J" (lambda () (interactive) (yf-visual-j 15))
+  "K" (lambda () (interactive) (yf-visual-k 15))
   "," 'goto-last-change
   "g," 'goto-last-change-reverse
   ";" 'evil-repeat-find-char
