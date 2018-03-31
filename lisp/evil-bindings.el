@@ -80,13 +80,13 @@
 (evil-define-motion yf-visual-j (count)
   "Wrapper for `evil-next-visual-line' ignores the visual in visual-line mode"
   :type line
-  (if (or (not (evil-state-p 'visual)) (eq (evil-visual-type) 'inclusive))
+  (if (or (not evil-visual-state-minor-mode) (eq (evil-visual-type) 'inclusive))
       (evil-next-visual-line count)
     (evil-next-line count)))
 (evil-define-motion yf-visual-k (count)
   "Wrapper for `evil-previous-visual-line' ignores the visual in visual-line mode"
   :type line
-  (if (or (not (evil-state-p 'visual)) (eq (evil-visual-type) 'inclusive))
+  (if (or (not evil-visual-state-minor-mode) (eq (evil-visual-type) 'inclusive))
       (evil-previous-visual-line count)
     (evil-previous-line count)))
 ;;; better search: Swiper!
