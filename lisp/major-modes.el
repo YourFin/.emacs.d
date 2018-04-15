@@ -61,5 +61,6 @@
 ;;  :defer t
 ;;  :config
 ;;  (use-package julia-shell))
+(use-package go-mode)
 
 (provide 'major-modes)
