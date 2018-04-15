@@ -53,6 +53,9 @@
   (define-key evil-visual-state-map "O" 'er/contract-region))
 
 (use-package evil-iedit-state)
+(use-package evil-lion
+  :config
+  (evil-lion-mode))
 (use-package evil-matchit
   :config (global-evil-matchit-mode 1))
 
