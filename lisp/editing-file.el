@@ -86,6 +86,7 @@ Terminal command is stored in `yf/terminal-command'"
   (sp-local-pair 'kotlin-mode "{" nil :post-handlers '((yf--create-newline-and-enter-sexp "RET")))
   (sp-local-pair 'rust-mode "{" nil :post-handlers '((yf--create-newline-and-enter-sexp "RET")))
   (sp-local-pair 'go-mode "{" nil :post-handlers '((yf--create-newline-and-enter-sexp "RET")))
+  (sp-local-pair 'go-mode "(" nil :post-handlers '((yf--create-newline-and-enter-sexp "RET")))
   (sp-local-pair 'ruby-mode "{" nil :post-handlers '((yf--create-newline-and-enter-sexp "RET")))
 
   (defun yf--create-newline-and-enter-sexp (&rest _ignored)
@@ -147,7 +148,7 @@ Terminal command is stored in `yf/terminal-command'"
 (defun yf-add-word-to-dictionary ()
   (interactive)
   (let ((current-location (point))
-         (word (flyspell-get-word)))
+	(word (flyspell-get-word)))
     (when (consp word)    
       (flyspell-do-correct 'save nil (car word) current-location (cadr word) (caddr word) current-location))))
 
