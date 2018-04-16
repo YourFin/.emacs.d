@@ -96,12 +96,28 @@ Terminal command is stored in `yf/terminal-command'"
     (indent-according-to-mode))
   (add-hook 'prog-mode-hook 'smartparens-mode))
 
+;; Indentation Crap
+;; Why is emacs such a pain with this, the world wonders
 (use-package aggressive-indent
   :config
-  (global-aggressive-indent-mode 1))
+  (global-aggressive-indent-mode 1)
+  (defadvice aggressive-indent--proccess-changed-list-and-indent
+      (around highlight-indent-guides-fix)
+    "Fix for `highlight-indent-guides-mode' on aggressive reindents"
+    (message aggressive-indent--changed-list)
+    (message potato)
+    ad-do-it))
 (use-package dtrt-indent
   :config
   (add-hook 'prog-mode-hook #'dtrt-indent-mode))
+;; Set default placements 
+(setq-default tab-stop-list (number-sequence 2 200 2))
+;; Tell emacs to bugger off with tabs unless dtrt-indent says
+;; otherwise
+(setq-default indent-tabs-mode nil)
+;; Set this to not 8
+(setq-default tab-width 2)
+
 
 (use-package yasnippet
   :config
