@@ -13,6 +13,8 @@
 
 ;; Make scrolling happen not quite at the bottom of the screen
 (setq scroll-margin 3)
+;; vim like scrolling
+(setq scroll-step 1)
 
 (use-package beacon
   :config (beacon-mode 1))

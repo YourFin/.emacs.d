@@ -5,6 +5,6 @@
 ;; Author:  <pen@firecakes>
 ;; Keywords: hardware 
 
-(setq yf/terminal-command "konsole")
+(setq yf/terminal-command "kitty")
 
 (provide 'init-firecakes)
