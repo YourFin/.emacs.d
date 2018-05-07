@@ -117,7 +117,7 @@
 (general-define-key
  :states '(normal insert)
  "C-y" 'yas-expand
- "C-s" 'evil-cp->
+ "C-s" 'sp-slurp-hybrid-sexp
  "M-RET" 'comment-indent-new-line)
 (general-define-key
  :states 'insert
