@@ -43,7 +43,7 @@
 
 ;; Heretic evil clipboard mode
 (require 'heretic-evil-clipboard-mode)
-(add-hook 'evil-mode-hook #'heretic-evil-clipboard-mode-on)
+(global-heretic-evil-clipboard-mode)
 
 (require 'evil-space-binds)
 
