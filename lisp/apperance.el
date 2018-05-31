@@ -51,16 +51,21 @@
 ;; Line Numbers
 (defun my-linum ()
   "Turns on and colors line numbers"
-  (linum-mode)
-  (custom-set-variables '(linum-format 'dynamic))
-  ;; Blatantly stolen from stackoverflow: https://stackoverflow.com/questions/3626632/right-align-line-numbers-with-linum-mode
-  (defadvice linum-update-window (around linum-dynamic activate)
-    (let* ((w (length (number-to-string
-		       (count-lines (point-min) (point-max)))))
-	   (linum-format (concat "%" (number-to-string w) "d ")))
-      ad-do-it)) 
-  (set-face-background 'linum "black"))
+  ;; Line Numbers
+  (if (>= emacs-major-version 26)
+      (display-line-numbers-mode)
+    (linum-mode)
+    (custom-set-variables '(linum-format 'dynamic))
+    ;; Blatantly stolen from stackoverflow: https://stackoverflow.com/questions/3626632/right-align-line-numbers-with-linum-mode
+    (defadvice linum-update-window (around linum-dynamic activate)
+      (let* ((w (length (number-to-string
+		                     (count-lines (point-min) (point-max)))))
+	           (linum-format (concat "%" (number-to-string w) "d ")))
+        ad-do-it)) 
+    (set-face-background 'linum "black")))
 (add-hook 'prog-mode-hook #'my-linum)
+;; Emacs 26 and up
+(setq-default display-line-numbers-grow-only t)
 
 ;; Wrapping
 (defvar yf/wrapping-linum-display
