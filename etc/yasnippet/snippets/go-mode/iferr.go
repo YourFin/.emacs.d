@@ -3,5 +3,5 @@
 # key: /fe
 # --
 if ${1:err} != nil {
-	${2:log.Fatal}(err)
+	${2:log.Fatal}("${3:CONTEXT} err: ", err)
 }$0
