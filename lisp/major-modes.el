@@ -61,6 +61,9 @@
 ;;  :defer t
 ;;  :config
 ;;  (use-package julia-shell))
+;; Typescript
+(use-package tide
+  :defer t)
 (use-package go-mode)
 
 (provide 'major-modes)
