@@ -10,6 +10,9 @@ truthy value: kill-new inserts into the second position in the kill ring
 (defvar heretic-evil-clipboard/mode-line-name " heretic-clip"
   "The mode-line name for `heretic-evil-clipboard-mode'.
 Should start with a space")
+(defvar heretic-evil-clipboard/ignored-modes (list 'magit)
+  "Modes that `heretic-evil-clipboard-mode' will not bind in.
+Must be changed before `heretic-evil-clipboard-mode.el' is loaded.")
 (defvar heretic-evil-clipboard//paste-kill nil
   "Internal variable for handling `heretic-evil-clipboard-p'")
 ;; This advice does most of the heavy lifting for heretic-evil-clipboard-mode.
@@ -18,7 +21,6 @@ Should start with a space")
   (cond
    ((bound-and-true-p evil-mc-cursor-list)
     (let ((interprogram-cut-function nil))
-      (message "potato")
       ad-do-it))
    ;; This is for handling "pasting over" in visual mode.
    ;; If you look at how `evil-visual-paste' is defined,
@@ -41,8 +43,8 @@ Should start with a space")
       ))
    ((and kill-ring (bound-and-true-p heretic-evil-clipboard/kill-to-second))
     (let ((real-kill-ring kill-ring)
-	  (kill-ring (cdr kill-ring))
-	  (interprogram-cut-function nil))
+	        (kill-ring (cdr kill-ring))
+	        (interprogram-cut-function nil))
       ad-do-it
       (setcdr real-kill-ring kill-ring)
       (setq kill-ring-yank-pointer real-kill-ring)))
@@ -51,8 +53,21 @@ Should start with a space")
     (let ((interprogram-cut-function nil))
       ad-do-it))
    (t (let ((interprogram-cut-function 'yf-sys-clip-set))
-	ad-do-it))))
+	      ad-do-it))))
 (ad-activate 'kill-new)
+
+(defun hetetic-evil-clipboard--add-ignore-hooks ()
+  "Internal use: adds hooks for the modes that are ignored
+by `heretic-evil-clipboard-mode' as defined in `heretic-evil-clipboard/ignored-modes'"
+  (mapcar
+   (lambda (mode)
+     (let ((mode-hook
+            (intern (concat (symbol-name mode) "-mode-hook")))) 
+       (if mode-hook
+           (add-hook mode-hook 'heretic-evil-clipboard-mode-off)
+         (error (concat "heretic-evil-clip: mode hook does not exist: "
+                        (symbol-name mode))))))
+   heretic-evil-clipboard/ignored-modes))
 
 (defun heretic-evil-clipboard--bind (key def)
   "Binds KEY to DEF with evil-define key
@@ -257,8 +272,7 @@ To further motivate usage of your new and improved `kill-ring',
 (defun heretic-evil-clipboard-mode-off ()
   "Turn off `heretic-evil-clipboard-mode'"
   (interactive)
-  (when heretic-evil-clipboard-mode
-    (heretic-evil-clipboard-mode)))
+  (heretic-evil-clipboard-mode -1))
 
 ;; evil helm kill ring
 (when (boundp 'helm-mode)
@@ -325,7 +339,7 @@ To further motivate usage of your new and improved `kill-ring',
     (let ((enable-recursive-minibuffers t))
       (helm :sources heretic-evil-helm-kill-ring--source
             :buffer "*helm evil kill ring"
-            :resume 'noresume)))
-  )
+            :resume 'noresume))))
+(hetetic-evil-clipboard--add-ignore-hooks)
 
 (provide 'heretic-evil-clipboard-mode)
