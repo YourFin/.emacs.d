@@ -83,8 +83,8 @@
 (use-package fill-column-indicator
   :defer t
   :config
-  (defun yf-fill-column-indicator-mode
-      "alias to fci-mode"
+  (defun yf-fill-column-indicator-mode ()
+    "alias to fci-mode"
     (interactive)
     (fci-mode)))
 
