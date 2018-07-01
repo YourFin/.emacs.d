@@ -177,8 +177,7 @@ Terminal command is stored in `yf/terminal-command'"
   :config
   (magit-auto-revert-mode -1)
   (global-auto-revert-mode -1)
-  (add-hook 'after-init-hook 'magit-file-mode-turn-on)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+  (add-hook 'after-init-hook 'magit-file-mode-turn-on))
 ;;(use-package magithub
 ;;  :after magit
 ;;  :config (magithub-feature-autoinject t))
